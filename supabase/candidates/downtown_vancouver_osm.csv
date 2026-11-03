@@ -1,0 +1,734 @@
+osm,name,osm_kind,category,lat,lng,address,cuisine,opening_hours,website,late_night
+node/12454888380,The Rec Room,amusement_arcade,activity,49.280841,-123.120939,855 Granville Street,,Mo-Su 10:30-24:00,https://www.therecroom.com/granville/,late
+node/4006317122,1181 Lounge,bar,bar,49.281603,-123.132897,1181 Davie Street,,Mo-Su 20:00-03:00,https://www.eleven-81.com/,late
+node/563321283,Alibi Room,pub,bar,49.28422,-123.100219,157 Alexander Street,,"Mo-Th 17:00-23:30; Fr 17:00-00:30; Sa 10:00-14:45,17:00-00:30; Su 10:00-14:45,17:00-23:30",https://alibi.ca/,
+node/14061866056,Amber,bar,bar,49.283352,-123.102534,99 Powell Street,,,https://www.amber99.com,
+node/5581881762,Back and Forth Bar,bar,bar,49.282196,-123.102401,303 Columbia Street,,,,
+node/12765481501,Bagheera,bar,bar,49.28004,-123.099469,518 Main Street,,Mo-Th 17:00-25:00; Fr-Sa 17:00-26:00; Su 17:00-25:00,https://bagheera.bar,
+node/6573857524,Ballyhoo Public House,pub,bar,49.282223,-123.124119,888 Burrard Street,,"Su-Th 12:00-02:00, Fr,Sa 12:00-03:00",https://www.freehouse.co/locations/ballyhoo,late
+node/10928025190,Bar Gobo,bar,bar,49.277787,-123.098373,237 Union Street,,We-Su 17:00-23:00,https://www.bargobo.com/,
+node/8533748445,Bartholomew,bar,bar,49.276088,-123.119574,1026 Mainland Street,,Su-We 17:00-00:00; Th-Sa 17:00-01:00,https://www.bartholomewbar.com/,late
+node/11034887090,Batch,pub,bar,49.27472,-123.110519,,,We-Fr 15:00-22:00; Sa-Su 12:00-22:00,https://batchvancouver.com/,
+node/5129895121,Bayside Lounge,bar,bar,49.287266,-123.141527,1755 Davie Street,,"Mo-Fr 12:00-02:00, Sa-Su 12:00-03:00",https://www.baysidelounge.ca,late
+node/1938712075,Black Frog Eatery,pub,bar,49.284607,-123.108511,108 Cambie Street,,Mo-Th 11:00-24:00; Fr 11:00-26:00; Sa 10:00-26:00; Su 10:00-24:00,https://www.theblackfrog.ca,late
+node/3769892471,Blackbird,pub,bar,49.285146,-123.118491,905 Dunsmuir Street,,"Fr 11:30-02:00, Mo-Th 11:30-01:00, Sa 16:00-02:00",,late
+node/5949604509,Bleach@611 - Listening?? Room,bar,bar,49.279143,-123.09737,611 Gore Avenue,,,https://bleachstudios.xyz/pages/listening-room,
+way/295769099,Brickhouse,pub,bar,49.278021,-123.09937,730 Main Street,,,,
+node/6933799872,Browns Social House,pub,bar,49.279773,-123.113076,649 Cambie Street,,"Mo-Fr 11:00-00:00; Sa, Su 10:00-00:00",https://brownssocialhouse.com/,
+node/3957339312,Cabana,bar,bar,49.277668,-123.125676,1159 Granville Street,,,,
+node/13050269601,Clough Club,bar,bar,49.283579,-123.106351,212 Abbott Street,,We-Th 17:00-25:00; Fr-Sa 17:00-26:00; Su 17:00-25:00,https://www.freehouse.co/locations/clough-club,
+node/3128863797,CRAFT Beer Market (Olympic Village / False Creek),pub,bar,49.270573,-123.106382,85 West 1st Avenue,,Mo-Th 11:00-00:00; Fr 11:00-01:00; Sa 10:30-01:00; Su 10:30-00:00,https://www.craftbeermarket.ca/locations/vancouver-false-creek/,late
+node/3646941329,Devil's Elbow Ale and Smoke House,bar,bar,49.280266,-123.109748,562 Beatty Street,barbecue,Mo-Th 11:30-00:00; Fr-Sa 11:30-01:00; Su 15:00-00:00,https://www.devilselbowalehouse.com/,late
+node/13680659603,District,bar,bar,49.277885,-123.114105,121 Robson Street,,Mo 16:00-23:00; Tu-Fr 11:30-23:00; Sa-Su 11:00-23:00,https://districtbar.ca/,
+node/6245713585,Donnellan's Irish Pub,pub,bar,49.278291,-123.124191,1082 Granville Street,irish,"Mo-Th 12:00-24:00, Fr,Sa 12:00-03:00, Su 12:00-01:00",https://www.donnellansirishpub.com/,late
+node/5401639183,Dublin Calling,pub,bar,49.280097,-123.121444,900 Granville Street,,"Su-We 12:00-01:00, Th 12:00-02:00, Fr,Sa 12:00-03:00",https://www.dublincalling.com/vancouver/home,late
+node/4689872192,Fionn MacCool's,pub,bar,49.271486,-123.100694,1601 Main Street,,"Su-Th 11:00-24:00, Fr,Sa 11:00-01:00",http://fionnmaccools.com/,late
+node/5004072522,French Creek Pub,pub,bar,49.27993,-123.127571,1100 Burrard Street,,09:00-21:00,https://frenchcreekpub.com/,
+node/11701915483,FUNK coffee bar,bar,bar,49.286343,-123.120525,1025 Dunsmuir Street,coffee_shop;breakfast;lunch,Mo-Fr 07:00-19:00; Sa 09:00-16:00,https://www.funkcoffeebar.com,
+node/11514535412,Funky Winker Beans,bar,bar,49.281901,-123.105893,37 West Hastings Street,,Su-Th 18:00-26:00; Fr-Sa 18:00-27:00,https://www.funkywinkerbeans.ca,
+node/651055566,Good Co. Granville,bar,bar,49.279676,-123.12269,965 Granville Street,,"Tu-Th 17:00-24:00, Fr 17:00-02:00, Sa 15:30-02:00; Su,Mo off",https://www.goodcobars.com/,late
+node/3155515549,Grain Tasting Bar,bar,bar,49.285202,-123.120343,655 Burrard Street,,"Su-Th 15:00-23:00 , Fr-Sa 15:00-00:00",https://vancouver.hyatt.com/,
+node/6219907894,Granville Island Brewing Taproom,pub,bar,49.270555,-123.135671,,,Mo-Th 12:00-20:00; Fr-Su 11:00-20:00,https://www.granvilleislandbrewing.ca/,
+node/9943988295,Granville Room,bar,bar,49.279782,-123.122528,957 Granville Street,,"Tu-Th,Su 11:00-03:00, Fr,Sa 10:00-03:00",https://thegranvilleroom.com/,late
+node/6437608536,Greta YVR,bar,bar,49.282609,-123.105799,50 West Cordova Street,,"Fr, Sa 15:00-03:00; Mo-Th, Su 15:00-02:00",https://www.gretabar.com/locations/vancouver,late
+node/2138612021,Guilt & Co,pub,bar,49.283657,-123.104122,1 Alexander Street,,Mo-Su 19:00-02:00,https://www.guiltandcompany.com/,late
+node/2321011551,Guu Davie,pub,bar,49.282263,-123.133768,1239 Davie Street,japanese,Mo-Fr 10:00-18:00; Sa 08:00-18:00,https://guu-izakaya.com/location/#Davie,
+node/12997424001,Is That French?,bar,bar,49.283263,-123.105588,45 Blood Alley Square,,,https://isthatfrench.com/,
+node/12765476601,Laowai,bar,bar,49.278708,-123.097977,251 East Georgia Street,,,https://laowai.ca,
+node/638771021,Lennox Pub,pub,bar,49.281145,-123.119819,800 Granville Street,,"Su-Th 11:00-24:00, Fr-Sa 11:00-01:00",,late
+node/3753258425,Library Square Public House,pub,bar,49.280158,-123.114937,300 West Georgia Street,,Mo 14:00+; Tu-Sa 11:00+; Su 10:00+,https://www.librarysquarepub.com,
+node/3715807287,Lions Pub,pub,bar,49.286941,-123.114836,888 West Cordova Street,,Mo-Tu 11:00-23:00; We-Sa 11:00-24:00; Su 12:00-22:00,http://www.lionspub.ca,late
+node/1373339577,London Pub,pub,bar,49.27844,-123.099511,700 Main Street,,"Su-Th 11:00-01:00, Fr,Sa 11:00-14:00",https://www.londonpubvan.com/,late
+node/3675301755,Long Table Distillery,pub,bar,49.275768,-123.13243,1451 Hornby Street,,We-Th 13:00-18:00; Fr-Sa 13:00-21:00,https://longtabledistillery.com/,
+node/2328938291,Malone's Social Lounge & Taphouse,pub,bar,49.284022,-123.114107,608 West Pender Street,,"Su-Th 10:00-01:00, Fr,Sa 10:00-02:00",https://www.malones.bc.ca/,late
+node/9727938472,Mansion Nightclub,bar,bar,49.286924,-123.124392,1161 West Georgia Street,,,https://mansionclub.ca/,
+node/11740535669,Molson Hockey House,bar,bar,49.277528,-123.109331,800 Griffiths Way,,,,
+node/4304852298,Moose's Down Under,pub,bar,49.285567,-123.116561,830 West Pender Street,burger,"Mo,Tu 07:00-21:00; We,Th 07:00-22:00; Fr 07:00-23:00; Sa 17:00-23:00",,
+node/6950222736,Numbers,bar,bar,49.279699,-123.130399,1042 Davie Street,,21:00-03:00,https://numbers.ca/,late
+node/4390232892,Pourhouse,pub,bar,49.284131,-123.108383,162 Water Street,,"Mo-Th,Su 17:00-00:00; Fr,Sa 17:00-01:00",https://www.pourhousevancouver.com/,late
+node/13751644028,Prophecy Cocktail Bar,bar,bar,49.283499,-123.118883,801 West Georgia Street,,Mo-We 16:00-24:00; Th 16:00-25:00; Fr-Sa 16:00-26:00; Su 16:00-24:30,https://www.prophecybar.com,late
+node/3898779304,Pub 340,bar,bar,49.282809,-123.109264,340 Cambie Street,,,,
+node/4006318250,Pumpjack,pub,bar,49.281495,-123.132742,1167 Davie Street,,Mo-Su 13:00-03:00,https://www.pumpjackpub.com/,late
+node/3746968903,Railway Club,bar,bar,49.282939,-123.115118,579 Dunsmuir Street,,,https://www.therailwayclub.com/,
+node/3718998435,Red Accordion,pub,bar,49.290275,-123.131749,1616 Alberni Street,,"Mo-Th 12:00-00:00,Fr 12:00-01:00, Sa 10:00-01:00, Su 10:00-00:00",https://www.theredaccordion.com/,late
+node/3940288768,Red Card Sports Bar + Eatery,bar,bar,49.279379,-123.120222,560 Smithe Street,,Mo-Th 11:30-23:00; Fr-Sa 11:30-01:45; Su 09:30-23:00,https://www.redcardsportsbar.ca,late
+node/3753257447,Relish,pub,bar,49.280241,-123.125061,888 Nelson Street,,"Mo-Th 11:30-02:00, Fr,Sa 11:30-03:00, Su 10:00-02:00",https://www.relishthepub.com/,late
+node/12557765860,Savoy Pub,pub,bar,49.281109,-123.098195,258 East Hastings Street,,Mo-Th 09:00-24:00; Fr-Sa 09:00-25:00; Su 11:00-24:00,https://savoypub.ca/,late
+node/2321016632,Score,bar,bar,49.282332,-123.134561,1262 Davie Street,,,https://scoreondavie.com/,
+node/4859906521,Shamrock Bar & Grill,bar,bar,49.287404,-123.141338,1184 Denman Street,,"Su-Th 12:00-01:00, Fr-Sa 12:00-02:00",https://www.theshamrock.ca/,late
+node/9211349987,Shamrock Storehouse,pub,bar,49.279067,-123.123001,678 Nelson Street,irish,"Su-We 09:00-24:00,Th 09:00-01:00, Fr-Sa 09:00-03:00",,late
+node/13683934213,Shark Club,bar,bar,49.278761,-123.112795,180 West Georgia Street,,"Mo,Tu 11:00-23:00, We-Sa 11:00-24:00, Su 09:30-23:00",https://www.sharkclub.com/location/vancouver/,late
+node/4323696593,Shenanigans,pub,bar,49.286656,-123.127498,1227 Robson Street,,"Mo-Sa 12:00-02:00, Su 11:00-24:00",,late
+node/4731544039,Shiny Tea,bar,bar,49.280207,-123.106848,88 West Pender Street,,,,
+node/4859979322,Six Acres,pub,bar,49.283366,-123.104426,203 Carrall Street,,Su-Th 11:30-23:30; Fr-Sa 11:30-00:30,https://www.sixacres.ca/,
+node/12641820076,Smith's Irish Pub,pub,bar,49.28292,-123.104123,208 Carrall Street,,,https://www.smithsofgastown.ca/,
+node/4433659025,Soho,bar,bar,49.27413,-123.124112,1283 Hamilton Street,,,,
+node/505751513,Steamworks,pub,bar,49.284869,-123.110987,375 Water Street,,Su-Th 11:30-00:00; Fr-Sa 11:30-01:00,https://steamworks.com/brew-pub,late
+node/4323351191,Switch,bar,bar,49.287571,-123.129108,1339 Robson Street,,Su-Th 14:00-26:00; Fr-Sa 14:00-27:00,https://switch-vancouver.ca/,
+node/3733886947,Sylvia's Bar,bar,bar,49.288578,-123.142644,,,,,
+node/4638868843,Tap & Barrel,pub,bar,49.271755,-123.106066,1 Athletes Way,,"Su,Mo 10:00-24:00, Sa 10:00-01:00, Tu-Th 11:00-24:00, Fr 11:00-01:00",https://tapandbarrel.com/,late
+node/5040239321,Tap & Barrel,pub,bar,49.2898,-123.116892,1055 Canada Place,,Mo-Su 11:00-23:00,https://tapandbarrel.com/,
+node/6476617352,TAP shack Eatery,bar,bar,49.289767,-123.1213,1199 West Cordova Street,,,,
+node/11079577905,The 515 Bar,bar,bar,49.283841,-123.114381,521 Seymour Street,,,https://the515bar.ca/,
+node/3771328557,The American,bar,bar,49.27631,-123.099559,926 Main Street,,Su 12:00-24:00; Mo-We 15:00-24:00; Th 15:00-25:00; Fr-Sa 12:00-26:00,https://www.theamerican.bar/,late
+node/6222249986,The Blarney Stone,pub,bar,49.282795,-123.104148,216 Carrall Street,,Su-Th 11:00-26:00; Fr-Sa 11:00-27:00,https://blarneystone.ca/,
+node/12164513044,The Boxcar,bar,bar,49.276585,-123.100116,917 Main Street,,Su-Th 16:00-25:00; Fr-Sa 16:00-26:00,https://www.boxcarvancouver.com,
+node/286316995,The Cambie,pub,bar,49.283192,-123.109049,300 Cambie Street,,,,
+node/13707238029,The Cordova Room,bar,bar,49.282863,-123.104126,212 Carrall Street,,,https://thecordovaroom.com/,
+node/6553721261,The Den,bar,bar,49.287464,-123.129581,1348 Robson Street,,"Mo-Th 16:00-01:00; Fr,Sa 16:00-02:00; Su 16:00-23:00",http://www.thedenvancouver.com/,late
+node/2612812538,The Fountainhead Pub,pub,bar,49.279654,-123.12973,1025 Davie Street,,"Su-Th 11:00-24:00; Fr,Sa 11:00-25:00",https://thefountainheadpub.com/,late
+node/8913557680,The Irish Heather Shebeen,pub,bar,49.278419,-123.09809,248 East Georgia Street,,"We-Fr 12:00-18:00+; Sa,Su 11:00-18:00+",https://www.irishheather.com/home,
+node/582802138,The Ivanhoe Pub,pub,bar,49.275081,-123.099616,1038 Main Street,,Mo-Su 13:00-23:00,,
+node/4276394066,The Junction,bar,bar,49.280729,-123.132345,1138 Davie Street,,13:30-27:00,https://www.junctionpub.com/,
+node/3933398898,The Keefer Bar,bar,bar,49.27962,-123.101326,133 Keefer Street,,Su-Th 16:00-25:00; Fr-Sa 16:00-26:00,https://thekeeferbar.com/,
+node/5120582599,The Lamplighter Public House,pub,bar,49.283744,-123.106246,92 Water Street,,We 16:00-24:00; Th 16:00-25:00; Fr 16:00-17:00; Sa 12:00-27:00; Su 12:00-24:00,https://www.freehouse.co/locations/lamplighter,late
+node/3699188198,The Liberty Distillery,bar,bar,49.270406,-123.134579,1494 Old Bridge Street,,"Su-Th 12:00-19:00; Fr,Sa 12:00-21:00",https://www.thelibertydistillery.com/,
+node/3728575595,The Magnet,pub,bar,49.282406,-123.111144,309 West Pender Street,,Mo-Th 16:00-23:30; Fr-Su 15:00-23:30,https://themagnet.ca/,
+node/3940619794,The Metropole Community Pub,pub,bar,49.282511,-123.106806,320 Abbott Street,,,https://www.themetpub.ca/,
+node/2490635047,The Moose,pub,bar,49.279432,-123.123588,724 Nelson Street,,Mo-Su 11:30-02:00,https://themoosevancouver.ca/,late
+node/3725347745,The Morrissey,pub,bar,49.27691,-123.126866,1227 Granville Street,,Su-Th 11:00-02:00; Fr-Sa 11:00-03:00,https://www.themorrissey.com/,late
+node/4796015027,The Park at English Bay,pub,bar,49.286954,-123.141081,1755 Davie Street,,Mo-Su 07:00-00:30,https://www.parkpub.ca/,
+node/1793709914,The Pint,pub,bar,49.281272,-123.107723,455 Abbott Street,,Mo-Su 11:00-02:00,http://www.thepint.ca/vancouver/,late
+node/4497495259,The Portside Pub,pub,bar,49.283562,-123.103881,7 Alexander Street,,"Mo-Fr 11:00-24:00+, Sa,Su 10:00-24:00+",https://theportsidepub.com/,late
+way/305206574,The Refinery,bar,bar,49.278116,-123.125186,1115 Granville Street,,,https://therefineryvancouver.com/,
+node/11740473569,The Sportsbar LIVE! At Rogers Arena,bar,bar,49.277992,-123.109697,99 West Georgia Street,,"Tu, Th, Sa 16:00-23:30",https://thesportsbar.ca/,
+node/2488971027,The Three Brits Public House,pub,bar,49.287073,-123.1418,1780 Davie Street,,"Mo-We 11:30-01:00, Th 11:30-02:00, Fr-Sa 11:30-03:00, Su 11:30-01:00",https://www.freehouse.co/locations/three-brits,late
+node/13305188086,The West Pub,pub,bar,49.280865,-123.104203,488 Carrall Street,,,,
+node/4793620025,The Wine Bar,bar,bar,49.273336,-123.119518,1167 Marinaside Crescent,,,,
+node/3108751085,Two Parrots,bar,bar,49.276951,-123.12616,1202 Granville Street,,"Mo-Su,PH 12:00-02:00",https://www.twoparrotsvancouver.com/,late
+node/5152793226,Uva,bar,bar,49.279519,-123.120443,900 Seymour Street,,Mo-Su 14:00-24:00,https://www.uvavancouver.com/,late
+node/3940929720,Vancouver's Favorite Country Music Pub,pub,bar,49.281774,-123.106781,78 West Hastings Street,,,,
+node/3892520736,Ventura Room,bar,bar,49.279691,-123.11307,695 Cambie Street,,,https://www.venturaroom.com,
+node/5134413847,WINGS Tap & Social,pub,bar,49.283838,-123.11386,580 West Pender Street,,"Th,Su-Tu 11:00-23:00, We,Fr,Sa 11:00-24:00",https://greatwings.ca/vancouver,late
+node/3789883860,Yagger's,bar,bar,49.283201,-123.112366,433 West Pender Street,,,,
+node/903721300,Yaletown Brewing Company,pub,bar,49.275444,-123.121015,,,"Mo-Th 11:30-23:00, Fr 11:30-02:00, Sa 10:00-03:00, Su 10:00-23:00",https://www.mjg.ca/yaletown/,late
+node/4100889700,1927 Lounge,restaurant,food,49.283674,-123.118649,801 West Georgia Street,,07:00-22:00,https://www.rosewoodhotels.com/en/hotel-georgia-vancouver/dining/1927-lobby-lounge,
+node/2691528101,1931 Gallery Bistro,restaurant,food,49.28268,-123.12055,750 Hornby Street,,"Su,Mo,We 11:00-16:00; Th-Sa 11:00-17:00; Tu off",https://www.1931gallerybistro.com,
+node/3947262067,4 Brothers Pizza,fast_food,food,49.277285,-123.127686,1232 Howe Street,pizza,Mo-Sa 10:00-00:00,http://4brotherspizza.ca/,
+node/3360178391,A&W,fast_food,food,49.285899,-123.112287,601 West Cordova Street,burger,Mo-Fr 06:30-24:00; Sa 07:30-24:00; Su 08:30-23:30,https://web.aw.ca/en/locations/0738/vancouver/waterfront-station,late
+node/3736899080,A&W,fast_food,food,49.283152,-123.115418,,burger,24/7,,
+node/3797415151,A&W,fast_food,food,49.279619,-123.117481,450 Robson Street,burger,24/7,,
+node/4232366490,A&W,fast_food,food,49.273958,-123.098051,,burger,Mo-Fr 06:30-17:00; Sa 07:30-17:00; Su 08:30-17:00,http://www.aw.ca,
+node/4343349310,A&W,fast_food,food,49.286013,-123.125149,1158 Alberni Street,burger,24/7,,
+node/4689886691,A&W,fast_food,food,49.273077,-123.100434,1399 Main Street,burger,24/7,,
+node/5248009125,A&W,fast_food,food,49.28961,-123.138533,991 Denman Street,burger,Mo-Fr 08:00-23:00; Sa 09:00-23:00; Su 09:00-22:00,https://web.aw.ca/en/locations/0640/Vancouver/991-denman-street,
+node/5902310785,A&W,fast_food,food,49.278797,-123.123458,1028 Granville Street,burger,24/7,https://web.aw.ca/en/locations/0770/vancouver/granville,
+node/4435420479,Aburi To-Go,fast_food,food,49.275348,-123.12063,1112 Mainland Street,japanese,Mo-Sa 11:30-19:00,https://www.aburitogo.com/,
+node/8407537336,Acquafarina,restaurant,food,49.281039,-123.115157,425 West Georgia Street,,"Mo 10:00-15:00; Tu-Th 10:00-22:00; Fr,Sa 10:00-23:00",,
+node/2321011495,Akihana Sushi,restaurant,food,49.281997,-123.133455,1205 Davie Street,sushi,"Su-Th 12:00-21:30; Fr,Sa 12:00-23:30",https://akihanasushi.ca/,
+node/4956101123,Akira Sushi,restaurant,food,49.288544,-123.140147,1069 Denman Street,sushi,12:00-21:30,https://akira-sushi.ca/,
+node/4433658972,Alchemy,restaurant,food,49.274234,-123.123941,1269 Hamilton Street,,11:00-01:00,https://www.alchemybar-kitchen.ca,late
+node/10138420735,AlHadbah Donair,restaurant,food,49.289641,-123.132863,1610 Robson Street,,Mo-Sa 10:30-23:00,https://alhadbahdonair.com/,
+way/715156944,Alimentaria Mexicana,restaurant,food,49.271647,-123.134911,1596 Johnston Street,mexican,Mo-Th 11:30-21:00; Fr 11:30-22:00; Sa 11:00-22:00; Su 11:00-21:00,https://alimentariamexicana.com,
+node/3945297423,Alouette,restaurant,food,49.28517,-123.118226,567 Hornby Street,french,06:30-22:00,https://www.alouettevancouver.com/,
+node/3998434895,Ancora,restaurant,food,49.273893,-123.132775,1600 Howe Street,peruvian;japanese,"Su-Fr 12:00-14:30, Mo-Su 17:00-22:00+",https://www.ancoradining.com/falsecreek,
+node/12454888383,Andonis,restaurant,food,49.277348,-123.126158,1193 Granville Street,mediterranean;greek,We-Th 17:00-23:00; Fr-Sa 17:00-26:00; Su 17:00-23:00,https://www.andonisvancouver.com/,
+node/13046301415,Arc,restaurant,food,49.287505,-123.113923,900 Canada Place,,"Su-Th 06:30-00:00, Fr-Sa 06:30-01:00",https://www.arcdining.com,late
+node/3769343999,Ask for Luigi,restaurant,food,49.284212,-123.097715,305 Alexander Street,italian,"Mo-Su 11:30-14:30,17:30-23:00",,
+node/3753945311,Aura Vietnamese Cuisine and Bar,restaurant,food,49.277721,-123.126777,781 Davie Street,vietnamese,Mo-Su 11:00-23:00,,
+node/8754120117,Auto Strada,restaurant,food,49.274389,-123.130987,1481 Continental Street,italian,Mo-Su 15:00-21:00,https://www.autostradahospitality.ca/,
+node/2695449862,Ba Le Sandwich Shop,restaurant,food,49.278782,-123.099504,638 Main Street,vietnamese;sandwich,08:00-18:00,,
+node/9657558865,Babylon Restaurant & Bar,restaurant,food,49.287657,-123.140997,1162 Denman Street,,Mo-Su 10:30-24:00,https://www.babylon-restaurant.ca/,late
+node/3945290782,Bacchus,restaurant,food,49.282308,-123.122543,845 Hornby Street,,"We-Sa 12:00-09:45, Su 16:00-09:00",https://wedgewoodhotel.com/dining/bacchus-restaurant/,
+node/4731553448,Bali Thai,fast_food,food,49.280214,-123.106334,88 West Pender Street,indonesian,"Mo-Sa 10:00-18:00; Su,PH off",https://www.balithaivancouver.com/,
+node/13689517364,Bam Bam,restaurant,food,49.278962,-123.113073,160 West Georgia Street,,Mo-Su 08:00-20:00,,
+node/12076235011,Ban Bu Xian Szechuan,restaurant,food,49.286717,-123.128356,1282 Robson Street,chinese;szechuan,Mo-Su 11:30-22:00,,
+node/3706130025,Banana Leaf,restaurant,food,49.279933,-123.130252,1043 Davie Street,malaysian,Mo-Sa 11:30-22:45; Su 11:30-22:00,https://www.bananaleaf-vancouver.com/,
+node/4331348291,Banana Leaf,restaurant,food,49.291387,-123.135016,1779 Robson Street,malaysian,Mo-Su 11:30-10:00,https://www.bananaleaf-vancouver.com/,
+node/4005033787,BangKoK Bistro,restaurant,food,49.281717,-123.133062,1193 Davie Street,thai,We-Mo 12:00-21:30; Tu 11:00-21:30,https://www.zomi.menu/shop/bangkokbistro,
+node/12703364034,Banter Room,restaurant,food,49.276318,-123.11974,1039 Mainland Street,,"Mo-Fr 11:30+; Sa,Su 11:00+",https://www.banterroom.com/,
+node/3933401480,Bao Bei,restaurant,food,49.27962,-123.10057,163 Keefer Street,chinese,Fr-Sa 17:30-00:00; Su-Th 17:30-22:00,https://www.bao-bei.ca,
+node/13025162703,Bar Tartar,restaurant,food,49.283508,-123.102825,54 Alexander Street,french,Th-Sa 17:00-00:00; Tu-We 17:00-23:00,https://bartartareyvr.ca/,
+node/8913557691,Barbara,restaurant,food,49.280469,-123.096985,305 East Pender Street,,Tu-Fr 17:30-22:00,https://barbararestaurant.com/,
+node/1383816989,Basil Pasta Bar,restaurant,food,49.276787,-123.125879,636 Davie Street,pasta,Su-Th 11:30-23:00; Fr-Sa 11:30-02:00,https://www.basilpastabar.com/,late
+node/12454888382,bb.q Chicken,restaurant,food,49.278956,-123.123739,1037 Granville Street,korean;chicken,"Mo 16:00-24:00, Tu-Th,Su 12:00-24:00, Fr,Sa 12:00-01:00",,late
+node/4390230450,BC Momo,restaurant,food,49.282123,-123.116481,678 Seymour Street,indian,Mo-Su 10:30-23:00,https://bcmomo.ca,
+node/5304492040,Beest,restaurant,food,49.28615,-123.126496,770 Bute Street,japanese;ramen,Mo-Su 11:30-22:30,,
+node/3769343998,Belgard Kitchen,restaurant,food,49.284329,-123.095516,55 Dunlevy Avenue,,Mo-Fr 11:30-23:00; Sa-Su 10:00-23:00,https://www.belgardkitchen.com/,
+node/2980393408,Bella Gelateria,ice_cream,food,49.287217,-123.128558,1301 Robson Street,,Mo-Su 11:00-22:00,,
+node/3673772829,Bella Gelateria,ice_cream,food,49.284166,-123.117894,,,Mo-Su 11:00-22:00,,
+node/11062762221,Between 2 Buns Burgers,fast_food,food,49.28054,-123.101973,105 East Pender Street,burger,Mo off; Tu-Th 16:00-21:00; Fr-Sa 12:00-22:00; Su 12:00-21:00,http://between2bunsburgers.ca/,
+node/7779648885,Big Bang Sushi,restaurant,food,49.288296,-123.14051,1103 Denman Street,sushi,Mo-Su 11:30-21:00,https://bigbangsushi.ca,
+node/3797415479,Big Way Hot Pot,restaurant,food,49.281713,-123.120675,778 Robson Street,chinese,"Su-Th 11:00-23:00, Fr-Sa 11:00-23:30",https://www.bigwayhotpot.com/delivery#vancouver,
+node/5697508530,Big Way Hot Pot,restaurant,food,49.28862,-123.130733,1479 Robson Street,hotpot,"Mo-Th,Su 10:00-24:00; Fr-Sa 10:00-24:30",https://www.bigwayhotpot.com/,late
+node/5716391313,Black & Blue,restaurant,food,49.284544,-123.122899,1032 Alberni Street,steak_house,"Su-We 02:30-18:00+; Th,Fr 11:30-18:00+; Sa 16:00-18:00+",https://blackandbluesteakhouse.ca/,late
+node/5031440452,Blnd Tger Dumplings,restaurant,food,49.278657,-123.097975,251 East Georgia Street,chinese;dumplings,"Tu-Th 17:00-00:30, Mo 17:00-11:30, Su 12:00-23:30, Fr,Sa 12:00-00:30",,
+node/1219255827,Blue Water Cafe + raw bar,restaurant,food,49.276096,-123.121114,Hamilton Street,,Mo-Su 16:30+,https://bluewatercafe.net/,
+node/4969363221,Bombay Kitchen On Denman,restaurant,food,49.288583,-123.140079,1061 Denman Street,indian,Su-Th 11:30-23:00; Fr-Sa 11:30-24:00,https://bombaykitchenondenman.ca/,late
+node/11993521869,Bonus Bakery,restaurant,food,49.270157,-123.095835,407 Industrial Avenue,american;breakfast,Mo-Fr 09:00-14:00,https://bonusbakery.com/,
+node/4694328589,Book Kyung Ban Jeoun & BK Karaoke,fast_food,food,49.289793,-123.133067,1638 Robson Street,,Su-Th 11:30-01:00; Fr-Sa 11:30-02:00,,late
+node/11965684502,Booster Juice,fast_food,food,49.284827,-123.111642,555 West Hastings Street,juice,Mo-Fr 09:00-17:00,,
+way/250247081,Boston Pizza,restaurant,food,49.277173,-123.11412,808 Beatty Street,pizza,Su-Th 11:00-24:00; Fr-Sa 11:00-01:00,https://bostonpizza.com/en/locations/stadium-district.html,late
+node/5827984711,Botanist,restaurant,food,49.288286,-123.116669,1038 Canada Place,international;regional,Mo-Fr 06:30-22:00; Sa-Su 07:00-22:00,,
+node/3763313290,Boulevard Kitchen & Oyster Bar,restaurant,food,49.282927,-123.123798,845 Burrard Street,,Tu-Su 16:30-22:00,https://boulevardvancouver.ca/,
+node/2138608215,Brioche Ristorante & Wine Bar,restaurant,food,49.283565,-123.102354,103 Columbia Street,italian,Mo-Th 07:00-21:00; Fr-Sa 07:00-22:00; Su 07:00-21:00,https://www.brioche.ca/,
+node/9593164231,Brooklyn Dumpling Shop,restaurant,food,49.27987,-123.117807,488 Robson Street,dumpling,Mo-We 11:30-24:00; Th-Sa 11:30-28:00; Su 11:30-24:00,https://www.brooklyndumplingshop.com/,late
+node/3957332656,Brunch,restaurant,food,49.2778,-123.125475,1147 Granville Street,mexican,08:30-15:00,https://www.brunchvancouver.com/,
+node/5823741253,Burger Crush,restaurant,food,49.279751,-123.123526,755 Nelson Street,burger,Mo-Su 11:00-22:00,https://burgercrush.ca/,
+node/2269956731,Burger King,fast_food,food,49.281171,-123.120411,821 Granville Street,burger,24/7,,
+node/3764696417,Burger King,fast_food,food,49.284127,-123.114276,612 West Pender Street,burger,24/7,https://www.burgerking.ca/store-locator/store/restaurant_14058,
+node/9212839027,C Prime Modern Italian Steak & Wine,restaurant,food,49.280895,-123.127338,1015 Burrard Street,italian,"07:00-12:00,16:00-12:00",https://www.cprime.ca/,
+node/652955235,Cactus Club Cafe,restaurant,food,49.275089,-123.122758,357 Davie Street,international,Su-We 11:30-00:00; Th-Sa 11:30-01:00,,late
+way/89118744,Cactus Club Cafe,restaurant,food,49.289671,-123.118078,1085 Canada Place,international,"Su-Th 11:30-24:00, Fr,Sa 11:30-00:30",https://www.cactusclubcafe.com/location/coal-harbour/,late
+way/1177714168,Cactus Club Cafe,restaurant,food,49.286709,-123.142745,1790 Beach Avenue,international,11:30-00:00,,
+node/10218067442,Cafe Tica,restaurant,food,49.280341,-123.119813,843 Seymour Street,sandwich;soup;pastry,Mo-Su 09:00-16:00,,
+node/5620925921,Calabash Bistro,restaurant,food,49.281036,-123.104202,428 Carrall Street,caribbean,Th 17:00-22:00; Fr-Sa 17:00-26:00,https://www.calabashbistro.com/,
+node/3887067937,Cantina Di Luigi,restaurant,food,49.27868,-123.099249,213 East Georgia Street,italian,We-Th 17:00-22:00; Fr-Sa 17:00-23:00,https://www.cantinadiluigi.com/,
+node/4433659011,Capo and the Spritz,restaurant,food,49.274724,-123.122703,350 Davie Street,,Mo-Su 15:00-22:00,,
+node/10084912091,Captain's Oven Pizza,fast_food,food,49.287571,-123.121131,1110 West Pender Street,pizza,"Mo-Th,Su 11:00-22:00; Fr,Sa 11:00-23:00",https://captainsovenpizza.com/vancouver/,
+node/4433485092,Cardero's,restaurant,food,49.291569,-123.127516,1583 Coal Harbour Quay,,"Mo-Sa 11:30-23:00; PH,Su 11:30-22:00",https://www.vancouverdine.com/carderos/,
+node/12403533431,Caspian Castle Food,restaurant,food,49.279753,-123.126437,1091 Hornby Street,,10:00-22:00,https://www.caspiancastlefood.com,
+node/9943988296,Cavo Bar+Kitchen,restaurant,food,49.280228,-123.121882,911 Granville Street,,11:00-23:00,https://cavobar.ca/,
+node/4162151571,Cazba,restaurant,food,49.280638,-123.131087,1103 Davie Street,persian,Mo-Su 11:30-22:00,https://cazbarestaurant.com/,
+node/3235438890,Chambar,restaurant,food,49.280151,-123.109872,568 Beatty Street,breakfast,"We-Fr 15:00-22:00; Sa,Su 09:00-22:00",https://www.chambar.com/,
+node/6402097299,Chang'an,restaurant,food,49.273358,-123.132748,1661 Granville Street,chinese,"11:30-14:30, 17:30-21:30",http://tastechangan.com/,
+node/11993521969,Chau Cafe,fast_food,food,49.272636,-123.135371,1689 Johnston Street,vietnamese,Mo-Su 10:00-20:00,https://chaucafe.com/,
+node/12496922703,Cheese Slap,restaurant,food,49.280093,-123.122076,925 Granville Street,,Mo-Su 11:00-04:00,https://www.zomi.menu/shop/cheeseslap,late
+node/6641011987,Chef Ron Restaurant & Bar,restaurant,food,49.289014,-123.139401,1037 Denman Street,,Mo 12:00-21:30; Tu-Su 12:00-22:30,https://chefron.ca,
+node/9164400185,Chicko Chicken,fast_food,food,49.286316,-123.127733,1234 Robson Street,chicken,Mo-Su 11:00-22:00,,
+node/13302217750,Chinatown BBQ,restaurant,food,49.28031,-123.101505,130 East Pender Street,chinese,Tu-Su 11:00-20:00; Mo off,https://chinatownbbq.com/,
+node/3011566476,Chipotle,fast_food,food,49.281542,-123.121179,818 Howe Street,mexican,Mo-Su 10:30-23:00,,
+node/3748827416,Chipotle,fast_food,food,49.279841,-123.13012,1037 Davie Street,mexican,Mo-Su 10:30-23:00,https://locations.chipotle.ca/bc/vancouver/1037-davie-st,
+node/8526596408,Chipotle,fast_food,food,49.279285,-123.116924,398 Robson Street,mexican,Mo-Su 10:45-22:00,https://locations.chipotle.ca/bc/vancouver/398-robson-st,
+node/4323279093,Chongqing on Robson,fast_food,food,49.286553,-123.128081,1260 Robson Street,chinese;szechuan,Mo-Su 11:30-22:00,https://robson.cqrestaurant.com/,
+node/4323353389,Chosun Korean BBQ,restaurant,food,49.287346,-123.12834,793 Jervis Street,korean;barbecue,"Mo-Th 11:30-15:00,17:00-25:00; Fr-Sa 11:30-26:00; Su 11:30-24:00",https://chosunbbq.ca/,late
+node/5826169153,Chronic Tacos,fast_food,food,49.286003,-123.112456,601 West Cordova Street,,Mo-Th 10:00-20:00; Fr-Sa 11:00-20:00; Su 11:00-18:00,https://www.chronictacos.com/restaurant/vancouver-waterfront-bc/16-601-cordova-street-w,
+node/6862066532,Chungchun,fast_food,food,49.291487,-123.135178,1795 Robson Street,hot_dog;korean,Mo-Su 11:30-23:00,https://chungchunricedog.ca/locations/Robson/,
+node/3788419825,Cielito Lindo,restaurant,food,49.28201,-123.108032,122 West Hastings Street,mexican,Mo-Th 12:00-22:00; Fr 11:30-23:30; Sa 11:00-23:30; Su 10:00-21:00,https://www.cielitolindocanada.com/,
+node/9709476547,CinCin Ristorante + Bar,restaurant,food,49.285297,-123.12626,1154 Robson Street,italian,We-Su 17:00-22:00,https://cincin.net/,
+node/14068954886,Cloudstreet,restaurant,food,49.285218,-123.120469,655 Burrard Street,regional,"Su-Th 15:00-23:00 , Fr-Sa 15:00-00:00",https://vancouver.hyatt.com/,
+node/12769106927,Club Kitchen,restaurant,food,49.274928,-123.115583,,,"Su-Th 11:00-22:00, Fr,Sa 11:00-24:00",,late
+node/2718677795,Coast Restaurant,restaurant,food,49.284716,-123.123117,1054 Alberni Street,seafood,"Mo-Fr 11:30-24:00+; Sa,Su 02:30-24:00+",https://www.glowbalgroup.com/coast/,late
+node/8913557690,Cofu,restaurant,food,49.280471,-123.09717,488 Gore Avenue,sushi,We-Su 17:00-22:00,https://www.cofu.ca/,
+way/1535117514,Congee Noodle Delight,fast_food,food,49.280601,-123.106236,88 West Pender Street,,Mo-Su 10:30-22:00,https://www.congeenoodledelight.com/,
+node/4323353789,Cora,restaurant,food,49.287563,-123.129718,1368 Robson Street,breakfast,Mo-Sa 06:00-15:00; Su 07:00-15:00,https://www.chezcora.com/en/order-online/?language=en&location_id=17526#/main,
+node/8724837747,CRAFT Beer Market,restaurant,food,49.286742,-123.14224,1795 Beach Avenue,,"Mo-Th 11:00-00:00, Fr 11:00-01:00, Sa 11:00-01:00, Su 11:00-00:00",https://www.craftbeermarket.com/locations/vancouver-english-bay/,late
+node/3725348143,Crave Cheesesteaks,fast_food,food,49.280103,-123.118121,500 Robson Street,sandwich,"Mo-Th 10:00-23:00; Fr,Sa 10:00-23:30; Su 11:00-20:00",https://cravecheesesteaks.ca,
+node/9211349978,Crave India,restaurant,food,49.279109,-123.123521,1019 Granville Street,indian,Mo-Sa 11:00-23:00,https://craveindiarestaurant.com/,
+node/5581881757,Cuchillo,restaurant,food,49.283288,-123.098074,261 Powell Street,mexican,Mo-Su 17:00+; PH 17:00+; Dec 24-25 off,https://www.cuchillo.ca/,
+node/3798833201,Curry Hut Indian Bistro,restaurant,food,49.285799,-123.115359,445 Howe Street,indian,Mo-Su 11:00-21:00,https://curryhut.ca/,
+node/3560176191,D'oro Gelato e Caffè,ice_cream,food,49.286159,-123.1275,1222 Robson Street,italian,Mo-Su 08:00-23:00,https://www.dorogc.com/locations/robson-street/,
+node/6610983284,D'oro Gelato e Caffè,ice_cream,food,49.288314,-123.140013,1094 Denman Street,,Mo-Su 08:00-23:00,https://dorogc.com/,
+node/6910827436,Dae Bak Bon Ga,restaurant,food,49.287444,-123.128832,1323 Robson Street,korean;barbecue,"Su-Th 11:30-23:30, Fr-Sa 11:30-00:00",https://www.daebakbonga.com/,
+node/4390232398,Dae Ji,fast_food,food,49.282677,-123.114716,519 Dunsmuir Street,,Mo-Fr 11:00-21:00; Sa 12:00-21:00,,
+node/3892520725,Daikichi Sushi,restaurant,food,49.277454,-123.131337,1346 Burrard Street,sushi,We-Mo 11:00-21:30,https://daikichisushi.com,
+node/1209181505,Dairy Queen,fast_food,food,49.274016,-123.122343,1217 Pacific Boulevard,ice_cream;burger,Mo-Su 11:00-22:00,,
+node/9707783439,Damso Modern Korean Restaurant,restaurant,food,49.290099,-123.133582,1680 Robson Street,korean,Su-Th 11:30-23:00; Fr-Sa 11:30-24:00,https://damso-restaurant.ca/,late
+node/4448663294,Dan Dan Noodle,restaurant,food,49.290923,-123.136016,836 Denman Street,,"Mo-Th, Su 11:00-22:30; Fr 11:00-23:30; Sa 11:00-22:00",,
+node/6806550824,Dante Italian Sandwich,restaurant,food,49.27914,-123.116689,360 Robson Street,sandwich;italian,Mo-Su 11:00-19:00,https://www.dantesandwich.com/,
+node/3708806648,Date Café & Bar,restaurant,food,49.279303,-123.12136,927 Seymour Street,coffee_shop;pastry,"Mo-Th,Su 11:00-23:00; Fr-Sa 11:00-24:00",http://datecafe.ca/,late
+node/3745027596,Dave's Hot Chicken,fast_food,food,49.280326,-123.121702,901 Granville Street,chicken,Mo-Su 10:00-28:00,https://daveshotchicken.ca/,
+node/4006318254,Davie's the Best,restaurant,food,49.281359,-123.132504,1157 Davie Street,turkish,Su-We 09:00-23:00; Th-Sa 09:00-23:30,https://www.daviesthebest.ca/,
+node/11742781269,Dawson's Hot Dogs,restaurant,food,49.277322,-123.111067,,hot_dog,Mo-Sa 11:00-22:00; Su 11:00-20:00,https://bcplace.com/,
+node/11062762212,DD Mau Chinatown,restaurant,food,49.280521,-123.100807,145 East Pender Street,vietnamese,"Mo-Th 11:30-22:00, Fr-Sa 11:30-24:00",https://www.ddmau.ca/chinatown,late
+node/8170028356,De Dutch,restaurant,food,49.290046,-123.116951,1055 Canada Place,breakfast;crepe,Mo-Su 08:00-15:00,https://dedutch.com/,
+node/5757057061,Deacon's Corner,restaurant,food,49.283942,-123.099836,101 Main Street,sandwich;burger;breakfast,Mo-Fr 08:00-21:00; Sa 09:00-21:00; Su 09:00-17:00,https://www.deaconscorner.ca/,
+node/5607284721,Delicious Pho,restaurant,food,49.278638,-123.115315,255 Robson Street,vietnamese,"Su-Th 11:00-24:00, Fr,Sa 11:00-05:00",https://deliciousphobc.com/,late
+node/2062674924,Denny's,restaurant,food,49.28021,-123.131197,1098 Davie Street,american,24/7,https://www.dennys.ca/restaurant/british-columbia/vancouver-davie/,
+node/5145439626,Desi Indian Lounge,restaurant,food,49.276914,-123.130785,1355 Hornby Street,indian,"Mo-Fr 11:00-22:00, Sa-Su 11:00-22:30",https://www.desilounge.ca/,
+node/9371329417,Di Beppe,restaurant,food,49.282384,-123.104525,8 West Cordova Street,italian,Mo-Fr 08:00-22:00; Sa 09:00-23:00; Su 09:00-22:00,https://www.dibeppe.com/,
+node/8724097862,Did's Pizza,fast_food,food,49.282853,-123.114984,575 Dunsmuir Street,pizza,Mo-Fr 11:30-22:30; Sa 17:00-22:30,,
+node/2320273635,Din Tai Fung,restaurant,food,49.285733,-123.124702,1132 Alberni Street,taiwanese,"Mo-Su 11:00-15:00, 17:00-20:30",https://dtf.com/en/locations/vancouver,
+node/4331530499,Dinesty Dumpling House,restaurant,food,49.290773,-123.134078,1719 Robson Street,chinese;asian,"Mo-Su 11:00-14:30, Su-Th 17:00-20:30, Fr,Sa 17:00-21:15",https://dinesty.ca/our-locations__trashed/vancouver-robson/,
+node/4390230581,Dingding Restaurant,restaurant,food,49.282087,-123.116542,682 Seymour Street,chinese,Mo-Sa 11:00-21:00,,
+node/4006318032,Disco Cheetah,fast_food,food,49.281632,-123.132944,1183 Davie Street,korean;fried_chicken,Su-Tu 11:00-21:00; We-Sa 11:00-22:00,https://www.discocheetah.com/,
+node/6629504828,Domino's,fast_food,food,49.277654,-123.125186,Granville Street,pizza,Mo-Su 10:00-03:00,,late
+node/9707740851,Domino's,fast_food,food,49.291798,-123.135226,777 Denman Street,pizza,Mo-Su 10:00-03:00,,late
+node/5837608675,Domo Sushi,restaurant,food,49.287349,-123.12363,1160 Melville Street,japanese;sushi,Mo-Fr 11:00-20:30; Sa 12:00-20:30,https://domo-sushi.com/,
+node/2991497960,Donair Drive,restaurant,food,49.279613,-123.123935,770 Nelson Street,,10:30-02:00,,late
+node/3719407590,Donair Dude,fast_food,food,49.282229,-123.109209,164 West Hastings Street,kebab,Mo-We 10:00-01:00; Th 09:30-01:00; Fr-Sa 10:00-02:00; Sa 11:00-02:00; Su 11:00-00:00,https://www.donairdude.com/,late
+node/3957328668,Donair Dude,fast_food,food,49.277831,-123.125433,1145 Granville Street,,"Su-Th 10:30-03:00, Fr,Sa 10:30-05:00",,late
+node/4305378422,Donair Dude,fast_food,food,49.281369,-123.132992,1172 Davie Street,kebab,"Su,Mo 10:30-01:00, Tu-Th 10:30-02:00, Fr,Sa 10:30-04:00",https://donairdude.com/,late
+way/1553362218,Donair Dude,restaurant,food,49.27299,-123.099657,201 Terminal Avenue,donair,"Mo-Th 10:00-01:00, Fr,Sa 10:00-03:00, Su 11:00-24:00",https://donairdude.com/,late
+node/4842907238,Dovetail,restaurant,food,49.275924,-123.12031,1079 Mainland Street,,Su-Th 11:30-00:00; Fr-Sa 11:30-01:00,https://www.dovetailrestaurant.ca,late
+node/9918283739,Dragon Bowl,fast_food,food,49.286181,-123.125417,1168 Alberni Street,chinese,Mo-Su 11:00-22:00,https://dragonbowl.ca/,
+node/652955240,Earls,restaurant,food,49.275779,-123.120525,1095 Mainland Street,american,"Mo-Th 11:00-24:00, Fr 11:00-01:00, Sa 10:00-01:00, Su 10:00-24:00",https://earls.ca/locations/yaletown/,late
+node/2070418346,Earls,restaurant,food,49.281594,-123.123754,905 Hornby Street,american,"Mo-Th 11:00-24:00, Fr 11:00-01:00, Sa 10:00-01:00, Su 10:00-24:00",,late
+node/2985100362,Earls,restaurant,food,49.285953,-123.126418,1185 Robson Street,american,Mo-Th 11:00-24:00; Fr 11:00-25:00; Sa 10:00-25:00; Su 10:00-24:00,https://www.earls.ca/locations/robson/,late
+node/1609793040,Eat Bar & Patio Haraheri,restaurant,food,49.279996,-123.125224,888 Nelson Street,japanese,"Mo-Fr 11:30-14:30,17:30-24:00; Sa-Su 12:00-15:00,17:30-24:00",https://haraheri.ca/,late
+node/4304895793,Ebi-Ten,restaurant,food,49.279246,-123.11686,388 Robson Street,japanese;sushi,"Mo,Tu,Th,Fr 11:00-22:30; Sa 11:00-21:00; Su 11:00-18:00; We 11:00-22:00",https://www.facebook.com/@Ebiten388Robson,
+node/6738071639,Eggette,restaurant,food,49.28585,-123.127,1194 Robson Street,dessert,Mo-Su 13:00-22:00,https://eggettehouse.ca/,
+node/9906294559,Eh! Restaurant,restaurant,food,49.284657,-123.123248,1050 Alberni Street,,Mo-Fr 07:00-18:00,http://www.ehrestaurant.com/,
+node/4859580822,El Furniture Warehouse - Granville,restaurant,food,49.279577,-123.122825,989 Granville Street,,Mo-Su 11:00-02:00,https://www.warehousegroup.ca/el-furniture-warehouse-granville,late
+node/5004150323,El Guapo,restaurant,food,49.276758,-123.120146,1011 Hamilton Street,,Mo 16 :00-24:00; Tu-We 11:30-24:00; Th 11:30-25:00; Fr 11:30-26:00; Sa 11:00-26:00; Su 11:00-24:00,https://elguapo.ca/,late
+node/5581881761,El Torito Mexican Restaurant,restaurant,food,49.279626,-123.10108,139 Keefer Street,mexican,Tu-Th 10:00-22:00; Fr-Sa 10:00-02:00; Su 10:00-20:00,,late
+node/6758046639,Elisa,restaurant,food,49.275919,-123.121377,1109 Hamilton Street,steak_house,16:30+,https://www.elisasteak.com,
+node/4438774202,Entrecôte Restaurant,restaurant,food,49.283244,-123.104844,12 Water Street,french,Mo-Su 11:30-22:00,https://www.entrecote-restaurant.com,
+node/9657558873,España Restaurant,restaurant,food,49.288049,-123.140402,1118 Denman Street,spanish,Th-Su 16:00-22:00,https://www.espanarestaurant.ca/,
+node/3954533679,Fable Diner & Bar,restaurant,food,49.280752,-123.117186,755 Richards Street,,"Su-Tu 09:00-14:30, Mo-Su 17:00-21:00, We,Th 09:00-14:30,17:00-22:00, Fr,Sa 09:00-14:30,17:00-23:00",https://fabledinerbar.com/,
+node/3843236754,Falafel King,fast_food,food,49.280134,-123.118169,516 Robson Street,kebab;mediterranean,Mo-Su 10:30-20:30,,
+node/4842937821,Fanny Bay Oyster Bar,restaurant,food,49.278575,-123.114112,762 Cambie Street,seafood,14:00-22:00,https://www.fannybayoysters.com/location/oyster-bar--shellfish-market,
+node/3934596876,Fat Mao,restaurant,food,49.279808,-123.126766,983 Helmcken Street,thai;noodles,"Sa,Su 11:30-16:00,17:00-21:00; Mo-Fr 11:30-21:00",https://www.fatmaonoodles.com/,
+node/5031440450,Fat Mao Noodles,restaurant,food,49.278678,-123.098952,217 East Georgia Street,chinese,Th-Tu 11:30-20:30,https://www.fatmaonoodles.com/,
+node/3748827424,Fatburger,fast_food,food,49.280226,-123.130709,1067 Davie Street,burger,10:00-23:00,https://www.fatburgercanada.com/locations/fatburger-davie/,
+node/4183926509,Fatburger,fast_food,food,49.281998,-123.118635,734 Granville Street,burger,"Su-Th 10:00-21:00; Fr,Sa 10:00-22:00",,
+node/9572194109,Fatburger,fast_food,food,49.28448,-123.112275,555 West Hastings Street,burger,Mo-Sa 07:00-18:00,,
+node/5685735917,Firecrust Neopolitan Pizzeria,restaurant,food,49.277774,-123.12752,808 Davie Street,pizza;salad,"Su-Th 11:00-01:00, Fr,Sa 11:00-04:00",https://www.firecrustpizzeria.com/,late
+node/4484291392,Fit Camp Foods,fast_food,food,49.280659,-123.131286,1107 Davie Street,,Mo-Th 10:00-19:00; Fr 10:00-18:00; Su 12:00-18:00,,
+node/3735407322,Five Guys,fast_food,food,49.28109,-123.119096,635 Robson Street,burger,Mo-Su 10:30-22:00,https://restaurants.fiveguys.ca/635-robson-street,
+node/4976343542,Flower & Horse In Spring,restaurant,food,49.291038,-123.134512,1741 Robson Street,,"Tu-Fr 11:00-15:00,17:00-21:00; Sa,Su 11:00-21:00",,
+node/6610970458,Foodies Delight,restaurant,food,49.288366,-123.139947,1088 Denman Street,italian,"Mo,Fr 12:00-20:30, Tu-Th 11:30-20:30, Sa-Su 11:00-20:30",,
+node/4844898122,Frankie’s Italian Kitchen & Bar,restaurant,food,49.278196,-123.113353,755 Beatty Street,italian,Mo-Sa 07:00-23:00; Su 07:00-22:00,http://www.frankiesitaliankitchen.ca/,
+node/5049976085,Fresh Sushi,restaurant,food,49.275736,-123.115156,909 Expo Boulevard,japanese,"Tu-Sa 11:30-14:30, Tu-Sa 15:30-20:30, Su,Mo 12:00-14:30, Su,Mo 15:30-20:00",https://www.freshsushi.ca,
+node/1383735117,Freshbowl,fast_food,food,49.274141,-123.120068,1128 Pacific Boulevard,southeast_asian,"Mo-Fr 12:00-20:00; Sa,Su 12:00-19:00",https://www.freshbowl.ca/,
+node/4211515697,Freshii,restaurant,food,49.287038,-123.118101,401 Burrard Street,salad,Mo-Fr 08:00-18:30,,
+node/6752024455,Freshii,restaurant,food,49.286932,-123.124661,1185 West Georgia Street,salad,Mo-Fr 11:00-19:00,,
+node/12233665294,Freshii,restaurant,food,49.277075,-123.12859,,salad,Mo-Fr 11:00-20:00; Sa 11:00-18:00; Su 11:00-17:00,,
+node/649986497,Freshslice Pizza,fast_food,food,49.284554,-123.118158,888 Dunsmuir Street,pizza,Mo-Sa 10:00-24:00; Su 10:00-23:00,,late
+node/1430597292,Freshslice Pizza,fast_food,food,49.27935,-123.107835,663 Abbott Street,pizza,Su-Th 11:00-23:00; Fr-Sa 11:00-00:00,,
+node/3108751087,Freshslice Pizza,fast_food,food,49.277668,-123.126685,771 Davie Street,pizza,Mo-We 10:30-01:00; Th 10:30-02:00; Fr 10:30-04:00; Sa 11:00-04:00; Su 11:00-01:00,,late
+node/3797414500,Freshslice Pizza,fast_food,food,49.281657,-123.120597,768 Robson Street,pizza,"Mo-We, Su 10:00-00:00; Th-Sa 10:00-05:00",,
+node/7005003391,Freshslice Pizza,fast_food,food,49.274075,-123.122088,1207 Pacific Boulevard,pizza,"Sa-We 11:00-20:00; Th,Fr 11:00-21:00",https://freshslice.com/,
+node/9817533032,Freshslice Pizza,fast_food,food,49.285814,-123.126964,1192 Robson Street,pizza,"Su-We 11:00-24:00, Th-Sa 11:00-02:00",https://freshslice.com/,late
+node/10013503848,Freshslice Pizza,fast_food,food,49.286779,-123.141341,1764 Davie Street,pizza,Mo-Su 11:00-14:00,,
+node/3108751086,Fritz's European Fry House/Poutine,fast_food,food,49.277295,-123.126667,718 Davie Street,fries;hot_dog;poutine,"Su-Mo 11:00-25:00, Tu-We 11:00-26:30; Th-Sa 11:00-28:00",https://fritzeuropeanfryhouse.ca/,
+node/9600080602,Gelato Express,ice_cream,food,49.278885,-123.116308,320 Robson Street,,Mo-Su 00:00-23:00,https://gelato-express.weeblyte.com/,
+node/638861831,Giardino Restaurant,restaurant,food,49.27695,-123.130068,1328 Hornby Street,italian,Tu-Sa 17:30-11:00+,,
+node/2441693951,Gillaneh Restaurant,restaurant,food,49.288481,-123.139744,1072 Denman Street,persian,Mo-Th 11:30-22:30; Fr-Su 11:30-00:00,https://gilane.ca/,
+node/4444974669,Glowbal,restaurant,food,49.281468,-123.117244,590 West Georgia Street,,Mo-Fr 11:30-23:00; Sa 10:30-23:00; Su 10:30-22:00,https://www.glowbalgroup.com/glowbal,
+way/407319738,Go Fish,fast_food,food,49.271295,-123.139527,,fish_and_chips,"Tu-Fr 11:30-19:00; Sa,Su 12:00-19:00",,
+node/11057664427,Golden Smell Mee Malaysian Singaporeon Cuisine,restaurant,food,49.280296,-123.101296,142 East Pender Street,asian,Th-Su 11:00-21:00; Mo-We 11:00-20:00,https://goldensmellmee.com/,
+node/3708806647,Gotham Steakhouse & Cocktail Bar,restaurant,food,49.282849,-123.115863,615 Seymour Street,steak_house,"Mo-Fr 11:30+; Sa,Su,PH 15:00+",https://www.gothamsteakhouse.com/,
+node/4433659013,Grand Chinese Restaurant,restaurant,food,49.274613,-123.123364,1233 Hamilton Street,chinese,Mo-Su 11:00-01:00,https://grandchineserestaurant.com/location/Yaletown/,late
+node/9211349981,Granville Kebab & Poutine,restaurant,food,49.279175,-123.123424,1011 Granville Street,,"Mo-Th 11:00-04:00, Fr-Su 11:00-04:30",https://granvillekebabpoutine.com/,late
+node/10084905955,Green Leaf Salad Bar,restaurant,food,49.28797,-123.123681,560 Bute Street,,Mo-Fr 11:00-18:00,https://www.greenleafsaladbar.com/,
+node/3785687432,Gurkha Himalayan Kitchen,restaurant,food,49.281209,-123.131973,1141 Davie Street,nepalese,Mo-Su 11:00-22:45,http://www.gurkha.ca,
+node/2494633340,Guu Original Thurlow,restaurant,food,49.284003,-123.125448,838 Thurlow Street,japanese,"Mo-Sa 11:45-13:30,17:30-00:30; Su 17:30-00:00",https://guu-izakaya.com/Original_QR,
+node/3736899081,Guu Toramasa,restaurant,food,49.281073,-123.118583,757 Seymour Street,japanese,"Mo-Fr 11:30-14:00; Mo-Fr 17:00-23:00; Sa, Su 12:00-23:00",https://guu-izakaya.com/Toramasa_QR,
+node/10087690525,Guu with Otokomae,restaurant,food,49.284738,-123.110373,375 Water Street,japanese,Sa-Th 11:30-23:00; Fr-Sa 11:30-24:00,https://guu-izakaya.com/Otokomae_QR,late
+node/4136170563,Guu ​with Garlic,restaurant,food,49.290289,-123.133888,1698 Robson Street,japanese,Mo-Sa 17:30-00:30; Su 17:30-00:00,https://guu-izakaya.com/robson,
+node/8864509086,Gyu King Teppanyaki,restaurant,food,49.284055,-123.122434,755 Burrard Street,teppanyaki,"Mo-Su 11:30-15:00, 17:00-22:30",http://www.gyukingteppanyaki.com/,
+node/3753258027,Gyu-Kaku,restaurant,food,49.280108,-123.125117,888 Nelson Street,japanese;barbecue,Su-Th 11:30-21:45; Fr-Sa 11:30-22:45,https://www.gyu-kaku.com/vancouver/,
+node/10731351275,H Kitchen,restaurant,food,49.280447,-123.118809,,,Mo-Su 11:30-16:00,,
+way/887954517,Happy Noodle House,restaurant,food,49.276678,-123.125794,630 Davie Street,chinese,Mo-Su 11:00-21:30,https://happynoodlehouse.shop/,
+node/9572194107,Harbour Spoon,fast_food,food,49.284552,-123.112411,555 West Hastings Street,russian,"Mo-Sa 10:00-18:00; Su,PH off",http://harbourspoon.com,
+node/5965217085,Hawksworth Restaurant,restaurant,food,49.283487,-123.119333,801 West Georgia Street,,"Mo-Fr 11:30-15:00,16:00+; Sa-Su 16:00+",https://hawksworthrestaurant.com/,
+node/4339201289,Hello Nori,restaurant,food,49.285623,-123.126101,1165 Robson Street,japanese,"Su-Th 11:00-23:00; Fr,Sa 11:00-24:00",https://www.hellonori.com/,late
+node/6322544028,Heritage Asian Eatery,restaurant,food,49.287548,-123.121038,1088 West Pender Street,asian,Mo-Fr 11:30-20:30; Sa-Su 12:00-20:30,https://www.heritageasianeatery.com/pender,
+node/3764696420,Himalayan Momo Restaurant and Bar,restaurant,food,49.284181,-123.114361,622 West Pender Street,,11:00-22:00,https://himalayanvancouver.ca,
+node/3940619799,Hiro Sushi,fast_food,food,49.282934,-123.108249,142 West Cordova Street,sushi,Mo-Fr 10:00-20:00; Sa 10:00-19:00,http://www.hirojapan.ca,
+node/4571905494,Hokkaido Ramen Santouka,restaurant,food,49.290206,-123.133742,1690 Robson Street,ramen,Mo-Th 11:00-21:00; Fr-Su 11:00-22:00,https://www.santouka.co.jp/en,
+node/3550807978,Holy Guacamole,restaurant,food,49.29148,-123.135691,805 Denman Street,mexican,Mo-Sa 09:00-23:00; Su 09:00-22:00,https://www.holyguacamolemexicangrill.com/,
+node/3748627420,Homer St Cafe and Bar,restaurant,food,49.278418,-123.118217,898 Homer Street,,"Mo-Fr 11:30-14:30, Su-Th 17:30-22:00, Fr,Sa 17:30-23:00, PH,Sa,Su 10:30-14:30",https://www.homerstreetcafebar.com/,
+node/6440030694,Honey Salt,restaurant,food,49.275164,-123.112746,39 Smithe Street,,Mo-Fr 06:30-22:00; Sa-Su 06:00-22:30,https://www.parqvancouver.com/restaurants/honey-salt/,
+node/5297451021,Hongdae Pocha Korean,restaurant,food,49.289846,-123.133158,1642 Robson Street,korean,"Su-Th 17:00-01:00, Fr,Sa 17:00-02:00",,late
+node/4976343552,Hook Cantina,restaurant,food,49.286945,-123.14199,1210 Denman Street,,"Tu-Fr 16:00-24:00; Sa,Su 12:00-24:00",https://www.hookcantina.com//,late
+node/9164400184,Horin Ramen + Sake,restaurant,food,49.286191,-123.127545,1226 Robson Street,ramen,Mo-Su 11:30-21:45,https://horinramen.com/,
+node/5783073753,House of Dosas,restaurant,food,49.281493,-123.133151,1188 Davie Street,indian,24/7,https://davie.houseofdosas.ca/,
+node/11062737501,House of India,restaurant,food,49.280095,-123.099986,509 Main Street,indian,Su-Fr 11:00-23:00; Sa 15:00-23:00,,
+node/1198763177,Hula,restaurant,food,49.275597,-123.120309,1076 Mainland Street,poke,Mo-Sa 11:30-20:00; Su 11:30-18:00,,
+node/12121234527,Hungrey Zus,restaurant,food,49.285145,-123.11447,433 Granville Street,mediterranean,"Mo-Fr 10:00-21:00, Sa-Su 12:00-19:00",https://hungryzus.com,
+node/13637594940,Hungry Guys Hot Pot Express,restaurant,food,49.284203,-123.115849,545 Granville Street,hotpot;salad;burger,Mo-Su 11:00-20:00,https://hungryguyskitchen.com/,
+node/3738440883,Hungry Guys Kitchen,fast_food,food,49.279288,-123.122665,988 Granville Street,,"Su-Th 17:00-24:00, Fr,Sa 17:00-02:00",https://hungryguyskitchen.com/,late
+node/582802371,Hunnybee Bruncheonette,restaurant,food,49.277736,-123.097161,789 Gore Avenue,,Mo-Su 08:00-16:00,https://www.hunnybeebrunch.com/,
+node/6927768691,Hydra Estiatorio Mediterranean,restaurant,food,49.285707,-123.11616,475 Howe Street,mediterranean,"Mo-Fr 06:30+, Sa,Su 06:30-11:00, Sa,Su 15:00+",https://www.hydravancouver.com/,
+node/513053838,Ignite Pizzeria,restaurant,food,49.277256,-123.118737,987 Mainland Street,pizza,"Su-Th 11:00-21:00; Fr,Sa 11:00-22:00",https://ignitepizzeria.com/,
+node/9403950622,Ignite Pizzeria Express,fast_food,food,49.284691,-123.111183,508 West Cordova Street,pizza,"Su-Th 11:00-22:00, Fr,Sa 23:00-00:30",https://ignitepizzeria.com,
+node/11292457070,Il Nido Italian Restaurant,restaurant,food,49.284639,-123.124156,780 Thurlow Street,italian,"Mo-Sa 17:30-21:00,11:30-14:00",https://www.ilnido.ca/,
+node/8095612101,Imran Beef Noodle,restaurant,food,49.28894,-123.131209,1509 Robson Street,chinese,Mo-Su 10:30-21:30,,
+node/3797414483,Indian Burger Joint,restaurant,food,49.279603,-123.124166,1020 Howe Street,burger;indian,Mo-Su 10:00-02:00,https://indianburgerjoint.com/,late
+node/6322544029,Indian Delicacy,restaurant,food,49.287363,-123.121674,,indian,"Mo-Fr 11:30-21:30; Sa,Su 16:30-21:30",,
+node/6684765386,Italian Kitchen,restaurant,food,49.282484,-123.123624,860 Burrard Street,italian,"Mo 11:30-22:00; Tu-Th 11:30-23:00; Fr 11:30-24:00, Sa 11:00-24:00, Su 11:00-22:00",https://glowbalgroup.com/italiankitchen/,late
+node/5031457075,Jade Dynasty Restaurant,restaurant,food,49.280521,-123.100978,137 East Pender Street,chinese,We-Mo 09:00-21:00; Tu off,https://jadedynasty.ca/,
+node/3690938881,Jang Mo Jib,restaurant,food,49.285708,-123.126991,808 Bute Street,korean,Mo-Su 12:00-24:00,https://www.jangmojibca.com/,late
+node/3843237661,Japadog,fast_food,food,49.2802,-123.118271,530 Robson Street,hot_dog,"Su-Th 10:00-03:00, Fr,Sa 10:00-04:00",https://www.japadog.com,late
+node/811017739,Jerusalem Shwarma,restaurant,food,49.280376,-123.118593,560 Robson Street,,Mo-Su 10:00-22:00,,
+node/4730286193,Jingle Bao,restaurant,food,49.291681,-123.13488,774 Denman Street,bao;chinese,Mo-Su 11:00-21:00,https://jinglebao.com/,
+node/3714732950,JINMI,restaurant,food,49.278444,-123.114328,782 Cambie Street,korean,"12:00-15:00, 17:00-22:00",https://www.jinmi.ca/,
+node/4976343545,Jinmi,restaurant,food,49.290826,-123.136162,854 Denman Street,korean,12:00-15:00;17:00-22:00,https://www.jinmidenman.ca/,
+node/4176888611,JINYA Ramen Bar,restaurant,food,49.280308,-123.117925,541 Robson Street,ramen,Su-Th 11:00-23:00; Fr-Sa 11:00-00:00,https://jinya-ramenbar.com/locations/detail/vancouver-downtown,
+node/12621261137,JJ's Restaurant,restaurant,food,49.2813,-123.111673,250 West Pender Street,,Mo-Fr 11:30-12:30,https://www.vcc.ca/services/eat-shop--more/jjs-restaurant/,
+node/3690929433,Joe Fortes,restaurant,food,49.284927,-123.124611,777 Thurlow Street,american,Mo-Su 11:00-23:00,https://www.joefortes.ca/,
+node/2070407325,Joey,restaurant,food,49.282757,-123.123139,820 Burrard Street,regional,Mo-Su 12:00-22:00,https://joeyrestaurants.com/,
+node/2500684808,Joey,restaurant,food,49.286665,-123.11834,507 Burrard Street,regional,Mo-Th 11:00-24:00; Fr 11:00-01:00; Sa 11:30-01:00; Su 11:30-24:00,https://joeyrestaurants.com/,late
+node/5755089222,Jollibee,fast_food,food,49.28107,-123.120576,833 Granville Street,burger,Mo-Su 10:00-21:00,https://ca.jollibeefoods.com,
+node/3542907446,Joyeaux Café and Restaurant,restaurant,food,49.284777,-123.116885,551 Howe Street,asian,Mo-Su 08:00-20:00; PH 08:00-20:00,https://joyeaux-cafe-restaurant.com/,
+node/1209175168,Jugo Juice,fast_food,food,49.274129,-123.121871,202 Davie Street,juice,"Mo-Fr 08:00-21:00; Sa, Su 08:30-21:00",https://jugojuice.com/,
+node/2494633341,Jugo Juice,fast_food,food,49.284841,-123.124899,1103 Robson Street,juice,08:15-21:00,https://jugojuice.com/locations/jugo-juice-robson/,
+node/8994539980,Jugo Juice,fast_food,food,49.282198,-123.118697,,juice,"Mo-Fr 09:00-20:00; Sa, Su 10:00-19:00",https//jugojuice.ca,
+node/5031450922,Juke,restaurant,food,49.279349,-123.100307,182 Keefer Street,,Mo-Su 11:00-24:00,,late
+node/3748827423,Kadoya,restaurant,food,49.280202,-123.13067,1063 Davie Street,japanese;sushi,11:30-15:15,https://kadoyasushi.ca/,
+node/4447002889,Kaide Sushi Bar,restaurant,food,49.274322,-123.126942,1375 Richards Street,sushi,Tu-Th 11:30-21:00; Sa 17:00-22:00; Fr 11:30-22:00,https://vancouverkaidesushi.com/,
+node/8886515051,Kam Wai Dim Sum,restaurant,food,49.280483,-123.098505,249 East Pender Street,chinese;cantonese;dim_sum,Mo-Su 09:00-18:00,https://www.kamwaidimsum.ca/,
+node/10090324039,Kamei Royale,restaurant,food,49.287299,-123.118403,1066 West Hastings Street,japanese,"Mo-Th 11:30-14:30,16:00-21:30; Fr 11:30-14:30,16:00-22:00; Sa 17:00-22:00; Su 17:00-21:30",https://kameiroyale.com/,
+node/9164400187,Kaneko Hannosuke,restaurant,food,49.290818,-123.134153,1725 Robson Street,,"Mo-Th 11:30-14:30,17:00-20:30; Fr 11:30-14:30,17:00-21:00; Sa 11:30-21:00; Su 11:30-20:30",,
+node/11263460462,Kev's Épicerie,restaurant,food,49.289981,-123.137944,,,"Mo-Fr 07:30-22:00+; Sa,Su 09:00-22:00+",,
+node/4006321052,KFC,fast_food,food,49.281233,-123.132309,1147 Davie Street,chicken,Mo-Sa 11:00-23:00; Su 11:00-22:00,https//kfc.ca,
+node/13632831569,KFC,fast_food,food,49.279564,-123.12233,,chicken,"Mo-Sa 10:00-04:00, Su 10:00-23:00",,late
+node/4976349582,Khaghan Restaurant,restaurant,food,49.290775,-123.13675,851 Denman Street,persian,Su-Fr 11:00-22:00,,
+node/4638548515,Ki Isu Japanese Restaurant,restaurant,food,49.273708,-123.123474,1275 Pacific Boulevard,japanese,Mo-Su 11:30-21:00,https://www.kiisujapanese.com,
+node/6484919232,Kiku Sushi Restaurant,restaurant,food,49.289266,-123.126936,1368 West Pender Street,sushi,Mo-Sa 11:30-21:30; Su 12:00-21:00,,
+node/4795559354,Kinara Indian Cuisine,restaurant,food,49.283091,-123.135633,1326 Davie Street,indian,"Mo-Fr 11:00-22:00; Sa, Su 12:00-22:00",http://kinaraindiancuisine.com,
+node/4484895630,Kingyo,restaurant,food,49.290566,-123.137056,871 Denman Street,japanese,"Mo-Th,Su 11:30-14:30,05:30-23:30; Fr,Sa 11:30-14:30,05:30-00:00",https://www.kingyo-izakaya.ca/,
+node/1383818167,Kinkura Sushi + Sake,restaurant,food,49.276812,-123.125931,656 Davie Street,japanese;sushi,"Su-Th 11:30-22:30; Fr,Sa 11:30-23:00",https://www.kinkurasushibc.com/,
+node/4976343544,Kintaro Ramen,restaurant,food,49.291575,-123.135063,788 Denman Street,ramen,Su-Th 11:30-21:00; Fr-Sa 11:30-21:30,https://kintaroramenbc.com/,
+node/3843237361,Kinton Ramen,restaurant,food,49.2795,-123.117231,420 Robson Street,,Mo-Su 11:00-24:00,,late
+node/4343200838,Kirin Restaurant,restaurant,food,49.286293,-123.125596,1172 Alberni Street,chinese,"Mo-Fr 11:00-14:30,17:00-20:30; Sa-Su 10:00-14:30,17:00-20:30; PH 10:00-14:30,17:00-20:30",https://www.kirinrestaurants.com/,
+node/11566576120,Kissa Tanto,restaurant,food,49.280478,-123.098177,263 East Pender Street,japanese;italian;fusion,We-Th 17:30-23:00; Fr-Sa 17:30-24:00; Su 17:30-23:00,https://www.kissatanto.com/,late
+node/3755319909,Kita no Donburi,fast_food,food,49.284544,-123.113301,423 Seymour Street,japanese;seafood;sushi,Mo-Sa 11:00-21:45; Su 12:00-20:45,https://kitanodonburi.ca/,
+node/3789883864,Koala Kebabs,fast_food,food,49.283636,-123.113026,519 West Pender Street,kebab,Mo-Fr 11:30-18:00,,
+way/887987896,Kobe,restaurant,food,49.284525,-123.12312,1042 Alberni Street,japanese,"Su-Th 17:00-18:00+; Fr,Sa 17:30-18:00+",https://koberestaurant.com,
+node/3755306099,Kokoro Tokyo Mazesoba,restaurant,food,49.283402,-123.115045,551 Seymour Street,japanese,Su-Th 11:30-21:30; Fr 11:00-22:00; Sa 11:00-22:30,,
+node/8783647053,Kosoo,restaurant,food,49.285051,-123.125811,1128 Robson Street,,"11:30-15:00,17:00-23:00",https://kosoo.ca,
+node/5949604516,Kozak Ukraïnian Restaurant,restaurant,food,49.282647,-123.104529,1 West Cordova Street,ukrainian,Su-Th 11:00-21:00; Fr-Sa 11:00-23:00,https://www.kozakeatery.ca/,
+node/11079572105,L'Abattoir,restaurant,food,49.283118,-123.104463,217 Carrall Street,regional;french,Tu-Sa 17:00-23:00,https://www.labattoir.ca/,
+node/3785674129,La Belle Patate/Poutine,fast_food,food,49.282055,-123.133565,1215 Davie Street,friture,"Mo-Th 11:00-23:00, Fr,Sa 11:00-03:00, Su 11:00-21:00",https://westcoastpoutine.wixsite.com/labellepatatevan,late
+node/3940620197,La Casita,restaurant,food,49.283064,-123.106967,101 West Cordova Street,mexican,"Mo-Th 11:30-23:00; Fr,Sa 11:30-02:00; Su 12:00-23:00",https://www.lacasita.ca/,late
+node/1383737622,La Terrazza,restaurant,food,49.274953,-123.118655,1088 Cambie Street,italian,"Tu-Th 17:00-22:00, Sa-Su 17:00-23:00",https://laterrazza.ca/,
+node/1151317774,La Tortilleria,fast_food,food,49.272764,-123.135426,1689 Johnston Street,mexican,09:00-19:00,https://latortilleriagranvilleisland.ca/,
+node/14068954887,Lagman Uyghur Cuisine,fast_food,food,49.28943,-123.132713,1610 Robson Street,asian,Mo-Su 12:00-19:30,https://www.instagram.com/lagmanuyghurcuicine/,
+node/5116363622,Le Crocrodile,restaurant,food,49.282617,-123.125193,909 Smithe Street,french,Tu-Sa 17:30-22:00+,https://www.lecrocodilerestaurant.com/,
+node/1151293867,Lee's Donuts,fast_food,food,49.272254,-123.13525,1689 Johnston Street,donut,Mo-Su 08:00-18:00; PH 08:00-19:00,https://www.leesdonuts.ca/granville-island,
+node/4267428589,Legendary Noodle House,restaurant,food,49.288454,-123.139806,1074 Denman Street,vietnamese,12:00-21:00,https://www.legendarynoodle.ca/english-bay-home,
+way/218949206,Lift Bar and Grill,restaurant,food,49.293636,-123.129671,333 Menchions Mews,sushi;seafood;fine_dining,Mo-Fr 11:30-22:00; Sa-Su 11:00-22:00,https://liftbarandgrill.com/,
+node/13988772247,Ling Kitchen & Bar,restaurant,food,49.275583,-123.134809,1018 Beach Avenue,,Su-Sa 11:30-24:00,,late
+node/9112129053,Linh Café,restaurant,food,49.274675,-123.129537,1428 Granville Street,vietnamese;french,"Su-Th 09:00-21:00, Fr-Sa 09:00-22:00",https://www.linhcafe.com/,
+node/9572194112,Little Japan,fast_food,food,49.284349,-123.112075,555 West Hastings Street,japanese,Mo-Sa 07:00-18:00,,
+node/4421507442,Liuyishou Hotpot Robson,restaurant,food,49.289056,-123.132023,1542 Robson Street,hotpot,"Mo-Su 11:30-14:30,16:30-24:00",https://www.liuyishouna.com/robson-1,late
+node/4723165789,Local Pizza,restaurant,food,49.290496,-123.134221,1706 Robson Street,,"Su-Th 10:30-23:00; Fr,Sa 10:30-24:00",,late
+node/5784581798,Loreto Brunch & Diner,restaurant,food,49.277796,-123.098943,219 Union Street,mexican,Mo-Su 08:00-22:00,,
+node/14113588301,Loreto Brunch and Dinner,restaurant,food,49.277748,-123.098927,219 Union Street,breakfast;chicken;coffee_shop;diner;fish;mexican;pancake,Su-Th 08:00-21:00; Fr-Sa 08:00-22:00,https://www.instagram.com/loretobrunch/,
+node/10928025178,Los Sapos Tacos,restaurant,food,49.279365,-123.099084,210 Keefer Street,mexican,Fr-Sa 17:30-03:00; Mo-Th 17:30-23:00; Sa 18:00-22:00,https://www.lossapostacos.com/,late
+node/6644732322,Lucha Libre Taqueria,restaurant,food,49.279394,-123.123503,722 Nelson Street,mexican,"Su-We 11:00-22:00, Th-Sa 11:00-02:30",https://luchalibretacos.com/,late
+node/10013501216,Lucifer's House of Heat,restaurant,food,49.285907,-123.140027,1682 Davie Street,,Tu-Th 11:00-20:00; Fr-Sa 11:00-22:00,https://lucifershouseofheat.com,
+node/12619437853,Lucky Sushi Company,restaurant,food,49.287329,-123.141457,1184 Denman Street,sushi,"Mo,We,Th 17:00-22:00, Fr 17:00-23:00, Sa 12:30-23:00, Su 12:30-22:00",https://www.luckysushico.com/,
+node/652956529,Lupo,restaurant,food,49.278158,-123.117244,869 Hamilton Street,italian,Mo-Su 17:00+,https://luporestaurant.ca/,
+node/3066876567,Mahony's Tavern,restaurant,food,49.289362,-123.114427,1055 Canada Place,,Mo-Th 11:30-22:30; Fr 11:30-24:00; Sa 10:00-24:00; Su 10:00-22:30,https://www.mahonystavern.com/,late
+node/3736865982,Mamalee,restaurant,food,49.279631,-123.10861,186 Keefer Place,,Mo-Su 11:00-20:00,https://www.mamalee.ca/,
+node/10050100234,Mangez Mangez,restaurant,food,49.286386,-123.12271,1100 Melville Street,,Mo-Fr 07:00-16:00,https://mangezmangez.com/,
+node/3946632648,Mangos Kitchen Bar,restaurant,food,49.278138,-123.126317,1180 Howe Street,mexican;peruvian;brazilian;spanish,"Sa 12:00-02:00, Tu-Th 15:00-22:00, Fr 15:00-02:00, Su 12:00-22:00",https://mangosvancouver.com,late
+node/5353811222,Manoush’eh,restaurant,food,49.27666,-123.125687,620 Davie Street,lebanese,"Mo,Tu,Th 11:00-21:00; Fr-Sa 10:00-22:00; Su 10:00-15:00; We off",https://www.manousheh.ca,
+node/3235438892,Marugame Udon,fast_food,food,49.280327,-123.110493,589 Beatty Street,noodle,"Su-Th 11:00-22:00; Fr,Sa 11:00-23:00",https://ca.marugame.com/,
+node/4569965589,Maruhachi Ra-men,restaurant,food,49.290603,-123.13339,780 Bidwell Street,ramen,"Su-Th 11:30-21:30; Fr,Sa 11:30-22:00",https://maruhachi.ca/,
+node/6556577632,Maruhachi Ra-men,restaurant,food,49.278549,-123.115763,270 Robson Street,ramen,Mo-Su 11:00-22:00,https://marutama.ca,
+node/2321011487,Master Donair,restaurant,food,49.282131,-123.134155,1230 Davie Street,,Mo-Fr 10:00-22:00; Sa-Su 10:00-23:00,https://www.masterdonair.com/,
+node/925662916,Maxim's Bakery & Restaurant,restaurant,food,49.279563,-123.097839,257 Keefer Street,chinese,Mo-Su 08:00-18:00,,
+node/8984391468,Maxine's Cafe & Bar,restaurant,food,49.27789,-123.131368,1325 Burrard Street,,"Su-Th 09:00-22:00, Fr-Sa 09:00-23:00",https://www.maxinescafebar.com/,
+node/1003363440,McDonald's,fast_food,food,49.285288,-123.139022,1610 Davie Street,burger,24/7,https://www.mcdonalds.com/ca/en-ca/location/vancouver/davie--cardero/1610-davie-street/29003.html,
+node/1944609896,McDonald's,fast_food,food,49.284768,-123.121069,1055 West Georgia Street,burger,24/7,http://www.mcdonalds.ca/,
+node/2720128581,McDonald's,fast_food,food,49.278826,-123.115564,275 Robson Street,burger,24/7,https://www.mcdonalds.com/ca/en-ca/location/vancouver/tv-towers/211-275-robson-street/40354.html,
+node/3735407006,McDonald's,fast_food,food,49.280548,-123.121366,891 Granville Street,burger,24/7,,
+node/4331530500,McDonald's,fast_food,food,49.290622,-123.133851,1701 Robson Street,burger,24/7,https://www.mcdonalds.com/ca/en-ca/location/vancouver/robson/1701-robson-street/22077.html,
+way/136571595,McDonald's,fast_food,food,49.271905,-123.100721,1527 Main Street,burger,24/7,https://www.mcdonalds.com/ca/en-ca/location/vancouver/terminal/1527-main-st/2143.html,
+way/1535117524,McDonald's,fast_food,food,49.280801,-123.107203,88 West Pender Street,burger,Su-Th 06:00-23:00; Fr-Sa 00:00-24:00,,late
+node/2490635045,Mean Poutine,fast_food,food,49.279356,-123.123413,718 Nelson Street,regional,"Mo-Th 11:00-23:00; Fr,Sa 11:00-04:00",https://www.meanpoutine.ca/,late
+node/1970223981,Meat & Bread,restaurant,food,49.287247,-123.118925,1033 West Pender Street,sandwich,Mo-Fr 08:00-16:00,https://www.meatandbread.com/pender,
+node/3735407003,Meat & Bread,restaurant,food,49.281022,-123.118995,625 Robson Street,sandwich,Mo-Su 08:00-20:00,https://www.meatandbread.com/robson,
+node/3756252015,Meat & Bread,restaurant,food,49.282623,-123.109344,370 Cambie Street,sandwich,Mo-Sa 08:00-16:00,https://www.meatandbread.com/cambie,
+node/12062122324,Mello,fast_food,food,49.288049,-123.130523,1428 Robson Street,donut,Mo-Su 12:00-19:00,https://www.mellovancouver.com,
+node/3797415152,Memphis Blues BBQ House,restaurant,food,49.279568,-123.117362,430 Robson Street,barbecue,Mo-Th 11:00-21:00; Fr 11:00-22:00; Sa 12:00-22:00; Su 12:00-21:00,https://www.memphisbluesbbq.com,
+node/3932735564,Menchie's,ice_cream,food,49.275335,-123.123731,412 Davie Street,frozen_yogurt,"Mo-Fr 14:00-22:30; Sa,Su 12:00-22:30",,
+node/11515033415,Menya Tsuzuki,fast_food,food,49.289465,-123.13277,1610 Robson Street,ramen,Th-Sa 11:00-20:00,,
+node/13302217762,Meo,restaurant,food,49.280477,-123.098128,265 East Pender Street,,Mo-Th 17:30-24:00; Fr-Sa 17:30-26:00; Su 17:30-23:00,https://www.meochinatown.com/,late
+node/4323353589,Miko Sushi,restaurant,food,49.287486,-123.12898,1335 Robson Street,japanese;sushi,"Mo,Tu,Th,Fr 11:30-14:00, Mo-Sa 17:00-22:00",,
+node/4898455721,Miku,restaurant,food,49.287065,-123.112828,200 Granville Street,japanese;sushi,Mo-Fr 11:30-22:00; Sa-Su 12:00-22:00,https://mikurestaurant.com/,
+node/1198758970,Minami,restaurant,food,49.275246,-123.120775,1118 Mainland Street,japanese;sushi,"Su-Th 15:00-21:30; Fr,Sa 17:00-21:30",https://minamirestaurant.com/,
+node/4404884611,Mirai Sushi,restaurant,food,49.281306,-123.10797,117 West Pender Street,japanese;sushi,Mo-Fr 11:30-00:00; Sa 12:00-00:00,,
+node/4435420486,Mister,ice_cream,food,49.27514,-123.121489,1141 Mainland Street,ice_cream,Mo-Su 14:00-22:00,https://madebymister.com/,
+node/9654257070,Modern Handi Indian Cuisine,restaurant,food,49.291112,-123.136277,827 Denman Street,indian,Mo 16:00-22:00; Tu-Su 12:00-22:00,https://www.modernhandi.com,
+node/4842976322,Moltaqa,restaurant,food,49.276436,-123.119045,1002 Mainland Street,moroccan,Mo-Th 11:30-23:00; Fr-Su 12:00-24:00,https://moltaqarestaurant.ca/,late
+node/6231369785,Momo Factory Davie,restaurant,food,49.281185,-123.132227,1143 Davie Street,chinese,"Su-Th 11:00-23:00, Fr,Sa 11:00-24:00",https://www.momofactory.ca/,late
+node/1938712086,Momo Sushi,restaurant,food,49.284709,-123.110228,375 Water Street,japanese,Mo-Su 11:00-21:00,https://momogastown.ca/,
+node/4336609289,Momo Sushi,restaurant,food,49.286253,-123.127635,1230 Robson Street,japanese;sushi,"Su-Th 11:30-22:30; Fr,Sa 11:30-23:00",https://momo-sushi.com/,
+node/7083406175,Momo Sushi,restaurant,food,49.290349,-123.134278,833 Bidwell Street,sushi,Mo-We 11:00-21:30; Th-Su 11:00-23:00,,
+node/9112159969,Monzo Burger,restaurant,food,49.274989,-123.129841,1401 Granville Street,burger,Mo-Su 11:00-24:00,https://www.monzoburger.com,late
+node/4427334491,Mortadella,restaurant,food,49.276638,-123.100103,915 Main Street,pizza,Tu-Sa 11:00-21:00,https://www.mortadella915.com/,
+node/910586961,Motoretta Gelato,ice_cream,food,49.287878,-123.116339,1001 West Cordova Street,,10:00-24:00,https://www.motorettagelato.com/,late
+node/2490635049,Moulin Rouge,restaurant,food,49.279235,-123.122725,998 Granville Street,,Mo-Su 16:00-04:00,,late
+node/3947265698,Mount Everest Kitchen & Grill,restaurant,food,49.283536,-123.114343,538 Seymour Street,nepalese,"Mo-Fr 10:00-22:00, Sa-Su 10:00-23:00",https://everestkitchen.ca/,
+node/13689517366,Moxie's,restaurant,food,49.279005,-123.113157,180 West Georgia Street,bar_and_grill,"Su-Th 07:00-00:00, Fr-Sa 07:00-01:00",https://moxies.com/restaurants/west-georgia,late
+node/3957328663,Mr. Greek,restaurant,food,49.277503,-123.125931,1173 Granville Street,greek,Su-We 11:00-16:00; Th-Sa 11:00-16:00,https://mrgreekdonairtown.shop/,
+node/12627895001,Mr. Shawarma,fast_food,food,49.282572,-123.121529,800 Robson Street,arab,Mo-Su 11:30-00:00,,
+node/3702373665,Mumu Kitchen,restaurant,food,49.286557,-123.140981,1738 Davie Street,korean,"Su-Th 17:00-24:00, Fr,Sa 17:00-01:00",,late
+node/9572194106,My Toan Vietnamese Gourmet,fast_food,food,49.284596,-123.11249,555 West Hastings Street,vietnamese,Mo-Sa 07:00-18:00,,
+node/10090291541,Nami Vietnamese,fast_food,food,49.287487,-123.11878,1066 West Hastings Street,sandwich;vietnamese,Mo-Fr 09:00-15:00,https://namivietnamese.com/,
+node/1381208083,Nando's,restaurant,food,49.277845,-123.12763,828 Davie Street,chicken;portuguese,"Fr,Sa 11:00-24:00, Su-Th 11:00-23:00",,late
+node/6610950762,Nat's New York Pizzeria,fast_food,food,49.288421,-123.13986,1080 Denman Street,pizza,Mo-Su 11:00-20:30,https://www.natspizza.com/,
+node/6864549773,Neate Donuts,fast_food,food,49.287578,-123.119152,1066 West Hastings Street,donut,Mo-Fr 07:00-16:00,https://jjbeancoffee.com/pages/neate-donuts,
+node/4350399798,NeNe Chicken,restaurant,food,49.282119,-123.133662,1231 Davie Street,chicken;korean,Mo-Fr 11:30-23:30; Sa 12:15-23:30; Su 12:15-23:00,https://nenechicken.ca/,
+node/6738071640,Nero Belgian Waffle Bar,restaurant,food,49.290678,-123.133913,1703 Robson Street,dessert;coffee_shop,"Mo-Th,Su 09:00-21:00; Fr-Sa 09:00-22:00",https://www.nerowafflebar.com/,
+node/9032723545,New Brandiz Fast Food,fast_food,food,49.281235,-123.102083,100 East Hastings Street,,Mo-Fr 10:00-01:00,,late
+node/1827837991,New Town Bakery & Restaurant,restaurant,food,49.28029,-123.101203,148 East Pender Street,chinese;filipino,"Mo,Tu,Th-Su 06:30-20:30; We 06:30-19:30",http://newtownbakery.ca/,
+node/5862689185,Nightingale,restaurant,food,49.287431,-123.117594,1017 West Hastings Street,chicken;fish;local;pasta;pizza,Su-We 11:30-23:00; Th-Sa 11:30-23:30,https://www.hawknightingale.com/,
+node/9136377517,Nine Dumplings,fast_food,food,49.289493,-123.132825,1610 Robson Street,chinese,Mo-Su 12:00-19:30,,
+node/1430598776,NiNNiN Ramen House,restaurant,food,49.279113,-123.107422,660 Abbott Street,ramen,"Mo-Su 11:00-14:30,17:00-21:30",,
+node/4976349581,No Ne Kitchen and Bar,restaurant,food,49.290626,-123.136971,867 Denman Street,vietnamese,Mo-Th 11:00-21:00; Fr-Su 11:00-22:00,https://nonekitchenandbar.com/,
+node/4264535594,Noah's Cafe,restaurant,food,49.288292,-123.14005,1096 Denman Street,,"Mo-Su 17:00-24:00, Sa,Su 11:30-14:30",https://www.noahscafe604.com/,late
+node/8095612100,Nom Nom,restaurant,food,49.289961,-123.133332,1660 Robson Street,korean,Mo-Su 11:00 - 21:30,none,
+node/9707740853,Nook,restaurant,food,49.29174,-123.135304,791 Denman Street,italian,"Tu-Th,Su 17:00-22:00; Fr,Sa 17:00-23:00",,
+node/13795300703,Nook,restaurant,food,49.287381,-123.123162,1155 Melville Street,italian;pasta;pizza,"Su-Th 11:30-22:30; Fr,Sa 11:30-23:00",https://nookrestaurants.com/,
+node/5964809588,Notch8,restaurant,food,49.283799,-123.12091,900 West Georgia Street,,"Su-Th 06:30-24:00; Fr,Sa 06:30-25:00",https://www.notch8-dining.com/,late
+node/1938712088,Nuba,restaurant,food,49.282761,-123.109648,207 West Hastings Street,lebanese,Mo-Th 11:30-21:00; Fr 11:30-22:00; Sa 11:00-22:00; Su 11:00-21:00,https://www.nuba.ca/,
+node/3932734946,Nuba,restaurant,food,49.27592,-123.124555,508 Davie Street,lebanese,"Mo, Su 12:00-21:00; Fr, Sa 12:00-22:00",,
+node/3743635242,Numero Uno Pizza,fast_food,food,49.277206,-123.126521,708 Davie Street,,Su-Th 10:30-27:00; Fr-Sa 10:30-17:00,https://numerounopizza.ca/,
+node/4183926510,O Sushi,restaurant,food,49.281898,-123.118783,742 Granville Street,japanese;sushi,Mo-Sa 11:00-24:00; Su 11:00-22:00,,late
+node/4796015026,Oakberry Açaí bowls,fast_food,food,49.287014,-123.141696,1778 Davie Street,açaí,"Mo-Fr 11:00-21:00; Sa,Su 11:00-22:00",https://www.oakberrycanada.ca,
+node/1927016760,Oeb Breakfast Co.,restaurant,food,49.273468,-123.119191,1137 Marinaside Crescent,,Mo-Su 07:00-15:00,,
+node/3689964635,Okami Sushi,restaurant,food,49.281396,-123.133708,1226 Bute Street,sushi,Th-Tu 12:00-21:30,https://okamisushidowntown.com/,
+node/13158221401,Oku Izakaya,restaurant,food,49.283431,-123.104482,2 Water Street,japanese,Su-Th 17:00-01:00; Fr-Sa 17:00-02:00,https://okuizakayabar.com/,late
+node/10916998764,Ole Chicken,restaurant,food,49.286515,-123.128029,1256 Robson Street,korean,"We,Th,Su 17:00-23:20, Fr,Sa 17:00-00:20",https://www.olechickenvancouver.com/,
+node/8095612096,Olympia Pizza & Pasta Restaurant,restaurant,food,49.289387,-123.138387,998 Denman Street,,"Su-Th 12:00-21:30; Fr,Sa 12:00-22:00",https://olympiapizza.com,
+node/6268389463,Onda by Casereccio,restaurant,food,49.271409,-123.105849,1610 Salt Street,italian,Mo-Su 07:30-22:00,https://ondayvr.ca,
+node/2078134601,One Saigon,fast_food,food,49.280823,-123.124797,979 Hornby Street,vietnamese,Mo-Su 11:00-21:00,https://onesaigonvancouver.com/,
+node/6476605964,One Under Vancouver,restaurant,food,49.284745,-123.114506,476 Granville Street,,Mo-Fr 12:00-24:00; Sa-Su 10:00-24:00,https://oneunder.ca/,late
+node/8095612097,Ong Ba Vietnamese Eatery,restaurant,food,49.289592,-123.138072,976 Denman Street,vietnamese,Mo-Su 09:00-21:00,https://www.ongba.ca/,
+node/4858371423,Onigiri Ya,restaurant,food,49.279264,-123.116094,345 Robson Street,japanese,"Mo-Fr 11:00-16:00; PH ""off""",https://www.onigiriya.ca/,
+node/5304206822,OPA! of Greece,restaurant,food,49.283188,-123.117592,701 West Georgia Street,greek,"Mo-We 10:00-19:00; Th,Fr 10:00-21:00; Sa 10:00-20:00; Su 11:00-19:00",https://opaofgreece.com/,
+node/10972222452,Open Outcry,restaurant,food,49.285571,-123.11599,,,Mo-Fr 12:00-22:00+; Sa 16:00-22:00+,,
+node/3797414502,Orange Julius,fast_food,food,49.279597,-123.117415,438 Robson Street,juice,Mo-Su 11:00-23:00,,
+node/5304513658,Original Joe's,restaurant,food,49.278613,-123.116018,298 Robson Street,bar_and_grill,"Th-Sa 11:00-24:00, Tu,We 11:00-23:00, Su,Mo 11:00-10:00",https://www.originaljoes.ca/home/robson?setCookie=1,late
+node/3707515368,Osaka Sushi,restaurant,food,49.277574,-123.13185,1361 Burrard Street,,"Mo-Th 11:00-21:30; Fr,Sa 11:00-22:00; Su 13:00-21:30",,
+node/9572194114,Osaka Sushi & Oshi,fast_food,food,49.284528,-123.112054,555 West Hastings Street,japanese,Mo-Sa 07:00-18:00,https://hirojapan.ca,
+node/2915198301,Oshi Nori,restaurant,food,49.276117,-123.120015,1055 Mainland Street,japanese;sushi,Su-Th 11:30-22:00; Fr-Sa 11:30-23:00,https://www.oshinori.com/,
+node/3728575596,Osteria Autostrada,restaurant,food,49.282596,-123.11195,350 West Pender Street,italian,Tu-Sa 17:00-22:00,https://www.autostradahospitality.ca,
+node/11751595636,oyo Korean Noodles,restaurant,food,49.28078,-123.124961,991 Hornby Street,korean,Tu-Sa 16:00-22:00,https://www.oyokoreanoodles.com/,
+node/4281486742,Oyster Express,restaurant,food,49.279308,-123.097392,296 Keefer Street,seafood,Tu-Su 16:00-20:00; PH off,https://www.oysterexpress.ca/,
+node/10103491174,P2B Restaurant + Bar,restaurant,food,49.288435,-123.120537,1133 West Hastings Street,,Mo-Fr 06:30-22:00; Sa-Su 07:00-22:00,https://www.p2bbistro.com/,
+node/3745030727,Pacifico Pizzeria & Ristorante,restaurant,food,49.281833,-123.124023,970 Smithe Street,pizza,Su-Th 11:30-22:00; Fr-Sa 11:30-23:00,https://www.pacificopizza.com/,
+node/10181664899,Palate Kitchen,restaurant,food,49.286264,-123.115668,848 West Hastings Street,,"Mo-Fr 07:00-16:45; Sa,Su 09:00-14:00; PH 09:00-15:00",https://www.palatekitchen.com,
+node/5248032928,Panago,fast_food,food,49.289756,-123.138326,969 Denman Street,pizza,"Su-Th 11:00-24:00, Fr,Sa 11:00-01:00, PH 11:00-24:00",,late
+node/5837059823,Panago,fast_food,food,49.288332,-123.122596,1199 West Pender Street,pizza,"Su-Th 11:00-24:00; Fr,Sa 11:00-01:00",https://www.panago.com/location/bc-vancouver-1199-west-pender-st,late
+node/8377010347,Panago,fast_food,food,49.273751,-123.123314,1267 Pacific Street,pizza,"Mo-Th, Su 11:00-00:00; Fr, Sa 11:00-01:00",,late
+node/6005956885,Papi's Seafood and Oyster Bar,restaurant,food,49.287745,-123.141335,1193 Denman Street,seafood,Mo-Th 12:00-21:00; Fr 12:00-22:00; Sa 10:00-22:00; Su 10:00-21:00,https://www.papisoysterbar.com/,
+node/4433659022,Paratha 2 Pasta,restaurant,food,49.274444,-123.123632,1257 Hamilton Street,indian,11:30-23:30,https://www.paratha2pasta.com/,
+node/8329245579,Passione Gelato,ice_cream,food,49.275726,-123.114056,55 Smithe Street,,"Su-Th 12:00-22:00; Fr,Sa 12:00-23:00",https://www.parqvancouver.com/food-drink/passione/,
+node/5304513659,Patisserie Fur Elise,restaurant,food,49.278606,-123.116857,847 Hamilton Street,,Th-Fr 13:00-20:00; Sa-Su 11:00-18:00,http://www.patisseriefurelise.com/,
+node/6067566486,Patrón Tacos & Cantina,restaurant,food,49.278679,-123.115383,265 Robson Street,mexican,Tu 15:00-21:00; We-Th 11:00-21:00; Fr 11:00-22:00; Sa 10:00-22:00; Su 10:00-21:00; Mo off,https://www.patrontc.com/,
+node/5248009223,Peaked Pies,fast_food,food,49.289715,-123.138378,975 Denman Street,coffee_shop,"Sa,Su 08:00-21:00; Mo-Fr 09:00-21:00",https://www.peakedpies.com/,
+node/6806550821,Pelicana Chicken,restaurant,food,49.279196,-123.116782,382 Robson Street,korean;chicken,"Su-Th 11:30-21:00; Fr,Sa 11:30-22:00",https://www.pelicana.ca,
+node/3755319080,Peqish,fast_food,food,49.283388,-123.114554,552 Seymour Street,,Mo-Fr 08:00-16:00,,
+node/4483161430,Per Se Social Corner,restaurant,food,49.278605,-123.118459,891 Homer Street,,Su-Th 11:00-23:00; Fr-Sa 11:00-24:00,https://persesocialcorner.com/,late
+node/5581881766,Petrichor French Farmhouse Restaurant,restaurant,food,49.283423,-123.106411,216 Abbott Street,french,Mo-Su 15:00-22:00,https://www.petrichorsocial.com/,
+way/147224794,Phnom Penh Restaurant,restaurant,food,49.278317,-123.098203,244 East Georgia Street,vietnamese;cambodian,Mo-Su 11:00-21:00,https://phnompenhrestaurant.ca/,
+node/9707824358,Pho 37 Vietnamese Restaurant,restaurant,food,49.289131,-123.132121,1578 Robson Street,vietnamese,Mo-Su 11:00-22:00,https://pho37.ca/,
+node/9707677001,Pho Express Ankor Noodle House,restaurant,food,49.291114,-123.134574,1745 Robson Street,vietnamese,Mo-Su 10:00-22:45,https://phoexpressankor-vancouver.com/,
+node/5264844021,Pho Georgia Express,restaurant,food,49.281688,-123.116537,575 West Georgia Street,vietnamese,Mo-Su 10:00-22:00,,
+node/4013675502,Pho Goodness,fast_food,food,49.280931,-123.132305,1150 Davie Street,vietnamese,Su-Th 11:00-22:00; Fr-Sa 11:00-23:00,https://www.phogoodness.com/,
+node/4844898124,Pho Khanh Express,restaurant,food,49.276253,-123.115549,910 Beatty Street,vietnamese;cambodian,Su-Tu 10:00-22:00; We-Fr 10:00-22:30; Sa 10:00-23:00,https://khanhexpress.ca/,
+node/3785574606,Pho Mien Tay,restaurant,food,49.278253,-123.121816,550 Nelson Street,vietnamese,Mo-Su 10:00-23:00,,
+node/3957328666,Pho Mimosa,restaurant,food,49.277701,-123.125626,1157 Granville Street,vietnamese,Mo-Su 11:00-23:00,https://phomimosa.ca/,
+node/2776275935,Pho Quynh Express,restaurant,food,49.284329,-123.117811,625 Howe Street,vietnamese,Mo-Su 11:00-22:00,https://phoquynhexpress.com/location/howe_st/,
+node/4638550188,Pho Quynh Express,restaurant,food,49.273777,-123.123226,1263 Pacific Street,asian;vietnamese;thai;cambodian,Mo-Su 10:45-23:00,,
+node/5949604500,Pho Quynh Express,restaurant,food,49.270391,-123.100938,1691 Main Street,vietnamese,Mo-Su 10:00-23:00,,
+node/3789883054,Pholicious,restaurant,food,49.283066,-123.112623,430 West Pender Street,vietnamese,Mo-Sa 10:30-19:00,https://pholiciouscafe.com/,
+node/3789883869,PiCaDo,restaurant,food,49.284188,-123.113873,605 West Pender Street,pizza,"Mo-Th 11:00-24:00, Fr,Sa 11:00-04:00, Su 12:00-24:00",https://picado-online-ordering.brygid.online,late
+node/5949604515,Pidgin,restaurant,food,49.28185,-123.10417,350 Carrall Street,asian;fusion,17:00-22:00,https://www.pidginvancouver.com/,
+node/3789883486,Pizza 2001,fast_food,food,49.28401,-123.113579,595 West Pender Street,,Mo-Fr 11:00-23:00,https://pizza2001.ca/,
+node/9707676992,Pizza Hut,restaurant,food,49.290916,-123.134307,1725 Robson Street,pizza,"Mo-Fr 11:00-23:00, Fr,Sa 11:00-24:00, Su 12:00-23:00",,late
+node/11301581325,Pizza Pizza,fast_food,food,49.279132,-123.115988,345 Robson Street,pizza,Mo-Su 11:00-17:00,,
+node/4733303988,Pizza Pzazz,fast_food,food,49.272661,-123.135316,1689 Johnston Street,pizza;ice_cream,Mo-Su 09:00-18:00,https://pizzapzazz.ca/,
+node/3736865979,Pizzeria Ludica,restaurant,food,49.280042,-123.108598,189 Keefer Place,pizza,Mo-Th 17:00-22:00; Fr-Sa 16:00-23:00; Su 16:00-22:00,https://www.ludica.ca/,
+node/3944755563,Poke Okey,fast_food,food,49.280707,-123.124984,995 Hornby Street,poke;fish,Mo-Su 09:00-22:00,https://www.pokeyokey.com/,
+node/6621301716,Poke Time,restaurant,food,49.281103,-123.121914,840 Howe Street,poke,Mo-Su 10:30-20:30,https://www.poketime.ca,
+node/7080686437,Pokébar,fast_food,food,49.280044,-123.130923,1072 Davie Street,,Mo-Su 10:30-22:30,https://www.ilovepokebar.com/locations/davie-street,
+node/3944755749,Pokérrito,fast_food,food,49.280735,-123.124938,991 Hornby Street,fish;poke,"Mo-Fr 11:00-22:00; Su,PH 12:00-20:00; Sa 11:00-21:00",https://www.pokerrito.ca/,
+node/4390232397,Pokérrito,fast_food,food,49.282617,-123.115118,558 Dunsmuir Street,poke,"Mo-Fr 11:00-21:00; Sa 11:00-20:00; Su,PH 12:00-20:00",,
+node/12070618789,Popeyes,fast_food,food,49.280525,-123.121488,897 Granville Street,chicken,"Mo-We 10:30-23:30, Th-Sa 10:30-04:00, Su 10:30-23:00",https://www.popeyeschicken.ca,late
+way/1230380648,Popina,restaurant,food,49.273009,-123.135491,,seafood,11:00-18:00,http://www.popinacanteen.com/,
+node/4422606789,Pressato,restaurant,food,49.279223,-123.116826,386 Robson Street,sandwich,Mo-Su 09:00-19:00,https://www.pressato.ca/,
+node/6752573299,Prestons Restaurant + Lounge,restaurant,food,49.28822,-123.122313,1177 West Pender Street,,"Mo-Fr 06:30-21:30; Sa,Su,PH 21:30-11:00",https://www.prestonsvancouver.ca/,
+node/1707487654,Provence Marinaside,restaurant,food,49.273278,-123.119664,1177 Marinaside Crescent,french,"Mo-Fr 10:00-23:00; Sa-Su,PH 09:00-23:00",https://www.provencemarinaside.ca/,
+node/12111495080,Quesada,fast_food,food,49.288837,-123.114996,1055 Canada Place,mexican,Mo-Su 10:00-22:00,,
+node/5837059825,Quiznos,fast_food,food,49.287164,-123.119709,1050 West Pender Street,sandwich,Mo-Fr 07:00-16:00,https://order.quiznos.com/menu/dacon-building,
+node/6545660733,Raclette Steaks,restaurant,food,49.286283,-123.127685,1232 Robson Street,,16:00-23:00,https://raclettesteaks.com/,
+node/4304851600,Ramen Danbo,restaurant,food,49.287455,-123.128933,1333 Robson Street,japanese;ramen,"Mo-Su,PH 11:00-23:00",https://ramendanbo.com,
+node/4084222709,Ramen Gojiro,restaurant,food,49.282524,-123.114459,501 Dunsmuir Street,ramen,Mo-Su 11:30-22:00,https://ramengojiro.com/,
+node/9918283738,Red Burrito,restaurant,food,49.286237,-123.125507,1170 Alberni Street,mexican,Mo-Sa 11:00-21:00; Su 12:00-20:00,https://www.redburrito.ca/,
+node/1491136504,Red Robin,restaurant,food,49.284529,-123.125253,803 Thurlow Street,burger,"Mo-Th,Su 11:00-23:00; Sa,Su 11:00-00:00",https://locations.redrobin.com/bc/vancouver/273,
+node/3793717678,Red Umbrella Cafe,restaurant,food,49.286421,-123.140262,1707 Davie Street,,Mo-Su 08:00-15:00,https://redumbrellacafe.ca,
+node/1187583267,Red Wasabi,restaurant,food,49.275573,-123.123397,437 Davie Street,sushi,Mo-Su 11:00-22:00,https://redwasabi.ca/,
+node/5949604510,RedBeef Noodle Kitchen,restaurant,food,49.279594,-123.09948,550 Main Street,taiwanese,Mo-Su 11:00-21:00,https://redbeef.ca/,
+node/12824182646,Ricardo's,ice_cream,food,49.280743,-123.120491,840 Granville Street,,"Su-Th 11:00-01:00, Fr,Sa 11:00-02:00",,late
+node/5849976885,Rice & Noodle,restaurant,food,49.286343,-123.12779,1236 Robson Street,thai,Mo-Su 11:00-23:00,https://www.thericeandnoodle.com/,
+node/9572211517,Rice 'N Spice,fast_food,food,49.284732,-123.11213,555 West Hastings Street,international,Mo-Fr 10:00-18:00,https://www.ricenspice.ca,
+node/4419400890,Rio Brazilian Steakhouse,restaurant,food,49.287992,-123.140464,1122 Denman Street,brazilian;meat,"Mo-Su 17:30-22:00, Sa,Su 12:00-15:30",https://riobraziliansteakhouse.ca/,
+node/1493591696,Robba da Matti,restaurant,food,49.28316,-123.103688,12 Powell Street,italian,Fr-Su 11:30-21:30; Mo-Th 17:00-21:30,https://www.robbadamatti.com/,
+node/1606145238,Rodney's Oyster House,restaurant,food,49.274343,-123.123269,1228 Hamilton Street,seafood,"Mo-Th 15:00-22:00; Fr, Sa 11:30-23:00; Su 11:30-22:00",https://rohvan.com,
+node/2188770960,Rogue Kitchen & Wetbar,restaurant,food,49.285394,-123.111402,601 West Cordova Street,,"Su-We 11:30-23:00, Th-Sa 11:30-24:00",https://roguewetbar.com/,late
+node/3843237660,Rollzzy,fast_food,food,49.28024,-123.118333,542 Robson Street,indian,Mo-Su 11:00-00:00,https://www.rollzzy.com/,
+node/6629504830,Romano's Pizza,restaurant,food,49.279484,-123.122985,995 Granville Street,pizza,10:00-04:00,https://www.romanospizza.ca/,late
+node/3769890482,Rue 909 Sushi,restaurant,food,49.285251,-123.118639,909 Dunsmuir Street,japanese,Mo-Sa 11:00-17:00,https://www.rue909sushi.com/,
+node/13323676877,Saan Saan Cafe and Restaurant,restaurant,food,49.282715,-123.099853,277 Main Street,,Fr-Su 10:00-18:00,https://www.saansaan.ca/,
+node/13009884530,Sai Plant Deli,fast_food,food,49.283719,-123.112157,422 Richards Street,japanese;oyaki,Mo-Sa 11:00-18:00,,
+node/2321011479,Sainam,restaurant,food,49.282145,-123.133706,1235 Davie Street,thai,"We-Sa 12:00-21:30; Su 17:00-21:30; Mo,Tu off",https://www.sainam.ca/,
+node/3951064957,Sake Dining - Hashigo,restaurant,food,49.276519,-123.127442,1265 Granville Street,japanese,Su-Mo 18:00-23:00; Th 18:00-23:00; Fr-Sa 18:00-24:00,https://zakkushi.com/hashigo/granville/,late
+node/5304492039,Saku,restaurant,food,49.289225,-123.132281,1588 Robson Street,japanese;tonkatsu;udon,"Mo-Th 11:30-15:00,17:00-21:30; Fr-Su 11:30-21:30",https://www.sakuvancouver.com/,
+node/9572194113,Salad Loop,fast_food,food,49.284465,-123.111972,555 West Hastings Street,salad,Mo-Sa 07:00-18:00,,
+node/3790995657,Salam Bombay,restaurant,food,49.284041,-123.12216,755 Burrard Street,indian,11:30-22:00,http://www.salambombay.com/,
+node/1209176811,Salsa and Agave Mexican Grill,restaurant,food,49.2741,-123.121957,1205 Pacific Boulevard,mexican,We-Su 11:00-20:00,https://www.salsaandagave.com/,
+node/867732262,Samurai Japanese Restaurant,restaurant,food,49.280538,-123.131698,1108 Davie Street,japanese;sushi,Su-Th 11:00-23:00; Fr-Sa 11:00-00:00,https://samuraisushi.ca/,
+node/13914766817,Sen Pad Thai,fast_food,food,49.272782,-123.135114,1689 Johnston Street,thai,10:00-18:00,https://senpadthai.com/,
+node/4433491389,Shabusen,restaurant,food,49.283934,-123.122349,755 Burrard Street,japanese;korean,11:00-14:30; 17:00-22:30,https://www.shabusen.ca/,
+node/7144773685,Shawarma Time,restaurant,food,49.279493,-123.114359,700 Hamilton Street,kebab,Su-Th 10:00-24:00; Fr-Sa 10:00-27:00,https://shawarmastime.ca/,late
+node/3725549413,Shizen Ya,restaurant,food,49.28094,-123.124627,965 Hornby Street,sushi;japanese,"Mo-Fr 11:30-22:00; PH,Sa,Su 12:00-21:00",https://shizenya.ca/,
+node/649986553,Shogun,restaurant,food,49.285489,-123.117216,518 Hornby Street,japanese,Mo-Fr 10:00-16:00,,
+node/6752573300,Showcase Restaurant & Bar,restaurant,food,49.287898,-123.120258,1122 West Hastings Street,,"Mo-Fr 06:30-10:30,11:30-14:00; Sa-Su 07:00-23:00",https://www.showcaserestaurant.com,
+node/13535788599,Silvestre Deli & Bistro,restaurant,food,49.28451,-123.109142,317 Water Street,peruvian,Su-Th 11:00-20:00; Fr-Sa 11:00-22:00,http://www.silvestregustolatino.com/,
+node/5581881763,Skewers Souvlaki Pita Bar,restaurant,food,49.283164,-123.10353,26 Powell Street,greek,"Su-Tu 16:00-22:00,We-Th 12:00-22:00, Fr-Sa 12:00-23:00",https://skewerspitabar.com/,
+node/4322299323,Smokehouse Sandwich Co,fast_food,food,49.284269,-123.11976,,sandwich,Mo-Fr 07:00-15:00,http://www.smokehousesandwich.ca,
+node/4454682442,Spicy 6,restaurant,food,49.284878,-123.125619,1116 Robson Street,indian,Mo-Su 10:30-22:00,https://spicy6.com/,
+node/5581881756,St. Lawrence Restaurant,restaurant,food,49.283265,-123.097896,269 Powell Street,french;quebeciois,Tu-Sa 17:00-24:00,https://www.stlawrencerestaurant.com/,late
+node/2488891724,Stack House,restaurant,food,49.280456,-123.131581,1102 Davie Street,,"Mo-Th 10:00-20:00, Th-Su 11:00-20:00",http://stackhousesteaksandwich.com/,
+node/3788419430,Stackhouse Steak Sandwiches,fast_food,food,49.28164,-123.107525,435 Abbott Street,sandwich,Mo-Su 10:30-20:00,,
+node/11740540069,Steamers,fast_food,food,49.277623,-123.109457,,hot_dog,Mo-Sa 11:00-23:00,,
+node/3898779301,Stega Eatery,restaurant,food,49.28374,-123.109231,301 West Cordova Street,breakfast;brunch;sandwich;salad,Mo-Su 08:30-16:00,https://www.stegaeatery.ca/,
+node/2062674536,Stepho's Greek Restaurant,restaurant,food,49.280702,-123.131961,1124 Davie Street,greek,Mo-Sa 11:30-23:30; Su 11:30-23:00,,
+node/4323326593,Stepho's Souvlaki Greek Tavern,restaurant,food,49.287665,-123.12925,1359 Robson Street,greek,Mo-Su 11:30-22:00,,
+node/12871651143,Steve's Poke Bar,restaurant,food,49.288958,-123.114858,1055 Canada Place,hawaiian,Mo-Su 11:00-21:00,https://www.stevespokebar.ca,
+node/2695452109,Straight Outta Brooklyn NYC Pizza,restaurant,food,49.278688,-123.099504,648 Main Street,pizza,Mo-Th 11:00-22:00; Fr 11:00-26:00; Sa 12:00-26:00; Su 12:00-22:00,https://www.straightbkpizza.com/,
+node/6806550823,Straight Outta Brooklyn NYC Pizzeria,fast_food,food,49.2791,-123.116632,350 Robson Street,pizza,Mo-Su 11:00-22:00,https://www.straightbkpizza.com/,
+node/1209180688,Subway,fast_food,food,49.274036,-123.122258,1213 Pacific Boulevard,sandwich,Mo-Th 07:00-01:00; Fr 07:00-02:00; Sa 08:00-02:00; Su 08:00-01:00,,late
+node/1381209602,Subway,fast_food,food,49.277908,-123.127732,838 Davie Street,sandwich,24/7,,
+node/1386561458,Subway,fast_food,food,49.279682,-123.126535,1095 Hornby Street,sandwich,"Mo-Sa 08:00-24:00, Su 09:00-23:00",,late
+node/1395460044,Subway,fast_food,food,49.284291,-123.115724,541 Granville Street,sandwich,24/7,,
+node/1692226627,Subway,fast_food,food,49.289088,-123.114688,1055 Canada Place,sandwich,"Mo-Th 08:00-24:00, Fr,Sa 08:00-24:00, Su,PH 09:00-23:00",,late
+node/2062676592,Subway,fast_food,food,49.279767,-123.130488,1046 Davie Street,sandwich,24/7,https://www.subway.com/,
+node/2995306949,Subway,fast_food,food,49.274756,-123.10032,1109 Main Street,sandwich,Mo-Fr 07:00-22:00; Sa 08:00-22:00; Su 09:00-22:00,,
+node/3154804966,Subway,fast_food,food,49.280495,-123.121965,722 Smithe Street,sandwich,24/7,,
+node/3235442664,Subway,fast_food,food,49.279264,-123.107846,683 Abbott Street,sandwich,Mo-Fr 07:00-23:00; Sa-Su 09:00-23:00,,
+node/3725347744,Subway,fast_food,food,49.27667,-123.127211,1255 Granville Street,sandwich,24/7,,
+node/3725404709,Subway,fast_food,food,49.282376,-123.108485,139 West Hastings Street,sandwich,Mo-Fr 07:00-23:00; Sa 08:00-23:00; Su 09:00-23:00,,
+node/4343349418,Subway,fast_food,food,49.286069,-123.125238,1162 Alberni Street,sandwich,"Mo-Fr 08:00-21:00; Sa,Su 09:00-21:00",,
+node/4419488389,Subway,fast_food,food,49.290886,-123.134262,1725 Robson Street,sandwich,"Mo-Fr 07:00-02:00, Sa 08:00-02:00, Su 09:00-02:00",,late
+node/4842937923,Subway,fast_food,food,49.276489,-123.118966,1000 Mainland Street,sandwich,24/7,,
+node/5304513660,Subway,fast_food,food,49.278518,-123.115717,260 Robson Street,sandwich,24/7,,
+node/5936269492,Subway,fast_food,food,49.270396,-123.105986,1696 Salt Street,sandwich,"Sa,Su 08:30-22:00; Mo-Fr 08:00-22:30",,
+node/7153051221,Subway,fast_food,food,49.285909,-123.111966,601 West Cordova Street,sandwich,Mo-Fr 06:00-25:00; Sa 06:00-24:00; Su 08:00-24:00,https://restaurants.subway.com/canada/bc/vancouver/34-601-w-cordova-st,late
+node/7243292887,Subway,fast_food,food,49.288731,-123.128133,1368 West Georgia Street,sandwich,"Mo-Fr 09:00-21:00; Sa,Su 09:00-19:00",,
+node/9368644342,Super Chef Grill,fast_food,food,49.278582,-123.11581,280 Robson Street,asian,Mo-Fr 11:00-19:30; Sa 12:00-19:30; Su off,https://super-chef-grill.business.site,
+node/11514535410,Super Save Pizza,restaurant,food,49.281966,-123.106269,47 West Hastings Street,pizza,24/7,,
+node/5297440523,Sura Korean,restaurant,food,49.288874,-123.13173,1518 Robson Street,korean,"Mo-Su 11:30-16:00,17:00-21:30",https://www.surakoreancuisine.com/#robson,
+node/9707783438,Sushi Bar Maumi,restaurant,food,49.29003,-123.133493,1668 Robson Street,sushi,"Mo-Tu 19:00-21:30; Fr 09:00-21:30; Sa 18:00-20:30; Su 12:00-14:30,18:00-20:30",https://www.sushibarmaumi.ca/,
+node/6806550822,Sushi Bros,restaurant,food,49.279166,-123.116741,380 Robson Street,sushi,"Mo 11:30-21:00; Tu-Fr 11:30-21:30; Sa,Su 11:30-21:00",,
+node/3743635236,Sushi California,restaurant,food,49.28044,-123.119554,827 Seymour Street,sushi,"Mo-Fr 11:00-21:00; Sa,Su 12:00-21:00",https://www.sushicali.ca/,
+node/4141243827,Sushi California,restaurant,food,49.286575,-123.122858,1100 Melville Street,,"Mo-Fr 11:00-21:00; Sa,Su 12:00-21:00",https://www.sushicali.ca/,
+node/3786976946,Sushi Den,fast_food,food,49.279559,-123.107842,609 Abbott Street,sushi,Mo-Fr 11:00-22:00; Sa-Su 12:00-22:00,,
+node/3743637822,Sushi Howe,fast_food,food,49.277516,-123.127083,738 Davie Street,sushi,Mo-Fr 11:15-21:15; Sa 11:45-21:15; Su off,https://www.sushihowe.com/,
+node/4435421597,Sushi Maro,restaurant,food,49.274859,-123.121917,1168 Mainland Street,sushi,"Mo-Fr 11:30-22:30; Sa,Su 00:00-22:30",https://sushimarojapaneserestaurant.gotoeat.net/,
+node/6517220164,Sushi Mugen,restaurant,food,49.278669,-123.12829,903 Davie Street,sushi;japanese,"Su-Th 11:30-22:00; Fr,Sa 11:30-23:30",https://sushimugenvancouver.com/,
+node/3011566477,Sushi Star,restaurant,food,49.279534,-123.123812,750 Nelson Street,japanese,Mo-Fr 11:30-21:00; Sa 17:00-21:00,,
+node/3730142201,Sushi Today,restaurant,food,49.280767,-123.124888,989 Hornby Street,sushi,Mo-Fr 11:30-20:00; Sa 12:30-20:00,https://sushi-today.ca/,
+node/1383813421,Sushi Yamato,restaurant,food,49.276629,-123.125638,616 Davie Street,sushi,Mo-Su 11:30-22:15,https://www.yamatosushivancouver.com/,
+node/3755319915,Sushi Yan,restaurant,food,49.284796,-123.124306,770 Thurlow Street,sushi,Mo-Fr 11:00-22:00; Sa-Su 12:00-22:00,https://www.sushiyan.ca/,
+node/8947585390,Sweet 7,restaurant,food,49.290248,-123.133814,1696 Robson Street,,Mo-Th 11:30-21:00; Fr-Su 11:30-22:00,,
+node/6322544030,Symphonie,restaurant,food,49.287665,-123.121895,West Pender Street,breakfast;filipino,Mo-Fr 07:30-14:00,,
+node/5837059827,Tableau,restaurant,food,49.287499,-123.123306,1181 Melville Street,,"Su-Th  07:00-10:00,11:30-14:30,17:00-22:00; Fr-Sa 07:00-10:00,11:30-14:30,17:00-23:00",https://www.tableaubarbistro.com/,
+node/12729583801,Taco Bell,fast_food,food,49.279528,-123.122381,964 Granville Street,tex-mex,Mo-Su 10:30-24:00,https://locations.tacobell.ca/en/bc/vancouver/964-granville-st.,late
+node/4842907227,Tacofino,restaurant,food,49.276445,-123.119515,1025 Mainland Street,mexican,"Su-Th 11:00-21:00; Fr,Sa 11:00-22:00",https://www.tacofino.com/location/yaletown-burrito-bar,
+node/13968735212,Tahini's,fast_food,food,49.283238,-123.112893,488 West Pender Street,mediterranean,Fr-Sa 10:30-27:00; Su-Th 10:30-25:00,https://tahinis.com/locations/bc/vancouver-w-pender-st/,
+node/3736867785,Taishoken,restaurant,food,49.280787,-123.107836,515 Abbott Street,ramen,"11:30-16:00,17:00-21:30",,
+node/5297361721,Takenaka Uni Bar,restaurant,food,49.283146,-123.103036,52 Powell Street,japanese,"12:00-23:00; PH ""off""",https://takenakavancouver.com,
+node/3898779190,Takeout Shack,fast_food,food,49.283014,-123.109178,320 Cambie Street,,Mo-Su 11:00-19:00,https://www.takeoutshack.ca/,
+node/3957622057,TAKO,fast_food,food,49.278898,-123.108233,601 Expo Boulevard,korean,Su-Th 11:00-22:00; Fr-Sa 11:00-23:00,http://www.takovancouver.com,
+node/12619471908,Taqueria Jalisco Mexican Restaurant,restaurant,food,49.287433,-123.141266,1184 Denman Street,mexican,Mo-Su 13:00-23:00,,
+node/4731534379,Tashkent,fast_food,food,49.280093,-123.106431,88 West Pender Street,uzbek,Tu-We 11:30-19:00; Fr-Sa 11:30-19:00; Su 13:00-19:00,https://tashkent-restaurant.com/,
+node/4672299309,Tatos Kitchen,restaurant,food,49.27934,-123.098808,232 Keefer Street,chinese,Mo-Su 10:00-18:30,https://www.tatoskitchen.com/,
+node/3745027597,Taylight,restaurant,food,49.281897,-123.124145,990 Smithe Street,,Mo-Su 14:00-24:00,https://taylightkitchen.com,late
+node/8323311633,Tendon Kohaku,restaurant,food,49.280964,-123.122118,190 Smithe Street,japanese,"Mo-Fr 11:00-22:00; PH,Sa,Su 11:30-22:00",http://www.kohakutendon.com/,
+node/9572194116,Teppan Kitchen,fast_food,food,49.284696,-123.112184,555 West Hastings Street,teppanyaki,Mo-Sa 07:00-18:00,,
+node/3951064961,Tequila Cocina,restaurant,food,49.276776,-123.126463,1224 Granville Street,mexican,Mo-Fr 12:00-22:00; Sa 11:00-22:00; Su 10:00-22:00,https://tequilacocina.ca/,
+node/2911746771,Tequila Lounge,restaurant,food,49.283076,-123.108384,136 West Cordova Street,mexican,Mo 15:00-22:00; We-Th 15:00-22:00; Fr 15:00-26:00; Sa 12:00-26:00; Su 12:00-22:00,https://www.tequilaloungevancouver.com/,
+node/3733886693,Tetsu Sushi Bar,restaurant,food,49.29181,-123.135189,775 Denman Street,,Tu-Su 17:00-21:30,,
+node/3962734368,Thai Away Home,restaurant,food,49.278491,-123.12445,1081 Granville Street,thai,"Mo-Sa 11:30-15:00, Mo-Sa 16:30-21:00, Su 12:00-15:00, Su 16:30-21:00",https://www.thaiaway.com,
+node/2488890834,Thai Basil,restaurant,food,49.280291,-123.131574,1125 Thurlow Street,thai,Mo-Th 11:30-21:30; Fr-Sa 11:30-22:00; Su 12:00-21:30,http://www.thaibasilvancouver.ca,
+node/9572194108,Thaï Express,fast_food,food,49.284515,-123.112333,555 West Hastings Street,thai,Mo-Sa 07:00-18:00,,
+node/4672996891,The Bagel Stop,fast_food,food,49.286071,-123.119875,595 Burrard Street,,Mo-Fr 09:00-17:00,,
+node/793915415,The Basic,restaurant,food,49.279771,-123.129926,1031 Davie Street,breakfast,Mo-Su 08:00-15:00,https://thebasiceats.com/,
+node/8724837746,The Basic,restaurant,food,49.289857,-123.137652,948 Denman Street,,Mo-Su 08:00-15:00,https://www.thebasiceats.com,
+node/1493619259,The Birds & The Beets,restaurant,food,49.283359,-123.102838,54 Alexander Street,,08:00-16:00,https://birdsandbeets.ca/,
+node/925718883,The Boss Bakery & Restaurant,restaurant,food,49.27982,-123.099467,532 Main Street,chinese;hong_kong_cafe,Mo-Su 07:00-18:00,,
+node/3743053714,The Butcher & Bullock,restaurant,food,49.286175,-123.116976,911 West Pender Street,burger,Mo-Fr 11:30-03:00; Sa-Su 11:00-03:00,https://donnellygroup.ca/the-butcher-bullock/,late
+node/5697508529,The Captain's Boil,restaurant,food,49.28868,-123.130827,1487 Robson Street,seafood,Mo-Su 12:30-21:00,https://www.thecaptainsboil.ca,
+node/3934596979,The Edge,restaurant,food,49.277847,-123.124816,1100 Granville Street,,07:00-11:00,https://www.chateaugranville.com/dining/the-edge-social-grille-lounge,
+node/652955244,The Greek by Anatoli,restaurant,food,49.276224,-123.119866,1043 Mainland Street,greek,Mo-Th 11:30-22:00; Fr 11:30-01:00; Sa-Su 12:00-01:00,https://www.thegreekbyanatoli.com/yaletown,late
+node/1493594107,The Greek Gastown,restaurant,food,49.283055,-123.104461,221 Carrall Street,,Mo-Th 11:30-22:00; Fr 11:30-24:00; Sa 13:00-24:00; Su 13:00-22:00,https://thegreekbyanatoli.com/location-gastown/,late
+node/4006318251,The Hestia Veggie,restaurant,food,49.281433,-123.132631,1161 Davie Street,vietnamese,Mo-Th 11:30-21:00; Fr-Su 11:30-22:00,https://www.thehestiaveggie.ca/,
+node/4350402602,The Italians,restaurant,food,49.281478,-123.133602,1220 Bute Street,italian,Tu-Su 17:00-21:30,https://theitaliansrestaurant.com/,
+node/652955247,The Keg,restaurant,food,49.276562,-123.119369,1011 Mainland Street,steak_house,"Su-Th 16:00-24:00, Fr,Sa 16:00-01:00",https://thekeg.com/en/locations/yaletown,late
+node/852389649,The Keg,restaurant,food,49.271156,-123.135808,1499 Anderson Street,steak_house,Mo-Tu 16:00-22:00; We-Th 11:30-22:00; Fr-Sa 11:30-23:00; Su 11:30-22:00,https://thekeg.com/en/locations/granville-island,
+node/3011685112,The Keg,restaurant,food,49.28338,-123.116411,688 Dunsmuir Street,steak_house,Mo-Th 11:30-00:00; Fr 11:30-01:00; Sa 16:00-01:00; Su 16:00-23:00,https://thekeg.com/en/locations/dunsmuir,late
+node/3712939934,The Keg,restaurant,food,49.286161,-123.124206,1121 Alberni Street,steak_house,"Su-Th 15:00-23:00; Fr,Sa 15:00-24:00",https://thekeg.com/en/locations/alberni,late
+node/12774575671,The Market Grill,fast_food,food,49.272518,-123.134791,1689 Johnston Street,burger,Mo-Su 08:00-18:00,https://publicmarketgrill.com,
+node/5447215521,The Mexican Antojitos y Cantina,restaurant,food,49.278797,-123.124006,1049 Granville Street,,"Mo-Th 12:00-22:00, Fr 12:00-10:00+, Sa 11:00-10:00+, Su 11:00-22:00",,
+node/4625645203,The Old Spaghetti Factory,restaurant,food,49.283828,-123.105368,53 Water Street,italian,"Su-Th 11:00-22:00; Fr,Sa 11:00-22:30",https://www.oldspaghettifactory.ca/locations/gastown,
+node/5380908922,The Parlour,restaurant,food,49.276692,-123.120266,1011 Hamilton Street,,"Mo,Tu 12:00-24:00, We,Th 12:00-01:00, Fr 12:00-02:00, Sa 11:00-02:00, Su 11:00-12:30",https://theparlourrestaurants.com/,late
+node/3799773142,The Pawn Shop,restaurant,food,49.278033,-123.125112,1117 Granville Street,,Mo-Su 12:00-17:00,,
+node/5031440449,The Ramen Butcher,restaurant,food,49.278685,-123.098736,223 East Georgia Street,ramen;japanese,Mo-Su 11:00-22:00,http://theramenbutcher.com/,
+node/852420584,The Sandbar,restaurant,food,49.271981,-123.134014,1535 Johnston Street,seafood,Mo-Th 11:30-22:30; Fr 11:30-23:30; Sa 11:00-23:30; Su 11:00-22:30,https://www.vancouverdine.com/sandbar/,
+node/9654257058,The Sauce Pasta Cafe,restaurant,food,49.290679,-123.136893,861 Denman Street,italian;pasta,"Tu 16:00-20:00; We,Th 12:00-20:00; Fr,Sa 12:00-21:00; Su 12:00-20:00",https://thesaucepastacafe.ca/,
+node/3108751083,The Templeton,restaurant,food,49.278438,-123.124545,1087 Granville Street,american,Mo-Su 08:30-15:00,http://thetempleton.ca/,
+node/852397122,The Vancouver Fish Company,restaurant,food,49.270636,-123.136651,1517 Anderson Street,fish;seafood,Su-Th 11:00-23:00; Fr-Sa 11:00-00:00,https://vanfish.com/,
+node/3931566492,Tokyo In April,restaurant,food,49.280383,-123.107405,526 Abbott Street,japanese,Mo 11:30-21:00; We-Th 11:30-21:00; Fr 11:30-22:00; Sa 12:00-22:00; Su 12:00-21:00,https://www.tokyoinapril.com/,
+node/2612802241,Tokyo Joe's,restaurant,food,49.279737,-123.126662,955 Helmcken Street,sushi,Mo-Th 11:00-19:00; Fr 11:00-15:00,https://tokyojoes.ca/,
+node/5233851421,Toloache Mexican Kitchen,restaurant,food,49.285013,-123.117913,586 Hornby Street,mexican,Mo-Fr 09:00-17:00; Sa-Su 10:00-15:00,https://toloache.ca/,
+node/4006318249,Tom Sushi,restaurant,food,49.28154,-123.132811,1175 Davie Street,sushi,We-Mo 12:00-21:30; Tu off,https://tomsushi.ca/,
+node/3718998425,Tonkotsu Ramen Tsukiya,restaurant,food,49.291854,-123.134623,740 Denman Street,ramen,Fr-Tu 11:30-20:30,,
+node/852400346,Tony's Fish and Oyster Café,restaurant,food,49.270744,-123.136378,1511 Anderson Street,fish_and_chips,"Mo-Fr 12:00-20:00; Sa,Su 12:00-20:30",https://www.tonysfishandoystercafe.com/,
+node/13086738701,Top of Vancouver,restaurant,food,49.284911,-123.111984,555 West Hastings Street,,Mo-Th 11:30-22:00; Fr 11:30-23:00; Sa 11:00-23:00; Su 11:00-22:00,https://topofvancouver.com/,
+node/3771328558,Torafuku,restaurant,food,49.275875,-123.099584,958 Main Street,asian,We; Th; Su 11:30-21:00; Fr-Sa 11:30-22:00,https://www.torafuku.ca/,
+node/4343306448,TOUK,restaurant,food,49.285957,-123.12506,1152 Alberni Street,cambodian,"Tu-Su 11:30-14:30,17:00-22:00",https://www.toukyvr.com/,
+node/4911354324,Tractor,restaurant,food,49.280438,-123.118103,547 Robson Street,sandwich,"Mo-Fr 07:00-20:30; Sa,Su 08:00-20:30",https://tractorfoods.com/,
+node/10090380096,Tractor,restaurant,food,49.287581,-123.116761,,,"Mo-Fr 10:30-18:00; Sa,Su 10:30-16:00",,
+node/6216412186,Tre Viet,restaurant,food,49.288123,-123.140291,1114 Denman Street,vietnamese,Mo-Fr 11:00-21:00; Fr-Su 11:00-22:00,https://treviet.ca/,
+node/3944755750,Trish Juice,fast_food,food,49.280806,-123.12482,981 Hornby Street,,"Mo-Fr 08:00-20:00; Sa,Su 08:00-18:00",https://trishjuice.com/,
+node/6133989587,Trish Juice,restaurant,food,49.288233,-123.12745,1328 West Georgia Street,,"Mo-Fr 10:00-20:00; Sa,Su 08:00-20:00",,
+node/3736865985,Tsuki Sushi Bar,restaurant,food,49.280896,-123.107845,509 Abbott Street,sushi,"Mo-Fr 11:30-14:30,17:00-21:30",https://www.tsukisushibar.ca/,
+node/9861281517,Tsukiya,restaurant,food,49.292278,-123.133942,Denman Street,japanese,Fr-Tu 11:30-21:00,https://ryugetsuservices.wixsite.com/tsukiya,
+node/3935138387,Tutto,restaurant,food,49.278407,-123.118752,901 Homer Street,italian,"Th,Fr 12:00-15:00+, Tu-Sa 17:00-21:00+; Su,Mo off",https://tuttorestaurant.ca/,
+node/6200215824,Twins Chinese Kitchen,restaurant,food,49.278781,-123.128286,917 Davie Street,,"Mo,Tu,Th,Fr 11:00-20:30; We,Sa 16:30-20:30",https://twinschinesekitchen.com,
+node/1493611790,Twisted Fork,restaurant,food,49.28318,-123.104464,213 Carrall Street,brunch;regional,Mo-Su 09:00-14:00,http://www.forkandfriends.ca/,
+node/8724837742,Tå Bom Korean Cuisine,restaurant,food,49.289008,-123.131903,1536 Robson Street,korean,"Su-Th 11:30-15:00, Mo-Th 17:00-24:00, Fr,Sa 11:30-15:00,17:00-02:00",https://tabom.ca/,late
+node/1430596606,Uncle Fatih's Pizza,fast_food,food,49.279259,-123.107425,638 Abbott Street,pizza,Mo 10:30-14:00; Tu-Th 10:30-01:00; Fr 10:30-03:00; Sa 12:00-03:00; Su 12:00-24:00,,late
+node/3957332655,Union Latino's,restaurant,food,49.277764,-123.125533,1149 Granville Street,colombian,Tu-We 15:00-22:00; Th 15:00-23:00; Fr-Sa 12:00-27:00; Su 12:00-22:00,https://www.unionlatinosrestaurant.com/,
+node/8833587709,Uno Gelato,ice_cream,food,49.289232,-123.114491,1055 Canada Place,,Su-Th 11:00-21:00; Fr-Sa 11:00-22:00,https://unogelato.com,
+node/4673059489,Unwind,fast_food,food,49.278404,-123.125731,1110 Howe Street,breakfast;european,Mo-Su 06:30-22:00,https://www.ihg.com/holidayinn/hotels/us/en/vancouver/yvrdt/hoteldetail/dining,
+node/1219245219,Urban Thai Bistro,restaurant,food,49.275791,-123.121587,1119 Hamilton Street,thai,Mo-Su 11:30-21:00,https://thaihouse.com/urban-thai-bistro/,
+node/9707677003,VanLove Sushi,restaurant,food,49.291198,-123.134705,1755 Robson Street,sushi,"Mo-Th, Su 11:30-21:30; Fr, Sa 11:30-23:00",https://vanlove.ca/,
+node/793915416,Vera's Burger Shack,fast_food,food,49.279519,-123.130102,1030 Davie Street,burger,Mo-Su 12:00-03:00,https://www.verasburgershack.com/,late
+node/3843237662,Viet Sub,fast_food,food,49.280162,-123.118212,520 Robson Street,,Mo-Su 10:00-19:30,https://www.zomi.menu/shop/vietsubvietnamesecuisine,
+node/9707783440,Viet Sub Vietnamese Cuisine,restaurant,food,49.290132,-123.133652,1682 Robson Street,vietnamese,Mo-Su 10:30-21:00,,
+node/4461277197,Virtuous Pie,restaurant,food,49.279699,-123.099992,583 Main Street,pizza;ice_cream,Su-Th 11:30-22:00; Fr-Sa 11:30-23:00,https://virtuouspie.com/locations/canada/chinatown,
+node/8400655735,Waffleland Café,restaurant,food,49.283575,-123.105268,32 Water Street,breakfast,Mo-Th 08:00-22:00; Fr-Sa 08:00-23:00; Su 08:00-22:00,https://wafflelandcafe.ca/,
+node/703754968,Water Street Cafe,restaurant,food,49.284233,-123.109032,300 Water Street,,Mo-Fr 11:30-21:00; Sa-Su 10:00-21:00; PH 10:00-21:00,https://www.waterstreetcafe.ca/,
+node/5027584521,Wela,restaurant,food,49.279815,-123.123638,765 Nelson Street,,Mo-Fr 07:30-20:00; Sa-Su 08:00-20:00,https://www.welahealthbar.ca/,
+node/4842907228,West Oak,restaurant,food,49.2764,-123.119601,1035 Mainland Street,,"Mo,Tu 11:00-24:00, We,Th 11:00-01:00, Fr,Sa 11:00-02:00, Su 11:00-01:00",https://westoakrestaurant.com/,late
+node/3169060829,White Spot,restaurant,food,49.281911,-123.113501,405 Dunsmuir Street,burger,Mo-Th 06:30-23:00; Fr 06:30-00:00; Sa 08:00-00:00; Su 08:00-23:00,,
+node/3948676191,White Spot,restaurant,food,49.276156,-123.128164,712 Drake Street,burger,Su-Tu 07:00-23:00; We-Sa 07:00-24:00,,late
+node/4232387090,White Spot,restaurant,food,49.273083,-123.103976,,burger,"PH,We-Su 10:00-17:00",https://www.whitespot.ca/,
+node/10013825633,Won More Szechuan Cuisine,restaurant,food,49.287421,-123.141234,1184 Denman Street,chinese,16:00-22:00,https://wonmore.ca,
+node/13707427441,World Wrap Place,fast_food,food,49.283678,-123.105877,68 Water Street,kebab,Mo-Th 11:00-18:00; Fr 11:00-27:00; Sa 20:00-17:00,https://worldwrapplace.ca/,
+node/7083218786,Yaletown Brewing Company,restaurant,food,49.275555,-123.12086,1111 Mainland Street,,Su-We 11:30-00:00; Th 11:30-01:00; Fr-Sa 11:30-03:00,https://yaletownbrewing.com/,late
+node/3930946752,Yaletown Gelato,ice_cream,food,49.275038,-123.123373,1210 Homer Street,ice_cream,Mo 12:00-20:30; Tu-Th 09:00-20:30; Fr-Sa 12:00-20:30; Su 12:00-20:00,,
+node/2612808704,Yolks,restaurant,food,49.278707,-123.128947,988 Davie Street,breakfast,Mo-Su 08:00-15:00,https://yolks.ca/,
+node/3932734586,Yopo,restaurant,food,49.276011,-123.121902,1122 Homer Street,chinese,We-Mo 11:30-22:00,https://sweetmandarin.ca/,
+node/4305377793,Yummy Slice Pizza,fast_food,food,49.281341,-123.132939,1168 Davie Street,pizza,Su-Th 11:00-02:30; Fr-Sa 11:00-04:30,,late
+node/4796015030,Yummy to Go,fast_food,food,49.28645,-123.140324,1711 Davie Street,japanese,Mo-Su 11:30-22:30,,
+node/12062122318,Yunqueen Rice Noodles,restaurant,food,49.288329,-123.130955,1460 Robson Street,chinese;yunnan,Mo-Su 11:00-22:00,https://yunqueennoodles.com/,
+node/13436279499,Zaatar w Zeit,restaurant,food,49.284407,-123.11556,531 Granville Street,lebanese,Mo-Fr 09:00-22:00; Sa-Su 10:00-22:00,https://zaatar-w-zeit.square.site/,
+node/1187574399,Zab Zaab,restaurant,food,49.274825,-123.123057,1211 Hamilton Street,thai,"Mo-Fr 11:30-15:00,17:00-21:00; Sa,Su 17:00-21:00",https://www.zabzaabthai.com/,
+node/9164400186,Zabu Chicken,restaurant,food,49.289843,-123.13262,1635 Robson Street,korean;fried_chicken,Mo-Su 17:00-01:00,https://www.zabuchicken.com/,late
+node/11244899436,Zac-Zac Japanese Curry House,restaurant,food,49.28043,-123.118767,590 Robson Street,japanese,Mo-Sa 11:00-19:25; Su off,https://www.zaczacjapanesecurryhouse.com/,
+node/4976343548,Zakkushi,restaurant,food,49.29117,-123.13619,823 Denman Street,japanese,Mo-Th 17:00-23:00; Fr 17:00-24:00; Sa 12:00-24:00; Su 12:00-23:00,https://zakkushi.com/zakkushi/denman/,late
+node/9217471621,Zubu,restaurant,food,49.281877,-123.123509,869 Hornby Street,japanese;sushi,"Su-Tu 11:00-24:00,Th 11:00-24:00, Fr,Sa 11:00-01:00",https://byzubu.com/ramen/location/downtown-location/,late
+node/9112174435,Ça Marche,fast_food,food,49.274599,-123.130842,1471 Continental Street,crepe,"We-Fr 11:00-20:00,Sa-Su 10:00-20:00",https://www.camarchecreperie.com/,
+node/3738439888,Aura,nightclub,nightclub,49.277302,-123.12571,1180 Granville Street,,Fr-Su 22:00-03:00,https://auravancouver.ca/,late
+node/3965009438,Backstage Lounge,nightclub,nightclub,49.272321,-123.134226,,,,https://artsclub.com/about/venue-rentals/backstage-lounge,
+node/4433659012,Bar None,nightclub,nightclub,49.274598,-123.122952,1222 Hamilton Street,,,https://www.barnoneclub.com/,
+node/3746148694,Celebrities,nightclub,nightclub,49.279385,-123.129915,1022 Davie Street,,Tu 22:00-03:00; Th-Sa 22:00-03:00,https://www.celebritiesnightclub.com/,late
+node/3957328665,Club Mumbai,nightclub,nightclub,49.277605,-123.125761,1163 Granville Street,,,https://www.clubmumbai.ca/,
+node/3785579479,Encore,nightclub,nightclub,49.27854,-123.123828,1058 Granville Street,,closed,https://www.encoredanceclub.com/,
+node/4404884147,ensō Event Centre,nightclub,nightclub,49.275407,-123.109631,750 Plaza of Nations,,,,
+node/11062762211,Fortune Sound Club,nightclub,nightclub,49.280521,-123.100738,147 East Pender Street,,"Fr-Sa,Mo 22:00-02:00; Su,Tu-Th off",https://www.fortunesoundclub.com/,late
+node/3944755565,Gorg-O-Mish,nightclub,nightclub,49.280215,-123.121028,695 Smithe Street,,"Fr,Sa 02:00-08:00",https://www.gorgomish.com/,late
+node/3746148422,Kiss & Tell Lounge,nightclub,nightclub,49.280145,-123.131353,1240 Thurlow Street,,"Tu 20:00-03:00; Fr,Sa 22:00-03:00",,late
+node/3755318336,Levels Nightclub,nightclub,nightclub,49.283264,-123.114728,560 Seymour Street,,Tu 23:00-26:00; We-Th 22:00-26:00; Fr-Sa 22:00-27:00; Su 21:00-26:00,https://levelsvancouver.ca/,
+node/5004150325,Pierre's,nightclub,nightclub,49.276625,-123.119889,1028 Hamilton Street,,,https://pierreslounge.ca/,
+node/8402230723,Playhaus Nightclub,nightclub,nightclub,49.284452,-123.110102,350 Water Street,,Su-Th 18:00-26:00; Fr-Sa 22:00-27:00,http://playhausnightclub.com/,
+node/3949415929,Red Room,nightclub,nightclub,49.284228,-123.111379,398 Richards Street,,,https://redroomvancouver.com/,
+way/883326328,Studio Lounge & Nightclub,nightclub,nightclub,49.280273,-123.122101,919 Granville Street,,Mo 21:30-03:00; Th-Sa 21:30-03:00,,late
+node/13891884280,The Cobalt,nightclub,nightclub,49.276496,-123.100107,917 Main Street,,,https://www.thecobalt.ca/,
+way/301876946,The Pearl,nightclub,nightclub,49.280718,-123.121406,881 Granville Street,,,,
+node/9943988292,The Roxy Cabaret,nightclub,nightclub,49.279758,-123.121991,932 Granville Street,,"Mo,Tu 21:00-03:00, We,Th 20:00-03:00, Fr,Sa 19:00-03:00, Su 20:00-03:00",http://www.roxyvan.com/,late
+node/4946357823,The Yale Saloon,nightclub,nightclub,49.275857,-123.127724,1300 Granville Street,,,https://yalesaloon.com/,
+node/3951064962,Twelve West,nightclub,nightclub,49.277049,-123.126644,1219 Granville Street,,Fr-Sa 21:30-27:00; Su 21:30-26:00,https://twelvewest.ca/,
+node/889550078,Harbour Centre Lookout Tower,viewpoint,viewpoint,49.284611,-123.112316,555 West Hastings Street,,Oct-May 09:00-21:00; Jun-Sep 08:30-22:30,https://www.vancouverlookout.com/,

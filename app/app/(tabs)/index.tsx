@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Button, Display, Header, Meter, Poster, Screen, SectionTitle, TextTabs } from '@/components/ui';
 import { colors, fonts, space } from '@/constants/theme';
@@ -41,13 +41,16 @@ export default function Discover() {
 
         {experiences.map((e) => (
           <View key={e.id} style={styles.item}>
+            <Pressable onPress={() => router.push({ pathname: '/experience/[id]', params: { id: e.id } })}>
             <Poster gradient={e.gradient} emoji={e.emoji} height={280}>
               <Text style={styles.badge}>{e.badge}</Text>
               <Text style={styles.title}>{e.title}</Text>
             </Poster>
+            </Pressable>
             <View style={styles.info}>
               <Text style={styles.meta}>
-                {e.duration} · {e.stops} stops · {e.cost} · <Text style={{ color: colors.yellow }}>★ {e.rating}</Text>
+                {[e.duration, `${e.stops} stops`, e.cost].filter(Boolean).join(' · ')}
+                {e.rating > 0 ? <Text style={{ color: colors.yellow }}> · ★ {e.rating}</Text> : null}
               </Text>
               <Text style={styles.route}>{e.route.join('  →  ')}</Text>
               <View style={{ flexDirection: 'row', gap: space.sm, marginTop: space.md }}>

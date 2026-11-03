@@ -12,6 +12,8 @@ export type Experience = {
   route: string[];
   gradient: [string, string];
   emoji: string;
+  description?: string;
+  stopPlaces?: Place[]; // full stop details when loaded from Supabase
 };
 
 export const experiences: Experience[] = [
@@ -59,74 +61,33 @@ export const experiences: Experience[] = [
   },
 ];
 
+export type PlaceCategory = 'bar' | 'nightclub' | 'food' | 'activity' | 'viewpoint';
+
 export type Place = {
   id: string;
   name: string;
-  meta: string;
-  rating: number;
-  reviews: number;
-  capacity: number;
-  walk: string;
-  note: string;
-  badge?: string;
-  gradient: [string, string];
+  category: PlaceCategory;
   emoji: string;
+  lat: number;
+  lng: number;
+  address: string;
+  hours: string; // raw OpenStreetMap opening_hours, may be empty
+  late: boolean; // open past midnight on at least one day
 };
 
+// Fallback list shown only until a Supabase project is connected and seeded.
 export const places: Place[] = [
-  {
-    id: 'keefer',
-    name: 'The Keefer Bar',
-    meta: 'Chinatown · Cocktails & Dim Sum · $$',
-    rating: 4.8,
-    reviews: 340,
-    capacity: 86,
-    walk: '4 min · 320m',
-    badge: 'HOTSPOT',
-    note: 'Tonight: Apothecary cocktails & late kitchen till 2a',
-    gradient: ['#3A1A0F', '#FF5C00'],
-    emoji: '🍸',
-  },
-  {
-    id: 'glitch',
-    name: 'Glitch Retro Arcade & Bar',
-    meta: 'Broadway · Arcade & Craft Beer · $',
-    rating: 4.7,
-    reviews: 180,
-    capacity: 74,
-    walk: '7 min · 560m',
-    badge: 'NO COVER',
-    note: 'Free play: Mario Kart 64 & 14 pinball machines',
-    gradient: ['#0F1A3A', '#0096FF'],
-    emoji: '🕹️',
-  },
-  {
-    id: 'guilt',
-    name: 'Guilt & Co',
-    meta: 'Gastown · Live Jazz & Speakeasy · $$',
-    rating: 4.9,
-    reviews: 610,
-    capacity: 89,
-    walk: '2 min · 140m',
-    badge: 'LIVE SET',
-    note: 'Upcoming: live funk set starting in 25 min',
-    gradient: ['#2A0F3A', '#FFD700'],
-    emoji: '🎷',
-  },
-  {
-    id: 'poutine',
-    name: 'Mean Poutine',
-    meta: 'Granville Strip · Late Night Food · $',
-    rating: 4.5,
-    reviews: 410,
-    capacity: 40,
-    walk: '5 min · 410m',
-    badge: 'OPEN NOW',
-    note: 'Fast · 5m line · open till 3:30 AM',
-    gradient: ['#3A2A0F', '#FF5C00'],
-    emoji: '🍟',
-  },
+  { id: 'm1', name: 'The Keefer Bar', category: 'bar', emoji: '🍸', lat: 49.2797, lng: -123.1036, address: '', hours: 'Su-Th 16:00-25:00; Fr-Sa 16:00-26:00', late: true },
+  { id: 'm2', name: 'Guilt & Co', category: 'bar', emoji: '🍸', lat: 49.2840, lng: -123.1066, address: '', hours: 'Mo-Su 19:00-02:00', late: true },
+  { id: 'm3', name: 'The Rec Room', category: 'activity', emoji: '🕹️', lat: 49.2808, lng: -123.1170, address: '', hours: 'Mo-Su 10:30-24:00', late: false },
+  { id: 'm4', name: 'Mean Poutine', category: 'food', emoji: '🍽️', lat: 49.2790, lng: -123.1210, address: '', hours: 'Fr,Sa 11:00-04:00', late: true },
 ];
+
+// Give the first mock experience full stop details so the detail screen can be previewed offline.
+experiences[0].stopPlaces = places;
+experiences[0].route = places.map((p) => p.name);
+experiences[0].stops = places.length;
+experiences[0].description = 'Cocktails, music, games and a late bite across Gastown and Granville.';
 
 export const liveStop = {
   title: 'Santos Cantina & Mezcal Den',
