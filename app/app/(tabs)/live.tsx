@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 
@@ -220,7 +221,15 @@ function ActiveNight() {
       )}
 
       <View style={{ paddingHorizontal: space.lg, marginTop: space.xl, gap: space.sm }}>
-        <Button label="End night" icon="stop-circle" variant="ghost" onPress={end} />
+        <Button
+          label="End night"
+          icon="stop-circle"
+          variant="ghost"
+          onPress={() => {
+            end();
+            router.navigate('/recap');
+          }}
+        />
         <Button label="Get a safe ride home" icon="car" variant="ghost" />
       </View>
     </ScrollView>

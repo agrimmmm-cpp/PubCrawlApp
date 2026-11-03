@@ -18,8 +18,13 @@ export type LiveSession = {
   log: LogEntry[];
 };
 
+export type FinishedNight = LiveSession & { endedAt: number };
+
 type LiveContextValue = {
   session: LiveSession | null;
+  /** The night that just ended, kept so the recap screen can show it. */
+  finished: FinishedNight | null;
+  dismissFinished: () => void;
   /** True right after start() so the Live tab can play the Go Live animation once. */
   burst: boolean;
   clearBurst: () => void;
@@ -40,6 +45,8 @@ export function LiveProvider({ children }: { children: ReactNode }) {
 
   const [session, setSession] = useState<LiveSession | null>(null);
   const [burst, setBurst] = useState(false);
+  const [finished, setFinished] = useState<FinishedNight | null>(null);
+  const dismissFinished = useCallback(() => setFinished(null), []);
   const clearBurst = useCallback(() => setBurst(false), []);
 
   // Latest session for callbacks that persist to Supabase.
@@ -66,8 +73,9 @@ export function LiveProvider({ children }: { children: ReactNode }) {
   );
 
   const end = useCallback(() => {
-    const id = ref.current?.id;
-    if (id) supabase.from('night_sessions').update({ ended_at: new Date().toISOString() }).eq('id', id).then();
+    const cur = ref.current;
+    if (cur?.id) supabase.from('night_sessions').update({ ended_at: new Date().toISOString() }).eq('id', cur.id).then();
+    if (cur) setFinished({ ...cur, endedAt: Date.now() });
     setSession(null);
     setBurst(false);
   }, []);
@@ -102,8 +110,8 @@ export function LiveProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ session, burst, clearBurst, start, end, add, nextStop, setJoinPolicy }),
-    [session, burst, clearBurst, start, end, add, nextStop, setJoinPolicy],
+    () => ({ session, finished, dismissFinished, burst, clearBurst, start, end, add, nextStop, setJoinPolicy }),
+    [session, finished, dismissFinished, burst, clearBurst, start, end, add, nextStop, setJoinPolicy],
   );
   return <LiveContext.Provider value={value}>{children}</LiveContext.Provider>;
 }

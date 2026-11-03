@@ -2,30 +2,33 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Button, Display, Divider, Header, Meter, Screen, SectionTitle } from '@/components/ui';
 import { colors, fonts, space } from '@/constants/theme';
-import { badges } from '@/data/mock';
 import { useAuth } from '@/lib/auth';
-
-const stats = [
-  { label: 'nights', value: '24' },
-  { label: 'places', value: '67' },
-  { label: 'cities', value: '3' },
-  { label: 'memories', value: '212' },
-];
+import { BADGES, tierFor, usePassport } from '@/lib/passport';
 
 export default function Profile() {
   const { configured, session, signOut } = useAuth();
+  const passport = usePassport();
+  const tier = tierFor(passport.nights);
+  const stats = [
+    { label: 'nights', value: passport.nights },
+    { label: 'places', value: passport.places },
+    { label: 'cities', value: passport.cities },
+    { label: 'moments', value: passport.moments },
+  ];
+  const earned = BADGES.filter((b) => b.earned(passport));
   return (
     <Screen>
       <ScrollView contentContainerStyle={{ paddingBottom: 48 }} showsVerticalScrollIndicator={false}>
         <Header title="passport" />
 
         <View style={{ paddingHorizontal: space.lg, paddingTop: space.lg, gap: space.md }}>
-          <Text style={styles.kicker}>LEVEL 42 · WEEKEND WANDERER</Text>
+          <Text style={styles.kicker}>{tier.next ? `NEXT: ${tier.next.toUpperCase()}` : 'TOP TIER'}</Text>
           <Display>
-            Night{'\n'}
-            <Text style={{ color: colors.yellow }}>Owl</Text> 🦉
+            {tier.name.split(' ')[0]}
+            {tier.name.includes(' ') ? '\n' : ''}
+            <Text style={{ color: colors.yellow }}>{tier.name.split(' ').slice(1).join(' ')}</Text>
           </Display>
-          <Meter value={0.68} color={colors.yellow} />
+          <Meter value={tier.progress} color={colors.yellow} />
         </View>
 
         <View style={styles.stats}>
@@ -38,12 +41,13 @@ export default function Profile() {
         </View>
         <Divider />
 
-        <SectionTitle title="Badges" right="3 of 6" />
+        <SectionTitle title="Badges" right={`${earned.length} of ${BADGES.length}`} />
         <View style={styles.badges}>
-          {badges.map((b) => (
-            <View key={b.id} style={[styles.badge, !b.earned && { opacity: 0.3 }]}>
+          {BADGES.map((b) => (
+            <View key={b.id} style={[styles.badge, !b.earned(passport) && { opacity: 0.3 }]}>
               <Text style={{ fontSize: 34 }}>{b.emoji}</Text>
               <Text style={styles.badgeLabel}>{b.label}</Text>
+              {!b.earned(passport) ? <Text style={styles.need}>{b.need}</Text> : null}
             </View>
           ))}
         </View>
@@ -73,5 +77,6 @@ const styles = StyleSheet.create({
   badges: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: space.lg, rowGap: space.lg },
   badge: { width: '33.33%', alignItems: 'center', gap: 6 },
   badgeLabel: { color: colors.text, fontFamily: fonts.bodyMedium, fontSize: 11, textAlign: 'center' },
+  need: { color: colors.textDim, fontFamily: fonts.body, fontSize: 10 },
   note: { color: colors.textDim, fontFamily: fonts.body, fontSize: 13, lineHeight: 19, paddingHorizontal: space.lg },
 });
