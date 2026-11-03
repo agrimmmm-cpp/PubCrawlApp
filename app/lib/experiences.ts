@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Experience, experiences as mockExperiences } from '@/data/mock';
+import type { Near } from '@/lib/location';
 import { PLACE_COLUMNS, Row as PlaceRow, toPlace } from '@/lib/places';
 import { supabase, supabaseConfigured } from '@/lib/supabase';
 
@@ -20,6 +21,7 @@ type Row = {
   start_time: string | null;
   city?: string | null;
   hub?: string | null;
+  vibe?: string[] | null;
   lat?: number | null;
   lng?: number | null;
   experience_stops: { position: number; stay_minutes: number | null; tip: string | null; places: PlaceRow | null }[];
@@ -54,6 +56,7 @@ function toExperience(r: Row): Experience {
     startTime: r.start_time ?? undefined,
     city: r.city ?? undefined,
     hub: r.hub ?? undefined,
+    tags: r.vibe ?? undefined,
     lat: r.lat ?? undefined,
     lng: r.lng ?? undefined,
     stopInfo: ordered.filter((s) => s.places).map((s) => ({ stay: s.stay_minutes ?? undefined, tip: s.tip ?? undefined })),
@@ -64,13 +67,12 @@ const BASE_COLUMNS =
   'id,title,badge,emoji,gradient,rating,reviews,duration_minutes,est_cost_cad,description,why_order,best_night,start_time';
 const STOPS = `experience_stops(position,stay_minutes,tip,places(${PLACE_COLUMNS}))`;
 // city/hub/lat/lng arrive with migration 007; before that the base columns still work.
-const FULL_SELECT = `${BASE_COLUMNS},city,hub,lat,lng,${STOPS}`;
+const FULL_SELECT = `${BASE_COLUMNS},city,hub,vibe,lat,lng,${STOPS}`;
 const BASE_SELECT = `${BASE_COLUMNS},${STOPS}`;
 
 const PAGE = 24;
 const snap = (n: number) => Math.round(n / 0.05) * 0.05; // ~5 km grid: only a coarse area is sent to the server
 
-export type Near = { lat: number; lng: number };
 
 function km(a: Near, b: Near) {
   const rad = (d: number) => (d * Math.PI) / 180;
@@ -82,20 +84,22 @@ function km(a: Near, b: Near) {
  * Experiences for the Discover feed: by city, or the closest to a point ("Near me"), or the default
  * list (hand-drafted first). One small page is fetched; the area sent to the server is coarse.
  */
-export function useExperienceFeed(opts: { city?: string; near?: Near } = {}) {
-  const { city, near } = opts;
+export function useExperienceFeed(opts: { city?: string; near?: Near; tags?: string[]; skip?: boolean } = {}) {
+  const { city, near, tags, skip } = opts;
+  const tagKey = tags?.join(',') ?? '';
   const [data, setData] = useState<Experience[]>(mockExperiences);
   const [loading, setLoading] = useState(supabaseConfigured);
   const nearLat = near?.lat;
   const nearLng = near?.lng;
 
   useEffect(() => {
-    if (!supabaseConfigured) return;
+    if (!supabaseConfigured || skip) return;
     let cancelled = false;
     setLoading(true);
 
     const run = async () => {
       let q = supabase.from('experiences').select(FULL_SELECT).eq('is_public', true);
+      if (tagKey) q = q.overlaps('vibe', tagKey.split(','));
       if (nearLat != null && nearLng != null) {
         const la = snap(nearLat);
         const ln = snap(nearLng);
@@ -135,7 +139,7 @@ export function useExperienceFeed(opts: { city?: string; near?: Near } = {}) {
     return () => {
       cancelled = true;
     };
-  }, [city, nearLat, nearLng]);
+  }, [city, nearLat, nearLng, tagKey, skip]);
 
   return { experiences: data, loading };
 }

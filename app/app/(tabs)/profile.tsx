@@ -2,6 +2,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Button, Display, Divider, Header, Meter, Screen, SectionTitle } from '@/components/ui';
 import { colors, fonts, space } from '@/constants/theme';
+import credits from '@/assets/vibes/credits.json';
 import { useAuth } from '@/lib/auth';
 import { BADGES, tierFor, usePassport } from '@/lib/passport';
 
@@ -57,6 +58,13 @@ export default function Profile() {
           Optional, only you see it, never ranked. Pace Insight is an estimate and never a measure of whether you
           are safe to drive.
         </Text>
+
+        {credits.length > 0 ? (
+          <Text style={[styles.note, { marginTop: space.xl }]}>
+            Photos by {credits.map((c) => c.photographer).join(', ')} on {[...new Set(credits.map((c) => c.source))].join(' and ')}.
+            Stock photos show a mood, never a specific venue. Place data © OpenStreetMap contributors.
+          </Text>
+        ) : null}
 
         {configured && session ? (
           <View style={{ paddingHorizontal: space.lg, marginTop: space.xl, gap: space.sm }}>

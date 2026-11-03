@@ -23,11 +23,13 @@ export type Experience = {
   lat?: number;
   lng?: number;
   distanceKm?: number; // set when sorted by Near me
+  tags?: string[]; // vibe tags, e.g. pubs, games, date
 };
 
 export const experiences: Experience[] = [
   {
     id: 'gastown',
+    tags: ['nightlife', 'dancing'],
     title: 'Gastown After Dark',
     badge: 'FEATURED',
     rating: 4.9,
@@ -42,6 +44,7 @@ export const experiences: Experience[] = [
   },
   {
     id: 'sunset',
+    tags: ['scenic', 'date'],
     title: 'Sunset to Sunrise',
     badge: 'DATE NIGHT',
     rating: 4.8,
@@ -56,6 +59,7 @@ export const experiences: Experience[] = [
   },
   {
     id: 'chaos',
+    tags: ['games', 'groups'],
     title: 'The Chaos Circuit',
     badge: 'HIGH ENERGY',
     rating: 4.9,
@@ -92,6 +96,7 @@ export type Place = {
   verifiedAt?: string; // YYYY-MM-DD
   city?: string;
   subcategory?: string; // pub, arcade, karaoke, brewery...
+  distanceKm?: number; // set when sorted by Near me
 };
 
 // Fallback list shown only until a Supabase project is connected and seeded.

@@ -40,7 +40,8 @@
         {
           "locationWhenInUsePermission": "DrunkVA uses your location to show nights out near you. It stays on your phone and only a rough area is used to search."
         }
-      ]
+      ],
+      "expo-image"
     ],
     "experiments": {
       "typedRoutes": true

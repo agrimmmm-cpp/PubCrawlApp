@@ -10,6 +10,7 @@ import { useExperience } from '@/lib/experiences';
 import { distanceMeters, formatDistance, walkMinutes } from '@/lib/geo';
 import { buildTimeline, clock } from '@/lib/timeline';
 import { useLive } from '@/lib/live';
+import { vibeImage, vibeOf } from '@/lib/vibes';
 
 const label: Record<PlaceCategory, string> = {
   bar: 'Bar',
@@ -52,7 +53,7 @@ export default function ExperienceDetail() {
   return (
     <Screen>
       <ScrollView contentContainerStyle={{ paddingBottom: 48 }} showsVerticalScrollIndicator={false}>
-        <Poster gradient={e.gradient} emoji={e.emoji} height={260}>
+        <Poster gradient={e.gradient} emoji={e.emoji} image={vibeOf(e) ? vibeImage(vibeOf(e)!.id) : undefined} height={260}>
           <Ionicons name="chevron-back" size={28} color="#fff" style={styles.back} onPress={() => router.back()} />
           <Text style={styles.badge}>{e.badge}</Text>
         </Poster>

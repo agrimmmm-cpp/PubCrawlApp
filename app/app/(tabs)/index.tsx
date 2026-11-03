@@ -1,61 +1,57 @@
-import * as Location from 'expo-location';
-import { router } from 'expo-router';
-import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useMemo, useState } from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { Button, Display, Header, Poster, Screen, TextTabs } from '@/components/ui';
+import { ExperienceCard } from '@/components/ExperienceCard';
+import { Display, Header, Screen, SectionTitle, TextTabs, VibeTile } from '@/components/ui';
 import { colors, fonts, space } from '@/constants/theme';
-import { Near, useExperienceCities, useExperienceFeed } from '@/lib/experiences';
-import { useLive } from '@/lib/live';
+import { useExperienceCities, useExperienceFeed } from '@/lib/experiences';
+import { useNearMe } from '@/lib/location';
+import { VIBES, vibeById, vibeImage } from '@/lib/vibes';
 
 const NEAR = 'Near me';
 
 export default function Discover() {
-  const { start } = useLive();
   const cities = useExperienceCities();
   const [choice, setChoice] = useState<string | null>(null);
-  const [near, setNear] = useState<Near | undefined>();
-  const [note, setNote] = useState<string | null>(null);
+  const { near, note, request } = useNearMe();
+  const [vibeId, setVibeId] = useState<string | null>(null);
   // Day and time shown in the hero, read once when the screen opens.
   const [now] = useState(() => new Date());
 
   const city = choice && choice !== NEAR ? choice : cities[0];
-  const { experiences, loading } = useExperienceFeed(choice === NEAR ? { near } : { city });
+  const place = choice === NEAR ? { near } : { city };
+  const vibe = vibeId ? vibeById(vibeId) : undefined;
+
+  const base = useExperienceFeed(place);
+  const picked = useExperienceFeed({ ...place, tags: vibe?.tags, skip: !vibe });
+  const all = base.experiences;
+
+  // Only offer moods that have at least one experience here.
+  const moods = useMemo(() => VIBES.filter((v) => all.some((e) => e.tags?.some((t) => v.tags.includes(t)))), [all]);
+  const sections = useMemo(
+    () =>
+      moods
+        .map((v) => ({ v, items: all.filter((e) => e.tags?.some((t) => v.tags.includes(t))) }))
+        .filter((s) => s.items.length > 0),
+    [moods, all],
+  );
 
   const pick = async (value: string) => {
-    setNote(null);
+    setVibeId(null);
     if (value !== NEAR) {
       setChoice(value);
-      return;
-    }
-    try {
-      const perm = await Location.requestForegroundPermissionsAsync();
-      if (perm.status !== 'granted') {
-        setNote('Location is off, so pick a city instead. You can turn it on in Settings.');
-        return;
-      }
-      const pos = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
-      setNear({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+    } else if (await request()) {
       setChoice(NEAR);
-    } catch {
-      setNote("Couldn't get your location. Pick a city instead.");
     }
   };
 
-  const status =
-    choice === NEAR
-      ? loading
-        ? 'Finding experiences near you…'
-        : experiences.length
-          ? 'Closest to you first'
-          : 'Nothing close by yet. Try a city.'
-      : loading
-        ? `Loading ${city}…`
-        : `${experiences.length} in ${city}`;
+  const where = choice === NEAR ? 'near you' : `in ${city}`;
+  const loading = base.loading || (!!vibe && picked.loading);
+  const status = note ?? (loading ? 'Loading…' : vibe ? `${picked.experiences.length} ${vibe.label.toLowerCase()} nights ${where}` : `${all.length} nights ${where}`);
 
   return (
     <Screen>
-      <ScrollView contentContainerStyle={{ paddingBottom: 48 }} showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 48 }} showsVerticalScrollIndicator={false} stickyHeaderIndices={[2]}>
         <Header place={choice === NEAR ? 'Near you' : city} />
 
         <View style={styles.hero}>
@@ -69,81 +65,76 @@ export default function Discover() {
           </Display>
         </View>
 
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginTop: space.xl }}>
-          <TextTabs items={[NEAR, ...cities]} active={choice === NEAR ? NEAR : city} onChange={pick} />
-        </ScrollView>
-        <Text style={styles.status}>{note ?? status}</Text>
+        {/* Sticky: stays on screen while you scroll. */}
+        <View style={styles.sticky}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <TextTabs glow items={[NEAR, ...cities]} active={choice === NEAR ? NEAR : city} onChange={pick} />
+          </ScrollView>
+        </View>
 
-        {experiences.map((e) => (
-          <View key={e.id} style={styles.item}>
-            <Pressable onPress={() => router.push({ pathname: '/experience/[id]', params: { id: e.id } })}>
-              <Poster gradient={e.gradient} emoji={e.emoji} height={280}>
-                <Text style={styles.badge}>{e.badge}</Text>
-                <Text style={styles.title}>{e.title}</Text>
-              </Poster>
-            </Pressable>
-            <View style={styles.info}>
-              <Text style={styles.meta}>
-                {[
-                  e.distanceKm != null ? `${e.distanceKm < 10 ? e.distanceKm.toFixed(1) : Math.round(e.distanceKm)} km away` : '',
-                  e.duration,
-                  `${e.stops} stops`,
-                  e.cost,
-                ]
-                  .filter(Boolean)
-                  .join(' · ')}
-                {e.rating > 0 ? <Text style={{ color: colors.yellow }}> · ★ {e.rating}</Text> : null}
-              </Text>
-              <Text style={styles.route}>{e.route.join('  →  ')}</Text>
-              <View style={{ flexDirection: 'row', marginTop: space.md }}>
-                <Button
-                  label="Start"
-                  icon="play"
-                  onPress={() => {
-                    start('experience', e.id);
-                    router.navigate('/live');
-                  }}
+        <Text style={styles.status}>{status}</Text>
+
+        {moods.length > 0 ? (
+          <>
+            <SectionTitle title="What's the mood?" right={vibe ? 'Tap again to clear' : undefined} />
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.row}>
+              {moods.map((v) => (
+                <VibeTile
+                  key={v.id}
+                  label={v.label}
+                  emoji={v.emoji}
+                  gradient={v.gradient}
+                  image={vibeImage(v.id)}
+                  active={vibeId === v.id}
+                  onPress={() => setVibeId(vibeId === v.id ? null : v.id)}
                 />
-              </View>
-            </View>
+              ))}
+            </ScrollView>
+          </>
+        ) : null}
+
+        {vibe ? (
+          <View style={{ marginTop: space.lg, gap: space.xl }}>
+            {picked.experiences.map((e) => (
+              <ExperienceCard key={e.id} e={e} variant="wide" />
+            ))}
+            {!picked.loading && picked.experiences.length === 0 ? (
+              <Text style={styles.status}>No {vibe.label.toLowerCase()} nights here yet.</Text>
+            ) : null}
           </View>
-        ))}
+        ) : (
+          <>
+            {all.length > 0 ? (
+              <>
+                <SectionTitle title="Top picks" />
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.row}>
+                  {all.slice(0, 8).map((e) => (
+                    <ExperienceCard key={e.id} e={e} />
+                  ))}
+                </ScrollView>
+              </>
+            ) : null}
+            {sections.map(({ v, items }) => (
+              <View key={v.id}>
+                <SectionTitle title={`${v.emoji} ${v.label}`} right={`${items.length}`} />
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.row}>
+                  {items.slice(0, 8).map((e) => (
+                    <ExperienceCard key={e.id} e={e} />
+                  ))}
+                </ScrollView>
+              </View>
+            ))}
+          </>
+        )}
       </ScrollView>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  hero: { paddingHorizontal: space.lg, paddingTop: space.lg, gap: space.sm },
+  hero: { paddingHorizontal: space.lg, paddingTop: space.lg, gap: space.sm, marginBottom: space.lg },
   kicker: { color: colors.textDim, fontFamily: fonts.bodyBold, fontSize: 11, letterSpacing: 1.5 },
-  status: { color: colors.textDim, fontFamily: fonts.bodyMedium, fontSize: 12, paddingHorizontal: space.lg, marginTop: space.sm },
-  item: { marginTop: space.xl },
-  badge: {
-    position: 'absolute',
-    top: space.lg,
-    left: space.lg,
-    color: '#0B0B0D',
-    backgroundColor: colors.yellow,
-    fontFamily: fonts.bodyBold,
-    fontSize: 10,
-    letterSpacing: 1,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    overflow: 'hidden',
-    transform: [{ rotate: '-3deg' }],
-  },
-  title: {
-    position: 'absolute',
-    left: space.lg,
-    bottom: space.lg,
-    right: space.lg,
-    color: '#fff',
-    fontFamily: fonts.display,
-    fontSize: 34,
-    lineHeight: 36,
-    letterSpacing: -1,
-  },
-  info: { padding: space.lg, gap: 6 },
-  meta: { color: colors.text, fontFamily: fonts.bodyMedium, fontSize: 14 },
-  route: { color: colors.textDim, fontFamily: fonts.body, fontSize: 13 },
+  sticky: { backgroundColor: colors.bg, borderBottomWidth: 1, borderBottomColor: colors.line },
+  status: { color: colors.textDim, fontFamily: fonts.bodyMedium, fontSize: 12, paddingHorizontal: space.lg, marginTop: space.md },
+  row: { paddingHorizontal: space.lg, gap: space.md },
 });

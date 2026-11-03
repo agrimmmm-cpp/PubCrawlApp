@@ -28,6 +28,19 @@ Load order in the Supabase SQL editor: `004_curation.sql`, `005_places_ingest.sq
 CSV), then `006_merge_import.sql`, then `007_generated_experiences.sql`. All of them are safe to re-run.
 Data © OpenStreetMap contributors (ODbL).
 
+## Photos
+
+Mood tiles and experience covers use free stock photos (never shown as a specific venue). Until they are
+added, screens show a gradient and emoji. Two ways to add them:
+
+- **API key:** sign up at https://pixabay.com/api/docs/ (free key shown after login) or https://www.pexels.com/api/,
+  add `PIXABAY_API_KEY=...` (or `PEXELS_API_KEY=...`) to `app/.env.local` with no `EXPO_PUBLIC_` prefix, then run
+  `python3 scripts/fetch_photos.py`.
+- **Your own photos:** save files as `app/assets/vibes/<vibe-id>.jpg` (ids are in `app/lib/vibes.ts`, for example
+  `pub.jpg`, `dance.jpg`) and run `python3 scripts/fetch_photos.py --index-only`.
+
+Either way, photographer credits go to `app/assets/vibes/credits.json`, and the app should list them.
+
 ## Curating places and experiences
 
 The editorial layer lives in `supabase/curation/` as three CSVs: `places.csv` (why go, tip, vibe, price, music, 19+),
