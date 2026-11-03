@@ -1,20 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { StopsMap } from '@/components/StopsMap';
 import { Button, Display, Divider, Header, Screen, TextTabs } from '@/components/ui';
 import { colors, fonts, space } from '@/constants/theme';
-import { Place, PlaceCategory } from '@/data/mock';
-import { usePlaces } from '@/lib/places';
-
-const filters: Record<string, (p: Place) => boolean> = {
-  All: () => true,
-  Bars: (p) => p.category === 'bar' || p.category === 'nightclub',
-  Food: (p) => p.category === 'food',
-  Late: (p) => p.late,
-  Games: (p) => p.category === 'activity',
-};
+import { PlaceCategory } from '@/data/mock';
+import { CITIES, PLACE_FILTERS, PlaceFilter, usePlaceSearch } from '@/lib/places';
 
 const pinColor: Record<PlaceCategory, string> = {
   bar: colors.primary,
@@ -33,14 +25,10 @@ const label: Record<PlaceCategory, string> = {
 };
 
 export default function Explore() {
-  const places = usePlaces();
-  const [active, setActive] = useState('All');
+  const [city, setCity] = useState('Vancouver');
+  const [active, setActive] = useState<PlaceFilter>('All');
   const [q, setQ] = useState('');
-
-  const shown = useMemo(() => {
-    const query = q.trim().toLowerCase();
-    return places.filter((p) => filters[active](p) && (!query || p.name.toLowerCase().includes(query)));
-  }, [places, active, q]);
+  const { places: shown, loading, capped } = usePlaceSearch({ city, filter: active, query: q });
 
   return (
     <Screen>
@@ -63,15 +51,19 @@ export default function Explore() {
           </View>
         </View>
 
-        <View style={{ marginTop: space.lg }}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginTop: space.lg }}>
+          <TextTabs items={CITIES} active={city} onChange={setCity} />
+        </ScrollView>
+
+        <View style={{ marginTop: space.md }}>
           {shown.length > 0 ? (
             <StopsMap stops={shown.map((p) => ({ ...p, color: pinColor[p.category] }))} height={240} />
           ) : null}
-          <Text style={styles.mapLabel}>{shown.length} places</Text>
+          <Text style={styles.mapLabel}>{loading ? 'Loading…' : `${shown.length} places`}</Text>
         </View>
 
         <View style={{ marginTop: space.lg }}>
-          <TextTabs items={Object.keys(filters)} active={active} onChange={setActive} />
+          <TextTabs items={[...PLACE_FILTERS]} active={active} onChange={(v) => setActive(v as PlaceFilter)} />
         </View>
 
         <View style={{ marginTop: space.md }}>
@@ -84,9 +76,12 @@ export default function Explore() {
                 <View style={{ flex: 1, minWidth: 0, gap: 2 }}>
                   <Text style={styles.name}>{p.name}</Text>
                   <Text style={styles.meta}>
-                    {label[p.category]}
-                    {p.address ? ` · ${p.address}` : ''}
+                    {[label[p.category], p.priceLevel ? '$'.repeat(p.priceLevel) : '', p.age19 ? '19+' : '', p.address]
+                      .filter(Boolean)
+                      .join(' · ')}
                   </Text>
+                  {p.whyGo ? <Text style={styles.whyGo}>{p.whyGo}</Text> : null}
+                  {p.vibe?.length ? <Text style={styles.vibeTags}>{p.vibe.join(' · ')}</Text> : null}
                   {p.hours ? (
                     <Text style={styles.note} numberOfLines={1}>
                       {p.hours}
@@ -102,6 +97,7 @@ export default function Explore() {
           {shown.length === 0 ? <Text style={[styles.meta, { padding: space.lg }]}>No places match.</Text> : null}
         </View>
 
+        {capped ? <Text style={styles.credit}>Showing the top {shown.length}. Search or filter to narrow it down.</Text> : null}
         <Text style={styles.credit}>Place data © OpenStreetMap contributors. Hours may be out of date.</Text>
       </ScrollView>
     </Screen>
@@ -123,6 +119,8 @@ const styles = StyleSheet.create({
   thumb: { width: 64, height: 64, alignItems: 'center', justifyContent: 'center' },
   name: { color: colors.text, fontFamily: fonts.display, fontSize: 17, letterSpacing: -0.3 },
   meta: { color: colors.textDim, fontFamily: fonts.body, fontSize: 12 },
+  whyGo: { color: colors.text, fontFamily: fonts.body, fontSize: 13, lineHeight: 18 },
+  vibeTags: { color: colors.blue, fontFamily: fonts.bodyMedium, fontSize: 11 },
   note: { color: colors.textFaint, fontFamily: fonts.body, fontSize: 11 },
   late: { color: colors.primary, fontFamily: fonts.bodyMedium, fontSize: 12, marginTop: 2 },
   credit: { color: colors.textFaint, fontFamily: fonts.body, fontSize: 11, padding: space.lg },

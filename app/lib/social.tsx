@@ -1,3 +1,4 @@
+import { AppState } from 'react-native';
 import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import { JoinPolicy, JoinRequest, joinRequests as seedRequests, people as seedPeople, Person, Relation } from '@/data/mock';
@@ -112,7 +113,10 @@ export function SocialProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!me) return;
     refresh();
-    const t = setInterval(refresh, 15000);
+    // Poll gently (and only while the app is open) to stay inside the free tier.
+    const t = setInterval(() => {
+      if (AppState.currentState === 'active') refresh();
+    }, 60000);
     return () => clearInterval(t);
   }, [me, refresh]);
 

@@ -8,6 +8,7 @@ import { colors, fonts, space } from '@/constants/theme';
 import { PlaceCategory } from '@/data/mock';
 import { useExperiences } from '@/lib/experiences';
 import { distanceMeters, formatDistance, walkMinutes } from '@/lib/geo';
+import { buildTimeline, clock } from '@/lib/timeline';
 import { useLive } from '@/lib/live';
 
 const label: Record<PlaceCategory, string> = {
@@ -38,6 +39,11 @@ export default function ExperienceDetail() {
   const legs = places.slice(1).map((p, i) => distanceMeters(places[i], p));
   const totalWalk = legs.reduce((a, b) => a + b, 0);
   const missingHours = places.filter((p) => !p.hours).length;
+  const timeline = buildTimeline(
+    e.startTime,
+    places.map((_, i) => e.stopInfo?.[i]?.stay),
+    legs.map(walkMinutes),
+  );
 
   const go = () => {
     start('experience', e.id);
@@ -61,10 +67,22 @@ export default function ExperienceDetail() {
               `${e.stops} stops`,
               places.length > 1 ? `${formatDistance(totalWalk)} on foot` : '',
               e.cost,
+              e.bestNight ? `Best ${e.bestNight}` : '',
             ]
               .filter(Boolean)
               .join(' · ')}
           </Text>
+ {e.whyOrder ? (
+            <Text style={styles.why}>
+              <Text style={{ fontFamily: fonts.bodyBold, color: colors.text }}>Why this order  </Text>
+              {e.whyOrder}
+            </Text>
+          ) : null}
+          {timeline && e.startTime ? (
+            <Text style={styles.summary}>
+              {clock(e.startTime, 0)} start · ends around {timeline.end}
+            </Text>
+          ) : null}
         </View>
 
         <View style={{ paddingHorizontal: space.lg }}>
@@ -100,12 +118,26 @@ export default function ExperienceDetail() {
                     {place ? `${place.emoji} ` : ''}
                     {(all[i] as { name: string }).name}
                   </Text>
+                  {timeline ? (
+                    <Text style={styles.arrive}>
+                      {timeline.arrive[i]} · about {e.stopInfo?.[i]?.stay} min
+                    </Text>
+                  ) : null}
                   {place ? (
                     <>
+                      {place.whyGo ? <Text style={styles.whyGo}>{place.whyGo}</Text> : null}
+                      {e.stopInfo?.[i]?.tip ? <Text style={styles.tip}>💡 {e.stopInfo[i].tip}</Text> : null}
                       <Text style={styles.meta}>
-                        {label[place.category]}
-                        {place.address ? ` · ${place.address}` : ''}
+                        {[
+                          label[place.category],
+                          place.priceLevel ? '$'.repeat(place.priceLevel) : '',
+                          place.age19 ? '19+' : '',
+                          place.address,
+                        ]
+                          .filter(Boolean)
+                          .join(' · ')}
                       </Text>
+                      {place.vibe?.length ? <Text style={styles.vibe}>{place.vibe.join(' · ')}</Text> : null}
                       <Text style={styles.hours}>{place.hours || 'Hours unknown. Check before you go.'}</Text>
                       {place.late ? <Text style={styles.late}>● Open late</Text> : null}
                     </>
@@ -146,6 +178,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     transform: [{ rotate: '-3deg' }],
   },
+  why: { color: colors.textDim, fontFamily: fonts.body, fontSize: 14, lineHeight: 20, marginTop: space.xs },
+  arrive: { color: colors.primary, fontFamily: fonts.bodyBold, fontSize: 12 },
+  whyGo: { color: colors.text, fontFamily: fonts.body, fontSize: 14, lineHeight: 20 },
+  tip: { color: colors.yellow, fontFamily: fonts.bodyMedium, fontSize: 12, lineHeight: 17 },
+  vibe: { color: colors.blue, fontFamily: fonts.bodyMedium, fontSize: 11 },
   desc: { color: colors.textDim, fontFamily: fonts.body, fontSize: 15, lineHeight: 22 },
   summary: { color: colors.text, fontFamily: fonts.bodyMedium, fontSize: 14, marginTop: space.xs },
   stop: { flexDirection: 'row', gap: space.md, paddingHorizontal: space.lg, paddingVertical: space.sm },

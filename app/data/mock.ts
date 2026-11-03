@@ -14,6 +14,10 @@ export type Experience = {
   emoji: string;
   description?: string;
   stopPlaces?: Place[]; // full stop details when loaded from Supabase
+  whyOrder?: string;
+  bestNight?: string;
+  startTime?: string; // 24h HH:MM
+  stopInfo?: { stay?: number; tip?: string }[]; // aligned with stopPlaces
 };
 
 export const experiences: Experience[] = [
@@ -73,6 +77,16 @@ export type Place = {
   address: string;
   hours: string; // raw OpenStreetMap opening_hours, may be empty
   late: boolean; // open past midnight on at least one day
+  // Curated fields (blank until someone fills them in).
+  whyGo?: string;
+  tip?: string;
+  vibe?: string[];
+  priceLevel?: number; // 1-4
+  music?: string;
+  age19?: boolean;
+  verifiedAt?: string; // YYYY-MM-DD
+  city?: string;
+  subcategory?: string; // pub, arcade, karaoke, brewery...
 };
 
 // Fallback list shown only until a Supabase project is connected and seeded.
@@ -88,6 +102,16 @@ experiences[0].stopPlaces = places;
 experiences[0].route = places.map((p) => p.name);
 experiences[0].stops = places.length;
 experiences[0].description = 'Cocktails, music, games and a late bite across Gastown and Granville.';
+// Placeholder curation so the offline preview shows the layout. Real text comes from the curation CSVs.
+experiences[0].whyOrder = 'Example: start with food, build energy, end late.';
+experiences[0].bestNight = 'Fri-Sat';
+experiences[0].startTime = '18:30';
+experiences[0].stopInfo = [
+  { stay: 75, tip: 'Example tip for this stop.' },
+  { stay: 60 },
+  { stay: 90 },
+  { stay: 30 },
+];
 
 export const liveStop = {
   title: 'Santos Cantina & Mezcal Den',
