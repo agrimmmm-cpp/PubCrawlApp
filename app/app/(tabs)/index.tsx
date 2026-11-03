@@ -1,59 +1,101 @@
+import * as Location from 'expo-location';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { Button, Display, Header, Meter, Poster, Screen, SectionTitle, TextTabs } from '@/components/ui';
+import { Button, Display, Header, Poster, Screen, TextTabs } from '@/components/ui';
 import { colors, fonts, space } from '@/constants/theme';
-import { useExperiences } from '@/lib/experiences';
+import { Near, useExperienceCities, useExperienceFeed } from '@/lib/experiences';
 import { useLive } from '@/lib/live';
 
-const categories = ['Tonight', 'Under $50', 'Date night', 'Hidden gems'];
+const NEAR = 'Near me';
 
 export default function Discover() {
   const { start } = useLive();
-  const experiences = useExperiences();
-  const [active, setActive] = useState(categories[0]);
+  const cities = useExperienceCities();
+  const [choice, setChoice] = useState<string | null>(null);
+  const [near, setNear] = useState<Near | undefined>();
+  const [note, setNote] = useState<string | null>(null);
+  // Day and time shown in the hero, read once when the screen opens.
+  const [now] = useState(() => new Date());
+
+  const city = choice && choice !== NEAR ? choice : cities[0];
+  const { experiences, loading } = useExperienceFeed(choice === NEAR ? { near } : { city });
+
+  const pick = async (value: string) => {
+    setNote(null);
+    if (value !== NEAR) {
+      setChoice(value);
+      return;
+    }
+    try {
+      const perm = await Location.requestForegroundPermissionsAsync();
+      if (perm.status !== 'granted') {
+        setNote('Location is off, so pick a city instead. You can turn it on in Settings.');
+        return;
+      }
+      const pos = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
+      setNear({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+      setChoice(NEAR);
+    } catch {
+      setNote("Couldn't get your location. Pick a city instead.");
+    }
+  };
+
+  const status =
+    choice === NEAR
+      ? loading
+        ? 'Finding experiences near you…'
+        : experiences.length
+          ? 'Closest to you first'
+          : 'Nothing close by yet. Try a city.'
+      : loading
+        ? `Loading ${city}…`
+        : `${experiences.length} in ${city}`;
 
   return (
     <Screen>
       <ScrollView contentContainerStyle={{ paddingBottom: 48 }} showsVerticalScrollIndicator={false}>
-        <Header />
+        <Header place={choice === NEAR ? 'Near you' : city} />
 
         <View style={styles.hero}>
-          <Text style={styles.kicker}>FRIDAY · 10:42 PM</Text>
+          <Text style={styles.kicker}>
+            {now.toLocaleDateString('en-CA', { weekday: 'long' }).toUpperCase()} ·{' '}
+            {now.toLocaleTimeString('en-CA', { hour: 'numeric', minute: '2-digit' }).replace(/\./g, '').toUpperCase()}
+          </Text>
           <Display>
             What&apos;s the{'\n'}
             <Text style={{ color: colors.primary }}>move</Text> tonight?
           </Display>
         </View>
 
-        <View style={styles.heat}>
-          <View style={styles.dot} />
-          <Text style={styles.heatText}>Gastown is lively right now</Text>
-          <View style={{ flex: 1, marginLeft: space.md }}>
-            <Meter value={0.87} />
-          </View>
-        </View>
-
-        <View style={{ marginTop: space.xl }}>
-          <TextTabs items={categories} active={active} onChange={setActive} />
-        </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginTop: space.xl }}>
+          <TextTabs items={[NEAR, ...cities]} active={choice === NEAR ? NEAR : city} onChange={pick} />
+        </ScrollView>
+        <Text style={styles.status}>{note ?? status}</Text>
 
         {experiences.map((e) => (
           <View key={e.id} style={styles.item}>
             <Pressable onPress={() => router.push({ pathname: '/experience/[id]', params: { id: e.id } })}>
-            <Poster gradient={e.gradient} emoji={e.emoji} height={280}>
-              <Text style={styles.badge}>{e.badge}</Text>
-              <Text style={styles.title}>{e.title}</Text>
-            </Poster>
+              <Poster gradient={e.gradient} emoji={e.emoji} height={280}>
+                <Text style={styles.badge}>{e.badge}</Text>
+                <Text style={styles.title}>{e.title}</Text>
+              </Poster>
             </Pressable>
             <View style={styles.info}>
               <Text style={styles.meta}>
-                {[e.duration, `${e.stops} stops`, e.cost].filter(Boolean).join(' · ')}
+                {[
+                  e.distanceKm != null ? `${e.distanceKm < 10 ? e.distanceKm.toFixed(1) : Math.round(e.distanceKm)} km away` : '',
+                  e.duration,
+                  `${e.stops} stops`,
+                  e.cost,
+                ]
+                  .filter(Boolean)
+                  .join(' · ')}
                 {e.rating > 0 ? <Text style={{ color: colors.yellow }}> · ★ {e.rating}</Text> : null}
               </Text>
               <Text style={styles.route}>{e.route.join('  →  ')}</Text>
-              <View style={{ flexDirection: 'row', gap: space.sm, marginTop: space.md }}>
+              <View style={{ flexDirection: 'row', marginTop: space.md }}>
                 <Button
                   label="Start"
                   icon="play"
@@ -62,16 +104,10 @@ export default function Discover() {
                     router.navigate('/live');
                   }}
                 />
-                <Button label="Remix" icon="shuffle" variant="ghost" />
               </View>
             </View>
           </View>
         ))}
-
-        <SectionTitle title="Not feeling these?" />
-        <View style={{ paddingHorizontal: space.lg }}>
-          <Button label="Build my night" icon="sparkles" />
-        </View>
       </ScrollView>
     </Screen>
   );
@@ -80,9 +116,7 @@ export default function Discover() {
 const styles = StyleSheet.create({
   hero: { paddingHorizontal: space.lg, paddingTop: space.lg, gap: space.sm },
   kicker: { color: colors.textDim, fontFamily: fonts.bodyBold, fontSize: 11, letterSpacing: 1.5 },
-  heat: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: space.lg, marginTop: space.lg },
-  dot: { width: 8, height: 8, borderRadius: 4, backgroundColor: colors.green },
-  heatText: { color: colors.textDim, fontFamily: fonts.bodyMedium, fontSize: 12 },
+  status: { color: colors.textDim, fontFamily: fonts.bodyMedium, fontSize: 12, paddingHorizontal: space.lg, marginTop: space.sm },
   item: { marginTop: space.xl },
   badge: {
     position: 'absolute',

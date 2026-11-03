@@ -6,7 +6,7 @@ import { StopsMap } from '@/components/StopsMap';
 import { Button, Display, Poster, Screen, SectionTitle } from '@/components/ui';
 import { colors, fonts, space } from '@/constants/theme';
 import { PlaceCategory } from '@/data/mock';
-import { useExperiences } from '@/lib/experiences';
+import { useExperience } from '@/lib/experiences';
 import { distanceMeters, formatDistance, walkMinutes } from '@/lib/geo';
 import { buildTimeline, clock } from '@/lib/timeline';
 import { useLive } from '@/lib/live';
@@ -21,15 +21,14 @@ const label: Record<PlaceCategory, string> = {
 
 export default function ExperienceDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const experiences = useExperiences();
   const { start } = useLive();
-  const e = experiences.find((x) => x.id === id);
+  const { experience: e, loading } = useExperience(id);
 
   if (!e) {
     return (
       <Screen>
         <Text style={[styles.meta, { padding: space.lg }]} onPress={() => router.back()}>
-          That experience isn&apos;t available. Tap to go back.
+          {loading ? 'Loading…' : "That experience isn't available. Tap to go back."}
         </Text>
       </Screen>
     );

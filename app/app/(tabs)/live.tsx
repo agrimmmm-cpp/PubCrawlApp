@@ -6,7 +6,7 @@ import { GoLiveBurst } from '@/components/GoLiveBurst';
 import { Avatar, Button, Display, Divider, Header, Meter, Screen, SectionTitle, TextTabs } from '@/components/ui';
 import { colors, fonts, space } from '@/constants/theme';
 import { JoinPolicy } from '@/data/mock';
-import { useExperiences } from '@/lib/experiences';
+import { useExperience, useExperiences } from '@/lib/experiences';
 import { formatElapsed, LogKind, useLive } from '@/lib/live';
 import { useSocial } from '@/lib/social';
 
@@ -91,7 +91,7 @@ function Idle({ go }: { go: (mode: 'freestyle' | 'experience', id?: string) => v
 function ActiveNight() {
   const { session, add, end, nextStop, setJoinPolicy } = useLive();
   const { joinRequests, resolveJoinRequest } = useSocial();
-  const experiences = useExperiences();
+  const { experience: exp } = useExperience(session?.experienceId);
   const [now, setNow] = useState(() => Date.now());
 
   useEffect(() => {
@@ -101,7 +101,6 @@ function ActiveNight() {
 
   if (!session) return null;
 
-  const exp = experiences.find((e) => e.id === session.experienceId);
   const stops = exp?.route ?? [];
   const drinks = session.log.filter((l) => ['beer', 'cocktail', 'shot', 'wine'].includes(l.kind)).length;
   const water = session.log.filter((l) => l.kind === 'water').length;

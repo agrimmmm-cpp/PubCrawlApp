@@ -18,6 +18,11 @@ export type Experience = {
   bestNight?: string;
   startTime?: string; // 24h HH:MM
   stopInfo?: { stay?: number; tip?: string }[]; // aligned with stopPlaces
+  city?: string;
+  hub?: string; // neighbourhood or cluster name
+  lat?: number;
+  lng?: number;
+  distanceKm?: number; // set when sorted by Near me
 };
 
 export const experiences: Experience[] = [
