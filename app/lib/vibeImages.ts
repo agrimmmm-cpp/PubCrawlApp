@@ -4,6 +4,8 @@ import type { ImageSource } from 'expo-image';
 
 export const VIBE_IMAGES: Record<string, ImageSource | number> = {
   'brewery': require('../assets/vibes/brewery.jpg'),
+  'cafes': require('../assets/vibes/cafes.jpg'),
+  'carts': require('../assets/vibes/carts.jpg'),
   'cocktails': require('../assets/vibes/cocktails.jpg'),
   'dance': require('../assets/vibes/dance.jpg'),
   'date': require('../assets/vibes/date.jpg'),
@@ -12,5 +14,6 @@ export const VIBE_IMAGES: Record<string, ImageSource | number> = {
   'karaoke': require('../assets/vibes/karaoke.jpg'),
   'live-music': require('../assets/vibes/live-music.jpg'),
   'pub': require('../assets/vibes/pub.jpg'),
+  'restaurants': require('../assets/vibes/restaurants.jpg'),
   'scenic': require('../assets/vibes/scenic.jpg')
 };

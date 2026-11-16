@@ -15,3 +15,6 @@ export function distanceMeters(a: Point, b: Point) {
 export const walkMinutes = (meters: number) => Math.max(1, Math.round(meters / 80));
 
 export const formatDistance = (m: number) => (m < 1000 ? `${Math.round(m / 10) * 10} m` : `${(m / 1000).toFixed(1)} km`);
+
+/** Rough time for a ride leg: a few minutes to get picked up, then about 24 km/h through city traffic. */
+export const rideMinutes = (meters: number) => Math.round(6 + (meters / 1000) * 2.5);

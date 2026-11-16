@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Drunk bowling",
+    "note": "Example trend. Edit, add or end-date these as trends come and go. kinds = place subcategories to boost.",
+    "kinds": ["bowling"],
+    "boost": 1.0,
+    "starts": "2026-01-01",
+    "ends": null,
+    "template": {
+      "key": "drunk-bowling",
+      "title": "Bowling Night",
+      "badge": "TRENDING",
+      "emoji": "🎳",
+      "gradient": ["#4A0E0E", "#FFD60A"],
+      "start": 1110,
+      "vibe": ["games", "friends", "groups"],
+      "why": "A drink to loosen up, then the lanes, then a late bite. The classic bowling night.",
+      "stops": [
+        ["Warm-up", ["bar", "pub"], 55, false, false],
+        ["Bowling", ["bowling"], 90, false, false],
+        ["Last round", ["bar", "pub"], 55, true, false],
+        ["Late bite", ["fast food", "restaurant", "cafe", "bakery", "food cart", "dessert"], 30, true, false]
+      ]
+    }
+  }
+]

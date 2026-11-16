@@ -17,13 +17,14 @@ export type Experience = {
   whyOrder?: string;
   bestNight?: string;
   startTime?: string; // 24h HH:MM
-  stopInfo?: { stay?: number; tip?: string }[]; // aligned with stopPlaces
+  stopInfo?: { stay?: number; tip?: string; ride?: boolean }[]; // aligned with stopPlaces; ride = reached by ride, not on foot
   city?: string;
   hub?: string; // neighbourhood or cluster name
   lat?: number;
   lng?: number;
   distanceKm?: number; // set when sorted by Near me
   tags?: string[]; // vibe tags, e.g. pubs, games, date
+  estCad?: number; // estimated cost per person in CAD
 };
 
 export const experiences: Experience[] = [
@@ -97,6 +98,7 @@ export type Place = {
   city?: string;
   subcategory?: string; // pub, arcade, karaoke, brewery...
   distanceKm?: number; // set when sorted by Near me
+  estCad?: number; // typical spend per person in CAD (0 = free), an estimate by kind of place
 };
 
 // Fallback list shown only until a Supabase project is connected and seeded.

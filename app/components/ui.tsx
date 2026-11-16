@@ -92,7 +92,7 @@ export function TextTabs({
 export function Chip({ label, active, onPress }: { label: string; active?: boolean; onPress?: () => void }) {
   return (
     <Pressable onPress={onPress} style={[styles.chip, active && styles.chipActive]}>
-      <Text style={[styles.chipText, active && { color: '#0B0B0D' }]}>{label}</Text>
+      <Text style={[styles.chipText, active && { color: colors.text }]}>{label}</Text>
     </Pressable>
   );
 }
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   buttonGhost: { borderWidth: 1, borderColor: colors.line },
   buttonText: { color: '#0B0B0D', fontFamily: fonts.bodyBold, fontSize: 14, flexShrink: 0 },
   chip: { paddingHorizontal: 14, paddingVertical: 7, borderRadius: 999, borderWidth: 1, borderColor: colors.line },
-  chipActive: { backgroundColor: colors.primary, borderColor: colors.primary },
+  chipActive: { backgroundColor: 'rgba(255,255,255,0.12)', borderColor: colors.text },
   chipText: { color: colors.textDim, fontFamily: fonts.bodyBold, fontSize: 12 },
   tile: { width: 104, overflow: 'hidden', borderWidth: 2, borderColor: 'transparent' },
   tileActive: { borderColor: colors.primary },

@@ -7,7 +7,7 @@ import { Button, Chip, Display, Divider, Header, Screen, TextTabs, VibeTile } fr
 import { colors, fonts, space } from '@/constants/theme';
 import { PlaceCategory } from '@/data/mock';
 import { useNearMe } from '@/lib/location';
-import { CITIES, usePlaceSearch } from '@/lib/places';
+import { CITIES, PriceBand, placeTier, usePlaceSearch } from '@/lib/places';
 import { VIBES, vibeImage } from '@/lib/vibes';
 
 const NEAR = 'Near me';
@@ -33,6 +33,7 @@ export default function Explore() {
   const [choice, setChoice] = useState('Vancouver');
   const [vibe, setVibe] = useState<string | undefined>();
   const [lateOnly, setLateOnly] = useState(false);
+  const [price, setPrice] = useState<PriceBand>('any');
   const [q, setQ] = useState('');
   const isNear = choice === NEAR && !!near;
   const { places: shown, loading, capped } = usePlaceSearch({
@@ -40,6 +41,7 @@ export default function Explore() {
     near: isNear ? near : undefined,
     vibe,
     lateOnly,
+    price,
     query: q,
   });
 
@@ -90,9 +92,12 @@ export default function Explore() {
             />
           ))}
         </ScrollView>
-        <View style={[styles.row, { flexDirection: 'row', marginTop: space.md }]}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={[styles.row, { marginTop: space.md }]}>
+          {(['any', 'free', '$', '$$', '$$$'] as PriceBand[]).map((b) => (
+            <Chip key={b} label={b === 'any' ? 'Any price' : b === 'free' ? 'Free' : b} active={price === b} onPress={() => setPrice(b)} />
+          ))}
           <Chip label="Open late" active={lateOnly} onPress={() => setLateOnly(!lateOnly)} />
-        </View>
+        </ScrollView>
 
         <View style={{ marginTop: space.lg }}>
           {shown.length > 0 ? (
@@ -114,7 +119,7 @@ export default function Explore() {
                     {[
                       p.distanceKm != null ? `${p.distanceKm < 10 ? p.distanceKm.toFixed(1) : Math.round(p.distanceKm)} km` : '',
                       p.subcategory ? p.subcategory[0].toUpperCase() + p.subcategory.slice(1) : label[p.category],
-                      p.priceLevel ? '$'.repeat(p.priceLevel) : '',
+                      p.priceLevel ? '$'.repeat(p.priceLevel) : placeTier(p.estCad),
                       p.age19 ? '19+' : '',
                       p.address,
                     ]

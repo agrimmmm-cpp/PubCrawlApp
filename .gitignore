@@ -1,0 +1,3 @@
+# Third-party place signals (ratings, review counts). Check the provider's terms before committing any of it.
+supabase/data/place_signals.csv
+__pycache__/

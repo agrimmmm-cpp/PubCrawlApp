@@ -3,22 +3,27 @@
 
     python3 scripts/generate_experiences.py > supabase/migrations/007_generated_experiences.sql
 
-Rule based, no AI and no ratings: for each neighbourhood hub it picks a walkable sequence of stops
-(dinner, bars, an activity, a late bite) that are open at the time you would arrive on a Friday night,
-preferring independent venues with complete records. Output is marked is_curated = false so hand
-curated experiences are never overwritten. Venue hours come from OpenStreetMap and may be stale.
+Rule based, no AI and no ratings. For each neighbourhood hub it tries a set of themes (pub crawl, brewery crawl,
+karaoke, live music, food-cart crawl, student night, sunset stroll, night views...) and keeps the ones it can
+fill with a walkable, open-at-the-time sequence of real places. A theme can end with a scenic finale that is too
+far to walk, which becomes a ride leg. Every experience gets an estimated cost and budget / all-ages tags so the
+app can filter by price. Output is marked is_curated = false so hand-curated experiences are never overwritten.
+Venue hours come from OpenStreetMap and may be stale; costs are estimates by kind of place.
 """
+import collections
 import csv
-import math
 import re
 import sys
 from pathlib import Path
 
-DATA = Path(__file__).resolve().parent.parent / "supabase" / "data" / "places_metro_vancouver.csv"
-FRIDAY = 4  # Mo=0
-DAYS = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from algo import config as C  # noqa: E402
+from algo.hours import FRIDAY, metres  # noqa: E402
+from algo.score import load_signals  # noqa: E402
+from algo.search import build  # noqa: E402
 
-# Approximate neighbourhood centres (lat, lng) and a walkable radius in metres.
+DATA = Path(__file__).resolve().parent.parent / "supabase" / "data" / "places_metro_vancouver.csv"
+# Approximate neighbourhood centres (name, city, lat, lng, radius m). More hubs are found automatically in the suburbs.
 HUBS = [
     ("Gastown", "Vancouver", 49.2840, -123.1075, 750),
     ("Chinatown", "Vancouver", 49.2800, -123.0990, 600),
@@ -36,88 +41,24 @@ HUBS = [
     ("New Westminster Quay", "New Westminster", 49.2010, -122.9120, 900),
     ("Lonsdale", "North Vancouver", 49.3100, -123.0827, 900),
 ]
+HUBS = [h + (900,) for h in HUBS]  # (..., max walking leg in metres)
 
-HUBS = [h + (900,) for h in HUBS]  # (name, city, lat, lng, radius, max leg in metres)
-
-ACTIVITY_SUBS = {"arcade", "bowling", "escape room", "mini golf", "karaoke", "trampoline"}
-CULTURE_SUBS = {"viewpoint", "theatre", "cinema"}  # "attraction" is too noisy in OSM (libraries, offices)
+ACTIVITY_SUBS = {"arcade", "bowling", "escape room", "mini golf", "trampoline"}
+CULTURE_SUBS = {"theatre", "cinema"}
 BAR_SUBS = {"bar", "pub", "brewery", "distillery", "beer garden"}
+CHEAP_EAT_SUBS = {"fast food", "food cart", "cafe", "dessert", "bakery", "market", "food court"}
+DESSERT_SUBS = {"dessert", "bakery", "cafe"}
+SCENIC_SUBS = {"viewpoint", "beach", "pier", "peak"}
+ADULT_SUBS = {"bar", "pub", "brewery", "distillery", "beer garden", "nightclub", "live music", "casino"}
 
-
-# ---------- opening hours ----------
-def _days(spec):
-    out = set()
-    for tok in (t.strip() for t in spec.split(",") if t.strip()):
-        if "-" in tok:
-            a, b = tok.split("-", 1)
-            if a in DAYS and b in DAYS:
-                i, j = DAYS.index(a), DAYS.index(b)
-                while True:
-                    out.add(i)
-                    if i == j:
-                        break
-                    i = (i + 1) % 7
-        elif tok in DAYS:
-            out.add(DAYS.index(tok))
-        else:
-            return None
-    return out
-
-
-def _rules(hours):
-    """-> list of (days:set, intervals:list[(start,end)]) or None when a rule cannot be read."""
-    rules = []
-    for part in (p.strip() for p in hours.split(";") if p.strip()):
-        m = re.search(r"\d\d:\d\d|\boff\b|\bclosed\b", part)
-        if not m:
-            return None
-        day_spec = part[: m.start()].strip()
-        times = part[m.start():].strip()
-        days = set(range(7)) if not day_spec else _days(day_spec)
-        if days is None:
-            return None
-        if times in ("off", "closed"):
-            rules.append((days, []))
-            continue
-        iv = []
-        for a, b, c, d in re.findall(r"(\d\d):(\d\d)\s*-\s*(\d\d):(\d\d)", times):
-            s, e = int(a) * 60 + int(b), int(c) * 60 + int(d)
-            iv.append((s, e if e > s else e + 1440))  # past midnight
-        if not iv:
-            return None
-        rules.append((days, iv))
-    return rules
-
-
-def open_at(hours, day, minute):
-    """True / False, or None when the hours are missing or unreadable."""
-    if not hours:
-        return None
-    if "24/7" in hours:
-        return True
-    rules = _rules(hours)
-    if rules is None:
-        return None
-    today = prev = None
-    for days, iv in rules:  # later rules override earlier ones for the same day
-        if day in days:
-            today = iv
-        if (day - 1) % 7 in days:
-            prev = iv
-    if today and any(s <= minute < e for s, e in today):
-        return True
-    if prev and any(s <= minute + 1440 < e for s, e in prev):
-        return True
-    return False
-
-
-# ---------- helpers ----------
-def metres(a, b):
-    r = 6371000
-    p1, p2 = math.radians(a[0]), math.radians(b[0])
-    dp, dl = p2 - p1, math.radians(b[1] - a[1])
-    h = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
-    return 2 * r * math.asin(math.sqrt(h))
+# Typical spend per person (CAD), used when the places file has no estimate.
+COST_BY_SUB = {
+    "restaurant": 30, "fast food": 14, "food cart": 12, "cafe": 8, "dessert": 7, "bakery": 8, "market": 15,
+    "food court": 15, "bar": 24, "pub": 24, "brewery": 22, "distillery": 22, "beer garden": 22, "nightclub": 25,
+    "live music": 25, "arcade": 20, "bowling": 22, "escape room": 35, "karaoke": 20, "mini golf": 15,
+    "trampoline": 25, "cinema": 18, "theatre": 40, "casino": 20, "attraction": 15, "museum": 20,
+    "viewpoint": 0, "beach": 0, "pier": 0, "peak": 0, "park": 0,
+}
 
 
 def q(s):
@@ -132,58 +73,152 @@ def load():
         r["quality"] = int(r["quality"] or 0)
         r["chain"] = r["is_chain"] == "true"
         r["late"] = r["late_night"] == "true"
-        r["hours_raw"] = (r["hours"].split('"osm": "', 1)[1].rsplit('"', 1)[0] if r["hours"] else "")
+        r["hours_raw"] = r["hours"].split('"osm": "', 1)[1].rsplit('"', 1)[0] if r["hours"] else ""
+        est = (r.get("est_cost_cad") or "").strip()
+        r["cost"] = int(est) if est else COST_BY_SUB.get(r["subcategory"], 15)
+        r["pt"] = (r["lat"], r["lng"])
     return rows
 
 
-# ---------- templates ----------
-# Each stop: (role, allowed category/subcategory test, stay minutes, must be a late spot)
-def is_food(r):
-    return r["category"] == "food"
+# ---------- role tests ----------
+def sub_in(*names):
+    return lambda r: r["subcategory"] in names
 
 
-def is_dinner(r):
-    return r["subcategory"] == "restaurant"
+is_dinner = sub_in("restaurant")
+is_bar = lambda r: r["subcategory"] in BAR_SUBS
+is_brewery = sub_in("brewery", "distillery")
+is_club = lambda r: r["category"] == "nightclub" and r["subcategory"] == "nightclub"
+is_music = sub_in("live music")
+is_activity = lambda r: r["subcategory"] in ACTIVITY_SUBS
+is_karaoke = sub_in("karaoke")
+is_culture = lambda r: r["subcategory"] in CULTURE_SUBS
+is_cheap_eat = lambda r: r["subcategory"] in CHEAP_EAT_SUBS
+is_cart = sub_in("food cart")
+is_dessert = lambda r: r["subcategory"] in DESSERT_SUBS
+is_sweet = sub_in("dessert", "bakery")
+is_any_food = lambda r: r["category"] == "food"
+is_scenic = lambda r: r["subcategory"] in SCENIC_SUBS
+is_pub = sub_in("pub", "beer garden")
+is_cocktail = sub_in("bar")
+is_cafe = sub_in("cafe")
+is_bakery_or_cafe = sub_in("bakery", "cafe")
+is_arts = sub_in("arts", "museum", "attraction")
+is_rink = sub_in("ice rink")
+is_escape = sub_in("escape room")
+is_theatre = sub_in("theatre")
+is_cinema = sub_in("cinema")
 
 
-def is_bar(r):
-    return r["subcategory"] in BAR_SUBS
-def is_club(r):
-    return r["category"] == "nightclub"
-def is_activity(r):
-    return r["subcategory"] in ACTIVITY_SUBS
-def is_culture(r):
-    return r["subcategory"] in CULTURE_SUBS
+# Stop: (role, test, stay minutes, must be a late spot, reached by ride)
+def S(role, test, stay, late=False, ride=False):
+    return (role, test, stay, late, ride)
 
 
+def T(key, title, badge, emoji, gradient, start, vibe, why, stops):
+    return dict(key=key, title=title, badge=badge, emoji=emoji, gradient=gradient, start=start, vibe=vibe, why=why, stops=stops)
+
+
+ORANGE, PINK, BLUE, GOLD, GREEN, PURPLE = ("#3A2A0F", "#FF5C00"), ("#1A0F3A", "#FF3D81"), ("#0B2A4A", "#2D9CFF"), ("#2A1F0A", "#E0A030"), ("#0F3A2A", "#37E08A"), ("#3A0F5C", "#FF5C00")
+H = lambda h, m=0: h * 60 + m
+
+# A "crawl" is the same kind of place several times in a row, so every stop must really be that kind.
 TEMPLATES = [
-    dict(key="dinner-drinks", title="Dinner & Drinks", badge="CLASSIC", emoji="🍸", gradient=("#1A0F3A", "#FF3D81"), start=18 * 60 + 30,
-         vibe=["dinner", "cocktails"], why="Eat first, ease into drinks, then finish with a bite when the kitchens are closing.",
-         stops=[("Dinner", is_dinner, 75, False), ("Drinks", is_bar, 70, False), ("Nightcap", is_bar, 70, True), ("Late bite", is_food, 30, True)]),
-    dict(key="pub-crawl", title="Pub Crawl", badge="FRIENDS", emoji="🍺", gradient=("#3A2A0F", "#FF5C00"), start=18 * 60,
-         vibe=["pubs", "friends"], why="Short walks between spots, so most of the night is spent drinking, not travelling.",
-         stops=[("First round", is_bar, 55, False), ("Second round", is_bar, 55, False), ("Third round", is_bar, 55, False), ("Last call", is_bar, 55, True)]),
-    dict(key="games-night", title="Games Night", badge="GAMES", emoji="🕹️", gradient=("#4A0E0E", "#FFD60A"), start=18 * 60 + 30,
-         vibe=["games", "groups"], why="Food first, then the games while everyone has energy, drinks after, and a late bite to end.",
-         stops=[("Dinner", is_dinner, 60, False), ("Games", is_activity, 90, False), ("Drinks", is_bar, 70, False), ("Late bite", is_food, 30, True)]),
-    dict(key="dance-night", title="Dance Night", badge="HIGH ENERGY", emoji="🪩", gradient=("#3A0F5C", "#FF5C00"), start=19 * 60 + 30,
-         vibe=["nightlife", "dancing"], why="Dinner and a warm-up drink, then the club once it fills up, and a late bite on the way out.",
-         stops=[("Dinner", is_dinner, 60, False), ("Warm-up", is_bar, 60, False), ("Dance", is_club, 120, True), ("Late bite", is_food, 30, True)]),
-    dict(key="date-night", title="Date Night", badge="DATE NIGHT", emoji="🌅", gradient=("#0B2A4A", "#2D9CFF"), start=17 * 60 + 30,
-         vibe=["scenic", "date"], why="Something to look at first, a proper dinner, then a quiet drink to talk.",
-         stops=[("Start", is_culture, 60, False), ("Dinner", is_dinner, 90, False), ("Drinks", is_bar, 75, False)]),
+    # --- crawls ---
+    T("pub-crawl", "Pub Crawl", "FRIENDS", "🍺", ORANGE, H(18), ["crawl", "pubs", "friends"],
+      "Four pubs close together, so most of the night is spent out, not travelling.",
+      [S("First round", is_pub, 55), S("Second round", is_pub, 55), S("Third round", is_pub, 55), S("Last call", is_pub, 55, True)]),
+    T("bar-crawl", "Bar Crawl", "BAR HOP", "🍻", ORANGE, H(19), ["crawl", "bars", "friends", "nightlife"],
+      "Three different bars on a short walk, ending somewhere open late.",
+      [S("Opener", is_bar, 50), S("Middle round", is_bar, 55), S("Last call", is_bar, 55, True)]),
+    T("cocktail-crawl", "Cocktail Crawl", "CRAFT COCKTAILS", "🍸", PINK, H(19, 30), ["crawl", "cocktails", "date", "nightlife"],
+      "Three cocktail bars on foot, then something sweet to finish.",
+      [S("Aperitif", is_cocktail, 55), S("Main pour", is_cocktail, 60), S("Nightcap", is_cocktail, 60, True), S("Something sweet", is_dessert, 25)]),
+    T("brewery-crawl", "Brewery Crawl", "CRAFT BEER", "🍻", GOLD, H(15, 30), ["crawl", "brewery", "pubs", "friends"],
+      "Taprooms close together, with a proper meal in the middle so the night lasts.",
+      [S("First pour", is_brewery, 50), S("Second pour", is_brewery, 50), S("Dinner", is_dinner, 70), S("Last pour", is_brewery, 50)]),
+    T("brewery-bites", "Brewery Hop & Bites", "CRAFT BEER", "🥨", GOLD, H(14, 30), ["crawl", "brewery", "dinner", "friends"],
+      "Two taprooms, something quick to eat, then one more flight.",
+      [S("Flight one", is_brewery, 50), S("Bite", is_cheap_eat, 30), S("Flight two", is_brewery, 50), S("Last pint", is_brewery, 45)]),
+    T("brewery-views", "Brewery Crawl & Views", "CRAFT BEER + VIEW", "🌇", GOLD, H(15), ["crawl", "brewery", "scenic", "friends"],
+      "Two taprooms, dinner, then a ride to a view to finish. Never drive after drinking.",
+      [S("First pour", is_brewery, 50), S("Second pour", is_brewery, 50), S("Dinner", is_dinner, 70), S("The view", is_scenic, 30, False, True)]),
+    T("coffee-crawl", "Café Crawl", "DAYTIME", "☕", ("#2A1F14", "#C98B5A"), H(10, 30), ["eat-crawl", "cafes", "chill", "all-ages"],
+      "Three good cafés on foot, then something sweet.",
+      [S("Coffee one", is_cafe, 35), S("Coffee two", is_cafe, 35), S("Coffee three", is_cafe, 35), S("Something sweet", is_dessert, 25)]),
+    T("dessert-crawl", "Dessert Crawl", "SWEET", "🍰", ("#3A0F1F", "#FF7A59"), H(19), ["eat-crawl", "dessert", "date", "all-ages"],
+      "Three sweet stops close together, for people who skip the bar.",
+      [S("First treat", is_sweet, 25), S("Second treat", is_sweet, 25), S("Third treat", is_sweet, 25)]),
+    T("food-carts", "Food Cart Crawl", "STREET EATS", "🌭", ORANGE, H(12, 30), ["eat-crawl", "street-food", "dinner", "chill"],
+      "Small plates from a few cheap spots in a short walk, then something sweet.",
+      [S("First bite", is_cart, 25), S("Second bite", is_cheap_eat, 30), S("Third bite", is_cheap_eat, 30), S("Something sweet", is_dessert, 20)]),
+    # --- a meal plus something to do ---
+    T("dinner-drinks", "Dinner & Drinks", "CLASSIC", "🍸", PINK, H(18, 30), ["dinner", "cocktails"],
+      "Eat first, ease into drinks, then finish with a bite when the kitchens are closing.",
+      [S("Dinner", is_dinner, 75), S("Drinks", is_bar, 70), S("Nightcap", is_bar, 70, True), S("Late bite", is_any_food, 30, True)]),
+    T("games-night", "Games Night", "GAMES", "🕹️", ("#4A0E0E", "#FFD60A"), H(18, 30), ["games", "groups"],
+      "Food first, then the games while everyone has energy, drinks after, and a late bite to end.",
+      [S("Dinner", is_dinner, 60), S("Games", is_activity, 90), S("Drinks", is_bar, 70), S("Late bite", is_any_food, 30, True)]),
+    T("play-first", "Play First", "GAMES", "🎯", ("#4A0E0E", "#FFD60A"), H(17), ["games", "friends", "groups"],
+      "Start with the games, earn a proper dinner, then a couple of pints.",
+      [S("Games", is_activity, 90), S("Dinner", is_dinner, 70), S("Pints", is_pub, 60), S("Last round", is_bar, 50, True)]),
+    T("pints-and-play", "Pints & Play", "FRIENDS", "🎮", ("#4A0E0E", "#FF9A3D"), H(18), ["games", "pubs", "friends"],
+      "A pint to start, games in the middle, another pub, then a bite.",
+      [S("Pint", is_pub, 50), S("Games", is_activity, 80), S("Second pub", is_bar, 55), S("Late bite", is_any_food, 30, True)]),
+    T("escape-night", "Escape Room Night", "TEAM UP", "🔐", ("#0F1A3A", "#2D9CFF"), H(17, 30), ["games", "groups", "friends"],
+      "Fuel up, beat the clock together, then celebrate (or console yourselves) with a drink.",
+      [S("Fuel up", is_cheap_eat, 40), S("Escape room", is_escape, 75), S("Debrief", is_bar, 70)]),
+    T("rink-night", "Skate Night", "ACTIVE", "⛸️", BLUE, H(18), ["games", "friends", "chill", "all-ages"],
+      "Warm up with a hot drink, skate, then a pub to thaw out.",
+      [S("Warm-up", is_cafe, 25), S("Skate", is_rink, 75), S("Pub", is_pub, 60)]),
+    T("culture-night", "Gallery & Cocktails", "CULTURE", "🖼️", ("#1A0F3A", "#9B6BFF"), H(16, 30), ["date", "chill", "cocktails"],
+      "See something first, a proper dinner, then a quiet cocktail to talk about it.",
+      [S("Gallery", is_arts, 60), S("Dinner", is_dinner, 80), S("Cocktail", is_cocktail, 70)]),
+    T("theatre-night", "Dinner & a Show", "NIGHT OUT", "🎭", ("#3A0F1F", "#FF7A59"), H(18), ["date", "dinner"],
+      "Dinner nearby, the show, then a drink while the streets quieten.",
+      [S("Dinner", is_dinner, 70), S("The show", is_theatre, 120), S("Nightcap", is_bar, 60, True)]),
+    T("movie-night", "Dinner & a Movie", "CHILL", "🎬", ("#0F1A3A", "#FF7A59"), H(18), ["date", "chill", "dinner", "all-ages"],
+      "Dinner first, the movie, then dessert.",
+      [S("Dinner", is_dinner, 60), S("The movie", is_cinema, 120), S("Dessert", is_dessert, 25)]),
+    T("karaoke-night", "Karaoke Night", "SING", "🎤", ("#3A0F3A", "#FF3D81"), H(19), ["karaoke", "friends", "groups"],
+      "Something to eat, warm up with a drink, then the mic, then a late bite.",
+      [S("Dinner", is_cheap_eat, 50), S("Warm-up", is_bar, 55), S("Karaoke", is_karaoke, 90), S("Late bite", is_any_food, 30, True)]),
+    T("live-music", "Live Music Night", "LIVE", "🎸", ("#0F1A3A", "#2D9CFF"), H(19), ["music", "nightlife"],
+      "Dinner nearby, then the show, then a quiet drink to talk about it.",
+      [S("Dinner", is_dinner, 60), S("The show", is_music, 120, True), S("Nightcap", is_bar, 60, True)]),
+    T("dance-night", "Dance Night", "HIGH ENERGY", "🪩", PURPLE, H(19, 30), ["nightlife", "dancing"],
+      "Dinner and a warm-up drink, then the club once it fills up, and a late bite on the way out.",
+      [S("Dinner", is_dinner, 60), S("Warm-up", is_bar, 60), S("Dance", is_club, 120, True), S("Late bite", is_any_food, 30, True)]),
+    T("date-night", "Date Night", "DATE NIGHT", "🌅", ("#3A0F1F", "#FF7A59"), H(17, 30), ["scenic", "date"],
+      "Something to look at first, a proper dinner, then a quiet drink to talk.",
+      [S("Start", lambda r: is_culture(r) or is_scenic(r), 60), S("Dinner", is_dinner, 90), S("Drinks", is_bar, 75)]),
+    T("night-views", "Night Views", "SCENIC", "🌃", BLUE, H(18, 30), ["scenic", "dinner", "cocktails"],
+      "Dinner and a drink, then a ride to a view to finish the night. Check it is open and lit after dark.",
+      [S("Dinner", is_dinner, 75), S("Drinks", is_bar, 70), S("The view", is_scenic, 30, False, True)]),
+    T("sunset-stroll", "Sunset Stroll", "CHILL", "🌇", ("#3A1F0F", "#FFB347"), H(16, 30), ["scenic", "chill", "date"],
+      "A coffee or dessert, a walk to a view, then dinner. Slow and easy.",
+      [S("Treat", is_dessert, 25), S("The view", is_scenic, 40), S("Dinner", is_dinner, 75)]),
+    T("sunrise-start", "Sunrise Start", "EARLY", "🌅", ("#3A1F0F", "#FFD60A"), H(5, 45), ["scenic", "chill", "cafes", "all-ages"],
+      "Catch the first light at a viewpoint, then breakfast and coffee nearby. Check the sunrise time for the day.",
+      [S("First light", is_scenic, 40), S("Coffee", is_cafe, 35), S("Breakfast", is_bakery_or_cafe, 40)]),
+    T("student-night", "Student Night", "BUDGET", "🎒", GREEN, H(18), ["games", "friends"],
+      "Cheap eats, something fun to do, then a coffee or dessert, easy on the wallet.",
+      [S("Cheap eats", is_cheap_eat, 40), S("Something fun", is_activity, 75), S("Dessert", is_dessert, 25)]),
+    T("late-eats", "Late-Night Eats", "LATE", "🍟", ORANGE, H(22), ["dinner", "nightlife"],
+      "A drink to start, then two late kitchens that are still open when everything else is closing.",
+      [S("A drink", is_bar, 55, True), S("First bite", is_any_food, 30, True), S("Second bite", is_any_food, 30, True)]),
 ]
 
 
 def auto_hubs(places, per_city=4):
-    """Find dense clusters of bars, clubs and activities outside the hand-placed hubs (suburbs are spread out)."""
+    """Dense clusters of bars, clubs and activities outside Vancouver's hand-placed hubs (suburbs are spread out)."""
     hubs = []
     for city in sorted({p["city"] for p in places} - {"Vancouver"}):
         remaining = [p for p in places if p["city"] == city and p["category"] in ("bar", "nightclub", "activity")]
         for _ in range(per_city):
             best = None
             for c in remaining:
-                near = [p for p in remaining if metres((c["lat"], c["lng"]), (p["lat"], p["lng"])) <= 1200]
+                near = [p for p in remaining if metres(c["pt"], p["pt"]) <= 1200]
                 if best is None or len(near) > len(best):
                     best = near
             if not best or len(best) < 4:
@@ -191,89 +226,168 @@ def auto_hubs(places, per_city=4):
             lat = sum(p["lat"] for p in best) / len(best)
             lng = sum(p["lng"] for p in best) / len(best)
             streets = [a.split(" ", 1)[1] for a in (p["address"] for p in best) if a and a[0].isdigit() and " " in a]
-            label = max(set(streets), key=streets.count) if streets else f"{city} Centre"
+            label = max(sorted(set(streets)), key=streets.count) if streets else f"{city} Centre"  # sorted: same result every run
             hubs.append((f"{label}, {city}" if streets else label, city, lat, lng, 1300, 1300))
             ids = {p["source_id"] for p in best}
             remaining = [p for p in remaining if p["source_id"] not in ids]
     return hubs
 
 
-def score(r, prev, used):
-    s = r["quality"] + (0 if r["chain"] else 6) - used.get(r["source_id"], 0) * 2
-    if prev:
-        s -= metres((prev["lat"], prev["lng"]), (r["lat"], r["lng"])) / 150
-    return s
+# Hubs named after a street. The street only goes in a crawl's name when at least two of its stops are on it.
+HUB_STREET = {"Granville Strip": ("granville", "Downtown"), "Commercial Drive": ("commercial", "East Vancouver"), "Lonsdale": ("lonsdale", "Lower Lonsdale")}
+STREET_TYPES = {"st": "street", "ave": "avenue", "av": "avenue", "dr": "drive", "rd": "road", "blvd": "boulevard", "hwy": "highway", "pl": "place", "ln": "lane", "cres": "crescent", "pkwy": "parkway"}
+DIRECTIONS = {"w", "e", "n", "s", "west", "east", "north", "south", "nw", "ne", "sw", "se"}
 
 
-def build(tpl, hub, pool, used):
-    name, city, lat, lng, radius, leg_max = hub
-    near = [r for r in pool if r["city"] == city and metres((lat, lng), (r["lat"], r["lng"])) <= radius]
-    picked, clock, prev = [], tpl["start"], None
-    for role, test, stay, need_late in tpl["stops"]:
-        cands = []
-        for r in near:
-            if not test(r) or r["source_id"] in {p["source_id"] for p in picked}:
+def street_of(address):
+    """'1082 Granville Street' -> 'granville street'; None when there is no street."""
+    m = re.match(r"^\s*\d+[A-Za-z]?(?:\s*-\s*\d+)?\s+(.+?)(?:,.*)?$", address or "")
+    if not m:
+        return None
+    words = m.group(1).lower().replace(".", "").split()
+    while words and words[0] in DIRECTIONS:
+        words = words[1:]
+    words = [STREET_TYPES.get(w, w) for w in words]
+    return " ".join(words) or None
+
+
+def area_name(hub, stops, modes):
+    """The place name to put in a crawl's title: the hub when the stops really are there, otherwise something true."""
+    name, city = hub[0], hub[1]
+    streets = collections.Counter(street_of(s["address"]) for s, m in zip(stops, modes) if m == "walk")
+    streets.pop(None, None)
+    if name in HUB_STREET:
+        key, fallback = HUB_STREET[name]
+        return name if sum(n for st, n in streets.items() if key in st) >= 2 else fallback
+    if name.endswith(f", {city}"):  # an automatic suburb hub, named after the busiest street in its cluster
+        label = name[: -len(city) - 2]
+        key = street_of("1 " + label)
+        if key and sum(n for st, n in streets.items() if st == key) >= 2:
+            return name
+        return city
+    return name
+
+
+MAX_OTHER_PER_HUB = 7
+TEMPLATE_ORDER = {}
+
+
+def trend_templates(trends):
+    """Active trends that bring their own itinerary template (a list of [role, kinds, stay, late, ride])."""
+    out = []
+    for t in trends:
+        tpl = t.get("template")
+        if not tpl:
+            continue
+        stops = [S(role, (lambda kinds: lambda r: r["subcategory"] in kinds)(set(kinds)), stay, late, ride)
+                 for role, kinds, stay, late, ride in tpl["stops"]]
+        out.append(dict(tpl, gradient=tuple(tpl["gradient"]), stops=stops))
+    return out
+
+
+def generate(places, trends=None, signals=None, day=FRIDAY):
+    for i, t in enumerate(TEMPLATES + trend_templates(C.load_trends() if trends is None else trends)):
+        TEMPLATE_ORDER[t["key"]] = i
+    """Run the search for every hub and template. Returns [(hub, tpl, title, stops, modes, minutes, cost, tags, score)]."""
+    trends = C.load_trends() if trends is None else trends
+    ctx = dict(signals=load_signals() if signals is None else signals, trends=trends, day=day, budget_per_stop=None)
+    by_city = collections.defaultdict(list)
+    for p in places:
+        by_city[p["city"]].append(p)
+    scenic_by_city = {c: [p for p in ps if is_scenic(p)] for c, ps in by_city.items()}
+
+    used, exps, titles = {}, [], set()
+    for hub in HUBS + auto_hubs(places):
+        name, city, lat, lng, radius, _ = hub
+        near = [r for r in by_city[city] if metres((lat, lng), r["pt"]) <= radius]
+        found = []
+        for tpl in TEMPLATES + trend_templates(trends):
+            res = build(tpl, hub, near, scenic_by_city.get(city, []), used, ctx)
+            if res:
+                found.append((tpl, res))
+        # Best first, then keep a varied set: no two nights may share three stops, at most 3 per kind of arc.
+        found.sort(key=lambda f: (-f[1][3] / len(f[1][0]), f[0]["key"]))
+        keep, non_crawl = [], 0
+        for tpl, res in found:
+            ids = {s["source_id"] for s in res[0]}
+            if tpl["badge"] != "TRENDING" and any(len(ids & {s["source_id"] for s in k[1][0]}) >= 3 for k in keep):
                 continue
-            leg = metres((prev["lat"], prev["lng"]), (r["lat"], r["lng"])) if prev else 0
-            if leg > leg_max or (need_late and not r["late"]):
+            is_crawl = "crawl" in tpl["vibe"] or tpl["badge"] == "TRENDING"  # drinking crawls and trends are never capped out
+            if not is_crawl and non_crawl >= MAX_OTHER_PER_HUB:
                 continue
-            arrive = clock + int(leg / 80)  # walking at ~80 m/min
-            ok = open_at(r["hours_raw"], FRIDAY, arrive % 1440)
-            if ok is False:
+            non_crawl += not is_crawl
+            keep.append((tpl, res))
+        keep.sort(key=lambda k: TEMPLATE_ORDER[k[0]["key"]])  # deterministic output order
+        for tpl, res in keep:
+            stops, modes, minutes, total = res
+            label = area_name(hub, stops, modes)
+            short = label[: -len(city) - 2] if label.endswith(f", {city}") else label  # the city is already a tab in the app
+            title = f"{short} {tpl['title']}"
+            if title in titles:
                 continue
-            cands.append((score(r, prev, used) - (2 if ok is None else 0), r, arrive))
-        if not cands:
-            return None
-        cands.sort(key=lambda x: -x[0])
-        _, r, arrive = cands[0]
-        picked.append(dict(r, role=role, stay=stay))
-        clock = arrive + stay
-        prev = r
-    walk = sum(metres((a["lat"], a["lng"]), (b["lat"], b["lng"])) for a, b in zip(picked, picked[1:]))
-    return picked, int(sum(p["stay"] for p in picked) + walk / 80), walk
+            titles.add(title)
+            name = label
+            for s in stops:
+                used[s["source_id"]] = used.get(s["source_id"], 0) + 1
+            cost = int(round(sum(s["cost"] for s in stops) / 5.0) * 5)
+            tags = list(tpl["vibe"])
+            if cost <= 50:
+                tags.append("budget")
+            if cost <= 40:
+                tags.append("student")
+            if not any(s["subcategory"] in ADULT_SUBS for s in stops):
+                tags.append("all-ages")
+            if sum(1 for s in stops if s["late"]) >= 2:
+                tags.append("late")
+            if tpl["badge"] == "TRENDING":
+                tags.append("trending")
+            exps.append(((label,) + tuple(hub[1:]), tpl, title, stops, modes, minutes, cost, tags, total / len(stops)))
+    return exps
 
 
 def main():
     places = load()
-    used, exps, titles = {}, [], set()
-    for hub in HUBS + auto_hubs(places):
-        for tpl in TEMPLATES:
-            res = build(tpl, hub, places, used)
-            if not res:
-                continue
-            stops, minutes, walk = res
-            title = f"{hub[0]} {tpl['title']}"
-            if title in titles:
-                continue
-            titles.add(title)
-            for s in stops:
-                used[s["source_id"]] = used.get(s["source_id"], 0) + 1
-            exps.append((hub, tpl, title, stops, minutes))
+    exps = generate(places)
 
     out = [
         "-- Generated by scripts/generate_experiences.py. Re-run safe. Needs migrations 004-006 and the places loaded.",
-        "-- Rule based itineraries (is_curated = false). Hours are from OpenStreetMap and may be stale.",
+        "-- Rule based itineraries (is_curated = false). Hours are from OpenStreetMap and may be stale; costs are estimates.",
         "alter table experiences add column if not exists city text, add column if not exists hub text,",
         "  add column if not exists lat double precision, add column if not exists lng double precision;",
+        "alter table experience_stops add column if not exists travel_mode text default 'walk';",
+        "alter table experience_stops add column if not exists why_here text;",
+        "alter table experiences add column if not exists score real;",
         "create index if not exists experiences_city_idx on experiences (city);",
+        "create index if not exists experiences_cost_idx on experiences (est_cost_cad);",
         "update night_sessions set experience_id = null where experience_id in (select id from experiences where is_curated = false and author_id is null);",
         "delete from experiences where is_curated = false and author_id is null;",
         "",
     ]
-    for hub, tpl, title, stops, minutes in exps:
+    cols = "(title, badge, emoji, gradient, duration_minutes, est_cost_cad, description, why_order, best_night, start_time, vibe, city, hub, score, is_curated, is_public)"
+    rows = []
+    for hub, tpl, title, stops, modes, minutes, cost, tags, sc in exps:
         roles = ", ".join(s["role"].lower() for s in stops)
-        desc = f"{hub[0]}, {hub[1]}: {roles}."
-        out.append(
-            "insert into experiences (title, badge, emoji, gradient, duration_minutes, description, why_order, best_night, start_time, vibe, city, hub, is_curated, is_public) values "
-            f"({q(title)}, {q(tpl['badge'])}, {q(tpl['emoji'])}, array[{q(tpl['gradient'][0])},{q(tpl['gradient'][1])}], {minutes}, "
-            f"{q(desc)}, {q(tpl['why'])}, 'Fri-Sat', {q('%02d:%02d' % divmod(tpl['start'], 60))}, array[{','.join(q(v) for v in tpl['vibe'])}], {q(hub[1])}, {q(hub[0])}, false, true);"
+        rows.append(
+            f"({q(title)}, {q(tpl['badge'])}, {q(tpl['emoji'])}, array[{q(tpl['gradient'][0])},{q(tpl['gradient'][1])}], {minutes}, {cost}, "
+            f"{q(f'{hub[0]}, {hub[1]}: {roles}.')}, {q(tpl['why'])}, 'Fri-Sat', {q('%02d:%02d' % divmod(tpl['start'], 60))}, "
+            f"array[{','.join(q(v) for v in tags)}], {q(hub[1])}, {q(hub[0])}, {round(sc, 4)}, false, true)"
         )
-        for i, s in enumerate(stops, 1):
-            out.append(
-                "insert into experience_stops (experience_id, position, place_id, stay_minutes) "
-                f"select e.id, {i}, p.id, {s['stay']} from experiences e, places p "
-                f"where e.title = {q(title)} and e.is_curated = false and p.source = 'osm' and p.source_id = {q(s['source_id'])};"
-            )
+    for i in range(0, len(rows), 100):
+        out.append(f"insert into experiences {cols} values\n" + ",\n".join(rows[i : i + 100]) + ";")
+    out.append("")
+    srows = []
+    for hub, tpl, title, stops, modes, minutes, cost, tags, _ in exps:
+        for i, (s, m) in enumerate(zip(stops, modes), 1):
+            why = ", ".join(s["why"])
+            srows.append(f"({q(title)}, {i}, {q(s['source_id'])}, {s['stay']}, {q(m)}, {q(why)})")
+    for i in range(0, len(srows), 400):
+        out.append(
+            "insert into experience_stops (experience_id, position, place_id, stay_minutes, travel_mode, why_here)\n"
+            "select e.id, v.pos, p.id, v.stay, v.mode, v.why from (values\n" + ",\n".join(srows[i : i + 400]) +
+            "\n) as v(title, pos, osm_id, stay, mode, why)\n"
+            "join experiences e on e.title = v.title and e.is_curated = false\n"
+            "join places p on p.source = 'osm' and p.source_id = v.osm_id;"
+        )
     out += [
         "",
         "-- Hand-drafted experiences are all in Vancouver.",
@@ -285,11 +399,14 @@ def main():
         ") s where e.id = s.experience_id;",
     ]
     print("\n".join(out))
+
     print(f"{len(exps)} experiences", file=sys.stderr)
-    import collections
+    print("by theme:", dict(collections.Counter(e[1]["title"] for e in exps)), file=sys.stderr)
     print("by city:", dict(collections.Counter(e[0][1] for e in exps)), file=sys.stderr)
-    for hub, tpl, title, stops, minutes in exps[:6]:
-        print(f"  {title} ({minutes} min): " + " > ".join(s["name"] for s in stops), file=sys.stderr)
+    costs = [e[6] for e in exps]
+    print(f"cost ${min(costs)}-${max(costs)}; under $50: {sum(c <= 50 for c in costs)}; student: {sum('student' in e[7] for e in exps)}; all-ages: {sum('all-ages' in e[7] for e in exps)}; with a ride leg: {sum('ride' in e[4] for e in exps)}", file=sys.stderr)
+    for hub, tpl, title, stops, modes, minutes, cost, tags, _ in exps[:8]:
+        print(f"  {title} (${cost}, {minutes} min): " + " > ".join(("🚗 " if m == "ride" else "") + s["name"] for s, m in zip(stops, modes)), file=sys.stderr)
 
 
 if __name__ == "__main__":

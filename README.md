@@ -28,6 +28,20 @@ Load order in the Supabase SQL editor: `004_curation.sql`, `005_places_ingest.sq
 CSV), then `006_merge_import.sql`, then `007_generated_experiences.sql`. All of them are safe to re-run.
 Data © OpenStreetMap contributors (ODbL).
 
+### How experiences are chosen
+
+`scripts/algo/` scores every place (quality, popularity, price fit, open-at-arrival, our own thumbs, active trend,
+minus chain and missing-data penalties) and runs a beam search over each itinerary template, so the three
+best-looking stops are chosen together, not one at a time. All weights are in `scripts/algo/config.py`.
+
+- **Trends:** `scripts/algo/trends.json`. A trend boosts places of certain kinds and can add its own template
+  (the example is a bowling night). Add, edit or end-date entries as trends change, then re-run the generator.
+- **Better data later:** put ratings, review counts, price level and our own thumbs in
+  `supabase/data/place_signals.csv` (columns `source_id,rating,reviews,price_level,own_up,own_total`). The file is
+  git-ignored and optional. Check the provider's terms before storing their fields.
+- **Check a change:** `python3 scripts/algo/evaluate.py` prints walk-leg length, open-on-arrival share, variety, budget
+  fit and place reuse.
+
 ## Photos
 
 Mood tiles and experience covers use free stock photos (never shown as a specific venue). Until they are

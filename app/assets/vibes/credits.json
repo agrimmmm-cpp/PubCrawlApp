@@ -7,6 +7,20 @@
   "source": "Pixabay"
  },
  {
+  "vibe": "cafes",
+  "photographer": "24457758",
+  "photographer_url": "https://pixabay.com/users/24457758-24457758/",
+  "photo_url": "https://pixabay.com/photos/sweets-macaroon-sweetness-tea-6851675/",
+  "source": "Pixabay"
+ },
+ {
+  "vibe": "carts",
+  "photographer": "Alexas_Fotos",
+  "photographer_url": "https://pixabay.com/users/Alexas_Fotos-686414/",
+  "photo_url": "https://pixabay.com/photos/antique-car-automobile-snack-crepes-4684597/",
+  "source": "Pixabay"
+ },
+ {
   "vibe": "cocktails",
   "photographer": "igorska",
   "photographer_url": "https://pixabay.com/users/igorska-5501093/",
@@ -60,6 +74,13 @@
   "photographer": "StockSnap",
   "photographer_url": "https://pixabay.com/users/StockSnap-894430/",
   "photo_url": "https://pixabay.com/photos/beer-cold-drinks-beverage-hands-2605535/",
+  "source": "Pixabay"
+ },
+ {
+  "vibe": "restaurants",
+  "photographer": "karriezhu",
+  "photographer_url": "https://pixabay.com/users/karriezhu-801232/",
+  "photo_url": "https://pixabay.com/photos/food-dishes-restaurant-meal-menu-1050813/",
   "source": "Pixabay"
  },
  {

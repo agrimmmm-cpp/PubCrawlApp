@@ -1,14 +1,17 @@
+import { router } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Button, Display, Divider, Header, Meter, Screen, SectionTitle } from '@/components/ui';
 import { colors, fonts, space } from '@/constants/theme';
 import credits from '@/assets/vibes/credits.json';
+import { useIsAdmin } from '@/lib/admin';
 import { useAuth } from '@/lib/auth';
 import { BADGES, tierFor, usePassport } from '@/lib/passport';
 
 export default function Profile() {
   const { configured, session, signOut } = useAuth();
   const passport = usePassport();
+  const isAdmin = useIsAdmin();
   const tier = tierFor(passport.nights);
   const stats = [
     { label: 'nights', value: passport.nights },
@@ -64,6 +67,12 @@ export default function Profile() {
             Photos by {credits.map((c) => c.photographer).join(', ')} on {[...new Set(credits.map((c) => c.source))].join(' and ')}.
             Stock photos show a mood, never a specific venue. Place data © OpenStreetMap contributors.
           </Text>
+        ) : null}
+
+        {isAdmin ? (
+          <View style={{ paddingHorizontal: space.lg, marginTop: space.xl }}>
+            <Button label="Admin tools" icon="construct" onPress={() => router.push('/admin')} />
+          </View>
         ) : null}
 
         {configured && session ? (

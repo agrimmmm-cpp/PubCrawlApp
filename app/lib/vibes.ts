@@ -24,8 +24,11 @@ export const VIBES: Vibe[] = [
   { id: 'live-music', label: 'Live music', emoji: '🎸', gradient: ['#0F1A3A', '#2D9CFF'], query: 'live music concert crowd', tags: ['music'], place: sub('live music') },
   { id: 'games', label: 'Games & arcade', emoji: '🕹️', gradient: ['#4A0E0E', '#FFD60A'], query: 'arcade games neon', tags: ['games'], place: sub('arcade', 'bowling', 'escape room', 'mini golf', 'trampoline') },
   { id: 'karaoke', label: 'Karaoke', emoji: '🎤', gradient: ['#3A0F3A', '#FF3D81'], query: 'karaoke singing friends', tags: ['karaoke'], place: sub('karaoke') },
-  { id: 'scenic', label: 'Scenic', emoji: '🌆', gradient: ['#0B2A4A', '#2D9CFF'], query: 'Vancouver skyline', tags: ['scenic'], place: (p) => p.category === 'viewpoint' },
+  { id: 'scenic', label: 'Scenic views', emoji: '🌆', gradient: ['#0B2A4A', '#2D9CFF'], query: 'Vancouver skyline', tags: ['scenic'], place: (p) => p.category === 'viewpoint' },
   { id: 'date', label: 'Date night', emoji: '🌅', gradient: ['#3A0F1F', '#FF7A59'], query: 'romantic dinner candlelight', tags: ['date'], place: sub('theatre', 'cinema') },
+  { id: 'carts', label: 'Food carts', emoji: '🌭', gradient: ['#3A2A0F', '#FFB347'], query: 'food truck street food', tags: ['street-food'], place: sub('food cart') },
+  { id: 'cafes', label: 'Cafés & dessert', emoji: '☕', gradient: ['#2A1F14', '#C98B5A'], query: 'coffee dessert cafe', tags: [], place: sub('cafe', 'dessert', 'bakery') },
+  { id: 'restaurants', label: 'Restaurants', emoji: '🍽️', gradient: ['#3A0F1F', '#FF7A59'], query: 'restaurant dinner table', tags: [], place: sub('restaurant') },
   { id: 'eats', label: 'Late eats', emoji: '🍟', gradient: ['#3A2A0F', '#FF5C00'], query: 'poutine fries burger', tags: ['dinner'], place: (p) => p.category === 'food' && p.late },
 ];
 

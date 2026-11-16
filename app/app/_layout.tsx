@@ -51,6 +51,8 @@ function Routes() {
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="experience/[id]" />
         <Stack.Screen name="recap" />
+        <Stack.Screen name="admin/index" />
+        <Stack.Screen name="admin/edit" />
       </Stack.Protected>
       <Stack.Protected guard={!signedIn}>
         <Stack.Screen name="sign-in" />

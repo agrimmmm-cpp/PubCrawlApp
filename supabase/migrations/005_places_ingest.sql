@@ -6,10 +6,13 @@ alter table places
   add column if not exists phone text,
   add column if not exists cuisine text,
   add column if not exists is_chain boolean default false,
-  add column if not exists quality smallint default 0;  -- how complete the OSM record is (0-9)
+  add column if not exists quality smallint default 0,  -- how complete the OSM record is (0-9)
+  add column if not exists est_cost_cad smallint;       -- typical spend per person in CAD, 0 = free. An estimate by kind of place.
 
 create index if not exists places_city_idx on places (city);
 create index if not exists places_category_idx on places (category);
+create index if not exists places_cost_idx on places (est_cost_cad);
+create index if not exists places_sub_idx on places (subcategory);
 create index if not exists places_late_idx on places (late_night) where late_night;
 
 -- Staging table: import data/places_metro_vancouver.csv here with the dashboard's CSV import,
@@ -19,4 +22,5 @@ create table if not exists places_import (
   lat text, lng text, address text, hours text, late_night text, website text, phone text,
   cuisine text, is_chain text, quality text
 );
+alter table places_import add column if not exists est_cost_cad text;
 alter table places_import enable row level security;

@@ -24,6 +24,7 @@ export type Row = {
   verified_at: string | null;
   city?: string | null;
   subcategory?: string | null;
+  est_cost_cad?: number | null;
 };
 
 export const toPlace = (r: Row): Place => ({
@@ -45,13 +46,14 @@ export const toPlace = (r: Row): Place => ({
   verifiedAt: r.verified_at ?? undefined,
   city: r.city ?? undefined,
   subcategory: r.subcategory ?? undefined,
+  estCad: r.est_cost_cad ?? undefined,
 });
 
 export const PLACE_COLUMNS =
   'id,name,category,emoji,lat,lng,address,hours,late_night,why_go,tip,vibe,price_level,music,age_19,verified_at';
 
 // Columns added by migration 005. Used for browsing; experiences only need PLACE_COLUMNS.
-const EXT_COLUMNS = `${PLACE_COLUMNS},city,subcategory`;
+const EXT_COLUMNS = `${PLACE_COLUMNS},city,subcategory,est_cost_cad`;
 
 export const CITIES = [
   'Vancouver', 'Burnaby', 'Surrey', 'Richmond', 'North Vancouver', 'West Vancouver', 'New Westminster',
@@ -77,15 +79,26 @@ const MOOD_FILTERS: Record<string, { subs?: string[]; category?: string; late?: 
   games: { subs: ['arcade', 'bowling', 'escape room', 'mini golf', 'trampoline'] },
   karaoke: { subs: ['karaoke'] },
   scenic: { category: 'viewpoint' },
+  carts: { subs: ['food cart'] },
+  cafes: { subs: ['cafe', 'dessert', 'bakery'] },
+  restaurants: { subs: ['restaurant'] },
   date: { subs: ['theatre', 'cinema'] },
   eats: { category: 'food', late: true },
 };
 
-type Opts = { city?: string; near?: Near; vibe?: string; lateOnly?: boolean; query: string };
+export type PriceBand = 'any' | 'free' | '$' | '$$' | '$$$';
+// Typical spend per person: free, up to $15, up to $35, more. These are estimates by kind of place.
+export const PRICE_RANGE: Record<PriceBand, [number, number] | undefined> = {
+  any: undefined, free: [0, 0], $: [1, 15], $$: [16, 35], $$$: [36, 999],
+};
+export const placeTier = (cad?: number) => (cad == null ? '' : cad === 0 ? 'Free' : cad <= 15 ? '$' : cad <= 35 ? '$$' : '$$$');
+
+type Opts = { city?: string; near?: Near; vibe?: string; lateOnly?: boolean; price?: PriceBand; query: string };
 
 const matches = (p: Place, o: Opts) => {
   const v = o.vibe ? vibeById(o.vibe) : undefined;
-  return (!v || v.place(p)) && (!o.lateOnly || p.late) && (!o.query || p.name.toLowerCase().includes(o.query.toLowerCase()));
+  const range = o.price ? PRICE_RANGE[o.price] : undefined;
+  return (!v || v.place(p)) && (!o.lateOnly || p.late) && (!range || (p.estCad != null && p.estCad >= range[0] && p.estCad <= range[1])) && (!o.query || p.name.toLowerCase().includes(o.query.toLowerCase()));
 };
 
 /**
@@ -93,14 +106,14 @@ const matches = (p: Place, o: Opts) => {
  * only one small page is fetched, so thousands of places never reach the phone.
  */
 export function usePlaceSearch(opts: Opts) {
-  const { city, near, vibe, lateOnly, query } = opts;
+  const { city, near, vibe, lateOnly, price, query } = opts;
   const nearLat = near?.lat;
   const nearLng = near?.lng;
   const [places, setPlaces] = useState<Place[]>(() => mockPlaces);
   const [loading, setLoading] = useState(supabaseConfigured);
 
   useEffect(() => {
-    const o: Opts = { city, vibe, lateOnly, query: query.trim() };
+    const o: Opts = { city, vibe, lateOnly, price, query: query.trim() };
     if (!supabaseConfigured) {
       setPlaces(mockPlaces.filter((p) => matches(p, o)));
       return;
@@ -120,6 +133,8 @@ export function usePlaceSearch(opts: Opts) {
       if (f?.subs) q = q.in('subcategory', f.subs);
       if (f?.category) q = q.eq('category', f.category);
       if (f?.late || lateOnly) q = q.eq('late_night', true);
+      const range = price ? PRICE_RANGE[price] : undefined;
+      if (range) q = q.gte('est_cost_cad', range[0]).lte('est_cost_cad', range[1]);
       const term = o.query.replace(/[%_\\]/g, (c) => `\\${c}`);
       if (term) q = q.ilike('name', `%${term}%`);
       // Independent venues first, then the most complete records.
@@ -153,7 +168,7 @@ export function usePlaceSearch(opts: Opts) {
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [city, nearLat, nearLng, vibe, lateOnly, query]);
+  }, [city, nearLat, nearLng, vibe, lateOnly, price, query]);
 
   return { places, loading, capped: places.length >= PAGE_SIZE };
 }

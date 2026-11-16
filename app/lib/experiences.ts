@@ -24,7 +24,8 @@ type Row = {
   vibe?: string[] | null;
   lat?: number | null;
   lng?: number | null;
-  experience_stops: { position: number; stay_minutes: number | null; tip: string | null; places: PlaceRow | null }[];
+  score?: number | null;
+  experience_stops: { position: number; stay_minutes: number | null; tip: string | null; travel_mode?: string | null; places: PlaceRow | null }[];
 };
 
 // No price shown until an estimate exists; never a guessed tier.
@@ -59,16 +60,20 @@ function toExperience(r: Row): Experience {
     tags: r.vibe ?? undefined,
     lat: r.lat ?? undefined,
     lng: r.lng ?? undefined,
-    stopInfo: ordered.filter((s) => s.places).map((s) => ({ stay: s.stay_minutes ?? undefined, tip: s.tip ?? undefined })),
+    estCad: r.est_cost_cad ?? undefined,
+    stopInfo: ordered
+      .filter((s) => s.places)
+      .map((s) => ({ stay: s.stay_minutes ?? undefined, tip: s.tip ?? undefined, ride: s.travel_mode === 'ride' })),
   };
 }
 
 const BASE_COLUMNS =
   'id,title,badge,emoji,gradient,rating,reviews,duration_minutes,est_cost_cad,description,why_order,best_night,start_time';
-const STOPS = `experience_stops(position,stay_minutes,tip,places(${PLACE_COLUMNS}))`;
+const STOPS_BASE = `experience_stops(position,stay_minutes,tip,places(${PLACE_COLUMNS}))`;
+const STOPS_FULL = `experience_stops(position,stay_minutes,tip,travel_mode,places(${PLACE_COLUMNS}))`;
 // city/hub/lat/lng arrive with migration 007; before that the base columns still work.
-const FULL_SELECT = `${BASE_COLUMNS},city,hub,vibe,lat,lng,${STOPS}`;
-const BASE_SELECT = `${BASE_COLUMNS},${STOPS}`;
+const FULL_SELECT = `${BASE_COLUMNS},city,hub,vibe,lat,lng,score,${STOPS_FULL}`;
+const BASE_SELECT = `${BASE_COLUMNS},${STOPS_BASE}`;
 
 const PAGE = 24;
 const snap = (n: number) => Math.round(n / 0.05) * 0.05; // ~5 km grid: only a coarse area is sent to the server
@@ -84,9 +89,10 @@ function km(a: Near, b: Near) {
  * Experiences for the Discover feed: by city, or the closest to a point ("Near me"), or the default
  * list (hand-drafted first). One small page is fetched; the area sent to the server is coarse.
  */
-export function useExperienceFeed(opts: { city?: string; near?: Near; tags?: string[]; skip?: boolean } = {}) {
-  const { city, near, tags, skip } = opts;
+export function useExperienceFeed(opts: { city?: string; near?: Near; tags?: string[]; maxCost?: number; required?: string[]; best?: boolean; skip?: boolean } = {}) {
+  const { city, near, tags, maxCost, required, best, skip } = opts;
   const tagKey = tags?.join(',') ?? '';
+  const requiredKey = required?.join(',') ?? '';
   const [data, setData] = useState<Experience[]>(mockExperiences);
   const [loading, setLoading] = useState(supabaseConfigured);
   const nearLat = near?.lat;
@@ -100,6 +106,8 @@ export function useExperienceFeed(opts: { city?: string; near?: Near; tags?: str
     const run = async () => {
       let q = supabase.from('experiences').select(FULL_SELECT).eq('is_public', true);
       if (tagKey) q = q.overlaps('vibe', tagKey.split(','));
+      if (requiredKey) q = q.contains('vibe', requiredKey.split(','));
+      if (maxCost != null) q = q.lte('est_cost_cad', maxCost);
       if (nearLat != null && nearLng != null) {
         const la = snap(nearLat);
         const ln = snap(nearLng);
@@ -107,10 +115,11 @@ export function useExperienceFeed(opts: { city?: string; near?: Near; tags?: str
       } else if (city) {
         q = q.eq('city', city);
       }
-      let res: { data: unknown; error: unknown } = await q
-        .order('is_curated', { ascending: false }) // hand-drafted first, then generated
+      // "Best" is ranked by the generator's score, across every city; otherwise hand-drafted first, then generated.
+      const ranked = best ? q.order('score', { ascending: false, nullsFirst: false }) : q.order('is_curated', { ascending: false });
+      let res: { data: unknown; error: unknown } = await ranked
         .order('created_at', { ascending: true })
-        .limit(nearLat != null ? 80 : PAGE);
+        .limit(best ? 120 : nearLat != null ? 80 : PAGE);
       if (res.error) {
         // The location columns are not in the database yet: fall back to the plain list.
         res = await supabase
@@ -139,7 +148,7 @@ export function useExperienceFeed(opts: { city?: string; near?: Near; tags?: str
     return () => {
       cancelled = true;
     };
-  }, [city, nearLat, nearLng, tagKey, skip]);
+  }, [city, nearLat, nearLng, tagKey, requiredKey, maxCost, best, skip]);
 
   return { experiences: data, loading };
 }
