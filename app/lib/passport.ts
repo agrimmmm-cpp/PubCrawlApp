@@ -32,13 +32,19 @@ export function usePassport() {
   return stats;
 }
 
-export const BADGES: { id: string; label: string; emoji: string; need: string; earned: (s: PassportStats) => boolean }[] = [
-  { id: 'first', label: 'First Night', emoji: '🌃', need: '1 night', earned: (s) => s.nights >= 1 },
-  { id: 'owl', label: 'Night Owl', emoji: '🦉', need: '5 nights', earned: (s) => s.nights >= 5 },
-  { id: 'explorer', label: 'Explorer', emoji: '🧭', need: '10 places', earned: (s) => s.places >= 10 },
-  { id: 'hopper', label: 'City Hopper', emoji: '🚌', need: '2 cities', earned: (s) => s.cities >= 2 },
-  { id: 'memory', label: 'Memory Maker', emoji: '📸', need: '10 moments', earned: (s) => s.moments >= 10 },
-  { id: 'legend', label: 'City Legend', emoji: '👑', need: '25 nights', earned: (s) => s.nights >= 25 },
+export type Badge = { id: string; label: string; emoji: string; need: string; goal: number; value: (s: PassportStats) => number; earned: (s: PassportStats) => boolean };
+
+const badge = (id: string, label: string, emoji: string, need: string, goal: number, value: (s: PassportStats) => number): Badge => ({
+  id, label, emoji, need, goal, value, earned: (s) => value(s) >= goal,
+});
+
+export const BADGES: Badge[] = [
+  badge('first', 'First Night', '🌃', '1 night', 1, (s) => s.nights),
+  badge('owl', 'Night Owl', '🦉', '5 nights', 5, (s) => s.nights),
+  badge('explorer', 'Explorer', '🧭', '10 places', 10, (s) => s.places),
+  badge('hopper', 'City Hopper', '🚌', '2 cities', 2, (s) => s.cities),
+  badge('memory', 'Memory Maker', '📸', '10 moments', 10, (s) => s.moments),
+  badge('legend', 'City Legend', '👑', '25 nights', 25, (s) => s.nights),
 ];
 
 const TIERS = [

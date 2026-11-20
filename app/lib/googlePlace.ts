@@ -12,7 +12,11 @@ export type GoogleInfo = {
   openNow?: boolean | null;
   weekdayText?: string[] | null;
   mapsUri?: string | null;
+  placeId?: string; // set when the server had to look the place up
 };
+
+/** What the server needs to find a place that has no Google id yet. */
+export type PlaceLookup = { id: string; name: string; lat: number; lng: number };
 
 type Kind = 'photo' | 'details';
 
@@ -26,7 +30,7 @@ const problems = new Map<string, string>();
  * Past it, cards quietly keep their Wikimedia or stock photo. The experience page itself is never limited by this,
  * only by the server's daily budget. Raise it if you want more cards to show Google photos.
  */
-export const CARD_PHOTOS_PER_SESSION = 40;
+export const CARD_PHOTOS_PER_SESSION = 150;
 let cardFetches = 0;
 
 /** Why the last request for this place failed, for the development note on screen. */
@@ -37,9 +41,9 @@ export const googleProblem = (placeId: string, kind: Kind) => problems.get(`${ki
  * Resolves to null on any problem (not set up yet, over the daily budget, offline), and screens quietly fall back
  * to their Wikimedia or stock photo.
  */
-export function fetchGoogleInfo(placeId: string, kind: Kind, card = false): Promise<GoogleInfo | null> {
-  if (!supabaseConfigured) return Promise.resolve(null);
-  const key = `${kind}:${placeId}`;
+export function fetchGoogleInfo(placeId: string | undefined, kind: Kind, card = false, lookup?: PlaceLookup): Promise<GoogleInfo | null> {
+  if (!supabaseConfigured || (!placeId && !lookup)) return Promise.resolve(null);
+  const key = `${kind}:${placeId ?? lookup!.id}`;
   let hit = cache.get(key);
   if (!hit) {
     if (card) {
@@ -47,7 +51,7 @@ export function fetchGoogleInfo(placeId: string, kind: Kind, card = false): Prom
       cardFetches++;
     }
     hit = supabase.functions
-      .invoke('place-info', { body: { placeId, kind } })
+      .invoke('place-info', { body: placeId ? { placeId, kind } : { place: lookup, kind } })
       .then(async ({ data, error }) => {
         const failure = error?.message ?? (data as { error?: string } | null)?.error;
         if (failure || !data) {
@@ -78,22 +82,24 @@ export function fetchGoogleInfo(placeId: string, kind: Kind, card = false): Prom
 }
 
 /** undefined while loading, null when there is nothing to show. */
-export function useGoogleInfo(placeId: string | undefined, kind: Kind, enabled = true, card = false) {
+export function useGoogleInfo(placeId: string | undefined, kind: Kind, enabled = true, card = false, lookup?: PlaceLookup) {
   const [result, setResult] = useState<{ key: string; info: GoogleInfo | null } | null>(null);
-  const key = placeId ? `${kind}:${placeId}` : '';
+  const id = placeId ?? lookup?.id;
+  const key = id ? `${kind}:${id}` : '';
+  const [name, lat, lng] = [lookup?.name, lookup?.lat, lookup?.lng];
 
   useEffect(() => {
-    if (!placeId || !enabled) return;
+    if (!id || !enabled) return;
     let cancelled = false;
-    fetchGoogleInfo(placeId, kind, card).then((info) => {
-      if (!cancelled) setResult({ key: `${kind}:${placeId}`, info });
+    fetchGoogleInfo(placeId, kind, card, placeId || !name ? undefined : { id, name, lat: lat as number, lng: lng as number }).then((info) => {
+      if (!cancelled) setResult({ key: `${kind}:${id}`, info });
     });
     return () => {
       cancelled = true;
     };
-  }, [placeId, kind, enabled, card]);
+  }, [id, placeId, kind, enabled, card, name, lat, lng]);
 
-  if (!placeId || !enabled) return null;
+  if (!id || !enabled) return null;
   return result?.key === key ? result.info : undefined;
 }
 

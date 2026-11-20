@@ -43,6 +43,14 @@
       ],
       "expo-image",
       [
+        "expo-camera",
+        {
+          "cameraPermission": "DrunkVA uses the camera so you can snap photos and short videos of your night and your side quests. They stay on your phone until you choose to share them.",
+          "microphonePermission": "DrunkVA records sound only when you film a short video moment.",
+          "recordAudioAndroid": true
+        }
+      ],
+      [
         "expo-image-picker",
         {
           "cameraPermission": "DrunkVA uses the camera so you can snap photos and short videos of your night and your side quests. They stay on your phone until you choose to share them.",

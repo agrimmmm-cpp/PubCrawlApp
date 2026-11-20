@@ -22,7 +22,8 @@ const open = (url: string) => (Platform.OS === 'web' ? Linking.openURL(url) : We
  */
 export function PlaceSheet({ place, group, onClose }: { place: Place; group?: Group; onClose: () => void }) {
   const { image, google: g, gradient } = usePlacePhoto(place, group, false);
-  const details = useGoogleInfo(place.googleId, 'details'); // same request as the card, so no extra cost
+  const lookup = !place.googleId && /^[0-9a-f-]{36}$/.test(place.id) ? { id: place.id, name: place.name, lat: place.lat, lng: place.lng } : undefined;
+  const details = useGoogleInfo(place.googleId, 'details', true, false, lookup); // same request as the card, so no extra cost
   const info = g ?? details;
   const today = info?.weekdayText?.[(new Date().getDay() + 6) % 7];
   const eats = !!place.subcategory && FOOD_AND_DRINK.has(place.subcategory);

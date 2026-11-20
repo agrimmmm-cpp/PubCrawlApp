@@ -15,7 +15,9 @@ export const PAGER_W = SCREEN_W - space.lg * 2 - 8;
 
 /** The best picture we have of a place: its own from Google, then Wikimedia, then a stock photo that fits its kind. */
 export function usePlacePhoto(place: Place, group?: Group, card = true) {
-  const g = useGoogleInfo(place.googleId, 'details', true, card);
+  // Places with no Google id yet are looked up by name and position; real places have UUID ids, sample ones do not.
+  const lookup = !place.googleId && /^[0-9a-f-]{36}$/.test(place.id) ? { id: place.id, name: place.name, lat: place.lat, lng: place.lng } : undefined;
+  const g = useGoogleInfo(place.googleId, 'details', true, card, lookup);
   const stock = photoFor(place);
   const fallback = group ? vibeImage(group.vibeId, place.id) : stock?.image;
   const image = g?.photoUri ? { uri: g.photoUri } : place.photo ? { uri: place.photo.url } : (stock?.real ? stock.image : fallback ?? stock?.image);

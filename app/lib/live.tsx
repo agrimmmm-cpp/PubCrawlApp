@@ -24,6 +24,9 @@ export type LogEntry = {
   note?: string;
   dbId?: string; // the drink_logs row, so edits and Undo reach the database
 };
+/** The caption that marks the one video a person picks as their best moment of the night. */
+export const BEST_MOMENT = 'best-moment';
+
 export type LogExtra = Pick<LogEntry, 'uri' | 'mediaType' | 'questId' | 'caption' | 'item' | 'size' | 'price' | 'rating' | 'note'>;
 
 export type LiveSession = {

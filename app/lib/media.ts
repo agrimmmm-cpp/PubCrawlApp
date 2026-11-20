@@ -12,8 +12,22 @@ export type CaptureResult = { ok: true; media: Captured } | { ok: false; reason:
  * storage so it survives the picker's temporary files. Photos and videos stay on the phone until shared.
  * On the web there is no camera, so the browser's file chooser opens instead.
  */
+// The in-app camera (components/CameraHost) registers itself here. It saves selfies un-mirrored, which the phone's
+// built-in camera does not always do.
+type CameraHostFn = (kind: 'photo' | 'video' | 'either') => Promise<Captured | 'denied' | null>;
+let cameraHost: CameraHostFn | null = null;
+export const registerCameraHost = (fn: CameraHostFn | null) => {
+  cameraHost = fn;
+};
+
 export async function capture(kind: 'photo' | 'video' | 'either'): Promise<CaptureResult> {
   try {
+    if (Platform.OS !== 'web' && cameraHost) {
+      const r = await cameraHost(kind);
+      if (r === 'denied') return { ok: false, reason: 'denied' };
+      if (!r) return { ok: false, reason: 'cancelled' };
+      return { ok: true, media: { uri: await keep(r.uri, r.type), type: r.type } };
+    }
     const mediaTypes: ImagePicker.MediaType[] = kind === 'photo' ? ['images'] : kind === 'video' ? ['videos'] : ['images', 'videos'];
     const options: ImagePicker.ImagePickerOptions = { mediaTypes, quality: 0.7, videoMaxDuration: 15 };
     let result: ImagePicker.ImagePickerResult;

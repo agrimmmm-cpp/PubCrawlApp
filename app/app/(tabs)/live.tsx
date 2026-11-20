@@ -15,7 +15,7 @@ import { JoinPolicy } from '@/data/mock';
 import { drinkMeta } from '@/data/drinks';
 import { useExperience, useExperiences } from '@/lib/experiences';
 import { distanceMeters, formatDistance, rideMinutes, walkMinutes } from '@/lib/geo';
-import { formatElapsed, LogKind, useLive } from '@/lib/live';
+import { BEST_MOMENT, formatElapsed, LogKind, useLive } from '@/lib/live';
 import { capture, shareMoment } from '@/lib/media';
 import { useQuests } from '@/lib/quests';
 import { useSocial } from '@/lib/social';
@@ -215,6 +215,23 @@ function ActiveNight() {
     }
   };
 
+  // One video per night, picked as the best moment: a dance move, a toast, a karaoke line, anything. Recording again
+  // replaces it. Nothing about how much or how fast anyone drinks.
+  const best = session.log.find((l) => l.kind === 'moment' && l.caption === BEST_MOMENT);
+  const recordBest = async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {});
+    const res = await capture('video');
+    if (res.ok) {
+      if (best) remove(best.id);
+      add('moment', { uri: res.media.uri, mediaType: 'video', caption: BEST_MOMENT });
+      say('Best moment saved ⭐');
+    } else if (res.reason === 'denied') {
+      say('Camera is off for DrunkVA. Turn it on in Settings.');
+    } else if (res.reason === 'error') {
+      say("The camera didn't open. Try again.");
+    }
+  };
+
   const shareOne = async (id: string, uri: string, type: 'photo' | 'video') => {
     setSharing(id);
     const r = await shareMoment({ uri, type }, { userId: auth?.user.id, sessionId: session.id });
@@ -377,6 +394,17 @@ function ActiveNight() {
           </View>
         ) : null}
 
+        <Pressable style={styles.bestCard} onPress={recordBest}>
+          <View style={styles.bestIcon}>
+            <Ionicons name={best ? 'checkmark' : 'videocam'} size={22} color="#0B0B0D" />
+          </View>
+          <View style={{ flex: 1, gap: 2 }}>
+            <Text style={styles.bestTitle}>{best ? 'Best moment saved ⭐' : 'Record your best moment'}</Text>
+            <Text style={styles.bestSub}>{best ? 'Tap to record a better one. It replaces this.' : 'A dance move, a toast, a karaoke line. One short video, your pick.'}</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={18} color={colors.textDim} />
+        </Pressable>
+
         {moments.length > 0 ? (
           <>
             <SectionTitle title="Moments" right={`${moments.length}`} />
@@ -391,6 +419,7 @@ function ActiveNight() {
                     <Image source={{ uri: m.uri }} style={StyleSheet.absoluteFill} contentFit="cover" />
                   )}
                   {m.questId ? <Text style={styles.thumbBadge}>🎯</Text> : null}
+                  {m.caption === BEST_MOMENT ? <Text style={styles.thumbBadge}>⭐</Text> : null}
                   <Pressable style={styles.thumbShare} onPress={() => m.uri && shareOne(m.id, m.uri, m.mediaType ?? 'photo')} hitSlop={6}>
                     <Ionicons name={sharing === m.id ? 'hourglass' : 'share-outline'} size={16} color="#fff" />
                   </Pressable>
@@ -588,6 +617,10 @@ function DockButton({ d, n, onPress }: { d: (typeof DOCK)[number]; n: number; on
 }
 
 const styles = StyleSheet.create({
+  bestCard: { flexDirection: 'row', alignItems: 'center', gap: space.md, marginHorizontal: space.lg, marginTop: space.lg, padding: space.md, borderRadius: 16, backgroundColor: colors.surface, borderWidth: 1, borderColor: 'rgba(255,92,0,0.35)' },
+  bestIcon: { width: 44, height: 44, borderRadius: 22, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center' },
+  bestTitle: { color: colors.text, fontFamily: fonts.bodyBold, fontSize: 15 },
+  bestSub: { color: colors.textDim, fontFamily: fonts.body, fontSize: 12, lineHeight: 17 },
   kicker: { color: colors.primary, fontFamily: fonts.bodyBold, fontSize: 11, letterSpacing: 1.5 },
   meta: { color: colors.textDim, fontFamily: fonts.body, fontSize: 13 },
   teaser: { color: colors.textDim, fontFamily: fonts.bodyMedium, fontSize: 13, lineHeight: 18, marginTop: space.sm },

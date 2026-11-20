@@ -11,6 +11,7 @@ type SocialValue = {
   addFriend: (id: string) => void;
   accept: (id: string) => void;
   decline: (id: string) => void;
+  removeFriend: (id: string) => void;
   join: (id: string) => void;
   resolveJoinRequest: (id: string, approve: boolean) => void;
 };
@@ -155,6 +156,20 @@ export function SocialProvider({ children }: { children: ReactNode }) {
     [me, patch, refresh],
   );
 
+  const removeFriend = useCallback(
+    (id: string) => {
+      patch(id, (p) => ({ ...p, relation: 'none', live: undefined }));
+      if (me) {
+        supabase
+          .from('friendships')
+          .delete()
+          .or(`and(requester_id.eq.${me},addressee_id.eq.${id}),and(requester_id.eq.${id},addressee_id.eq.${me})`)
+          .then(refresh);
+      }
+    },
+    [me, patch, refresh],
+  );
+
   // "friends" policy joins instantly; "invite" sends a request the host must approve.
   const join = useCallback(
     (id: string) => {
@@ -188,8 +203,8 @@ export function SocialProvider({ children }: { children: ReactNode }) {
   );
 
   const value = useMemo(
-    () => ({ people, joinRequests, addFriend, accept, decline, join, resolveJoinRequest }),
-    [people, joinRequests, addFriend, accept, decline, join, resolveJoinRequest],
+    () => ({ people, joinRequests, addFriend, accept, decline, removeFriend, join, resolveJoinRequest }),
+    [people, joinRequests, addFriend, accept, decline, removeFriend, join, resolveJoinRequest],
   );
   return <SocialContext.Provider value={value}>{children}</SocialContext.Provider>;
 }

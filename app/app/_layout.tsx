@@ -5,6 +5,7 @@ import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 
 import { colors } from '@/constants/theme';
+import { CameraHost } from '@/components/CameraHost';
 import { QuestCard } from '@/components/QuestCard';
 import { AuthProvider, useAuth } from '@/lib/auth';
 import { LiveProvider } from '@/lib/live';
@@ -37,6 +38,7 @@ export default function RootLayout() {
               <StatusBar style="light" />
               <Routes />
               <QuestCard />
+              <CameraHost />
             </SocialProvider>
           </QuestProvider>
         </LiveProvider>
@@ -56,6 +58,7 @@ function Routes() {
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="experience/[id]" />
         <Stack.Screen name="recap" />
+        <Stack.Screen name="add/[code]" />
         <Stack.Screen name="admin/index" />
         <Stack.Screen name="admin/edit" />
       </Stack.Protected>
