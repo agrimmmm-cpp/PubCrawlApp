@@ -1,12 +1,14 @@
 import { Ionicons } from '@expo/vector-icons';
+import * as Notifications from 'expo-notifications';
 import { router, useLocalSearchParams } from 'expo-router';
-import { ScrollView, Share, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Alert, Linking, Platform, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 
 import { TagRow } from '@/components/ExperienceCard';
 import { StopsMap } from '@/components/StopsMap';
 import { Button, Display, Poster, Screen, SectionTitle } from '@/components/ui';
 import { colors, fonts, space } from '@/constants/theme';
-import { PlaceCategory } from '@/data/mock';
+import { Place, PlaceCategory } from '@/data/mock';
 import { experienceCost } from '@/lib/cost';
 import { useExperience } from '@/lib/experiences';
 import { distanceMeters, formatDistance, rideMinutes, walkMinutes } from '@/lib/geo';
@@ -16,6 +18,10 @@ import { tagsFor } from '@/lib/tags';
 import { actName, doingAt, photoFor, teaser } from '@/lib/story';
 import { formatMinutes, sunset } from '@/lib/sun';
 import { vibeImage, vibeOf } from '@/lib/vibes';
+import { openNow } from '@/lib/hours';
+import { PriceSigns, Stars } from '@/components/GoogleBits';
+import { googleProblem, useGoogleInfo } from '@/lib/googlePlace';
+import { supabase, supabaseConfigured } from '@/lib/supabase';
 
 const label: Record<PlaceCategory, string> = {
   bar: 'Bar',
@@ -29,6 +35,33 @@ export default function ExperienceDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { start } = useLive();
   const { experience: e, loading } = useExperience(id);
+  const [about, setAbout] = useState(false);
+  const [more, setMore] = useState<Record<number, boolean>>({});
+  const [reminded, setReminded] = useState(false);
+  const [nights, setNights] = useState<number | null>(null);
+  const [now, setNow] = useState(() => new Date());
+  // One Google photo for the whole page: the first stop that has a Google place id. Costs one small request, and
+  // falls back to the Wikimedia or stock cover if Google is not set up or the daily budget is used.
+  const leadId = e?.stopPlaces?.find((p) => p.googleId)?.googleId;
+  const lead = useGoogleInfo(leadId, 'details'); // the same request the stop card makes, so it is paid for once
+
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 30_000);
+    return () => clearInterval(t);
+  }, []);
+
+  // Real social proof only: how many nights have been started on this experience, shown once it is 3 or more.
+  useEffect(() => {
+    if (!supabaseConfigured || !id) return;
+    supabase
+      .from('experience_stats')
+      .select('nights')
+      .eq('experience_id', id)
+      .maybeSingle()
+      .then(({ data, error }) => {
+        if (!error && data) setNights(Number((data as { nights: number }).nights));
+      });
+  }, [id]);
 
   if (!e) {
     return (
@@ -55,8 +88,61 @@ export default function ExperienceDetail() {
   );
 
   const last = places[places.length - 1];
+  // Cover: a real photo of one of the stops when there is one (the finale first), otherwise stock for the mood.
+  const realPhoto = [...places].reverse().find((p) => p.photo);
+  const leadPlace = places.find((p) => p.googleId === leadId);
+  const cover = lead?.photoUri
+    ? { image: { uri: lead.photoUri }, credit: undefined, real: false }
+    : realPhoto
+      ? photoFor(realPhoto)
+      : vibeOf(e)
+        ? { image: vibeImage(vibeOf(e)!.id, e.id), credit: undefined, real: false }
+        : undefined;
+  const credited = places.filter((p) => p.photo?.credit);
   const sunsetMin = last?.category === 'viewpoint' ? sunset(new Date(), last.lat, last.lng) : null;
   const hook = teaser(e);
+  const open = openNow(places, now);
+  const startAt = (() => {
+    if (!e.startTime) return null;
+    const [h, m] = e.startTime.split(':').map(Number);
+    const d = new Date(now);
+    d.setHours(h, m, 0, 0);
+    return d;
+  })();
+  const untilStart = startAt ? Math.round((startAt.getTime() - now.getTime()) / 60000) : null;
+  const startLine =
+    untilStart === null
+      ? null
+      : untilStart > 90
+        ? `Starts at ${clock(e.startTime!, 0)}, in ${Math.floor(untilStart / 60)}h ${untilStart % 60}m`
+        : untilStart > 0
+          ? `Starts at ${clock(e.startTime!, 0)}, in ${untilStart} min`
+          : untilStart > -120
+            ? 'Starting time has passed. You can start now and catch the rest.'
+            : null;
+  const remind = async () => {
+    if (!startAt) return;
+    const when = new Date(startAt.getTime() - 30 * 60000);
+    if (when.getTime() < Date.now()) when.setDate(when.getDate() + 1);
+    if (Platform.OS === 'web') {
+      setReminded(true);
+      return;
+    }
+    try {
+      const perm = await Notifications.requestPermissionsAsync();
+      if (!perm.granted) {
+        Alert.alert('Notifications are off', 'Turn them on in Settings to get a reminder.');
+        return;
+      }
+      await Notifications.scheduleNotificationAsync({
+        content: { title: `Get ready: ${e.title}`, body: `Starts at ${clock(e.startTime!, 0)}. Tap to start your night.` },
+        trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: when },
+      });
+      setReminded(true);
+    } catch {
+      Alert.alert("Couldn't set the reminder", 'Try again in a moment.');
+    }
+  };
   const share = () => Share.share({ message: `${e.title}: ${hook || e.description || 'A night out'} Find it on DrunkVA.` });
 
   const go = () => {
@@ -68,15 +154,23 @@ export default function ExperienceDetail() {
     <Screen>
       <View style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={{ paddingBottom: 120 }} showsVerticalScrollIndicator={false}>
-        <Poster gradient={e.gradient} emoji={e.emoji} image={vibeOf(e) ? vibeImage(vibeOf(e)!.id) : undefined} height={260}>
+        <Poster gradient={e.gradient} emoji={e.emoji} image={cover ? (cover.image as never) : undefined} height={260}>
           <Ionicons name="chevron-back" size={28} color="#fff" style={styles.back} onPress={() => router.back()} />
           <Text style={styles.badge}>{e.badge}</Text>
+          {lead?.photoUri ? (
+            <Text style={styles.credit} numberOfLines={1}>
+              📷 {leadPlace?.name}: {lead.photoBy ?? 'Google contributor'} · Google Maps
+            </Text>
+          ) : cover?.real && realPhoto?.photo?.credit ? (
+            <Text style={styles.credit} numberOfLines={1}>
+              📷 {realPhoto.name}: {realPhoto.photo.credit} · {realPhoto.photo.license}
+            </Text>
+          ) : null}
         </Poster>
 
         <View style={{ padding: space.lg, gap: space.sm }}>
           <Display style={{ fontSize: 34, lineHeight: 36 }}>{e.title}</Display>
           {hook ? <Text style={styles.hook}>{hook}</Text> : null}
-          {e.description ? <Text style={styles.desc}>{e.description}</Text> : null}
           <Text style={styles.summary}>
             {[
               e.duration,
@@ -91,34 +185,79 @@ export default function ExperienceDetail() {
           <TagRow tags={tagsFor(e, 6)} />
           {cost?.cad ? (
             <Text style={styles.summary}>
-              About ${cost.cad} per person <Text style={{ color: colors.textFaint }}>(estimate: a meal, drinks and entry)</Text>
+              About ${cost.cad} per person <Text style={{ color: colors.textFaint }}>(estimate)</Text>
             </Text>
           ) : null}
-          {e.whyOrder ? (
-            <Text style={styles.why}>
-              <Text style={{ fontFamily: fonts.bodyBold, color: colors.text }}>Why this order  </Text>
-              {e.whyOrder}
-            </Text>
-          ) : null}
-          {timeline && e.startTime ? (
-            <Text style={styles.summary}>
-              {clock(e.startTime, 0)} start · ends around {timeline.end}
-            </Text>
-          ) : null}
+          {nights !== null && nights >= 3 ? <Text style={styles.proof}>🔥 {nights} nights started on this one</Text> : null}
         </View>
+
+        {__DEV__ ? (
+          <Text style={styles.devNote}>
+            {!leadId
+              ? 'Dev note: none of this experience\'s stops has a Google id yet, so no Google photo. Run 014_google_place_ids.sql, or open a generated experience.'
+              : lead === undefined
+                ? 'Dev note: asking Google for the cover photo…'
+                : lead === null
+                  ? `Dev note: Google did not answer: ${googleProblem(leadId, 'photo') ?? 'unknown'}`
+                  : lead.photoUri
+                    ? 'Dev note: Google photo loaded.'
+                    : 'Dev note: Google answered but this place has no photo.'}
+          </Text>
+        ) : null}
+
+        {(open.open > 0 || startLine) && places.length > 0 ? (
+          <View style={styles.tonight}>
+            <Text style={styles.tonightTitle}>Tonight</Text>
+            {open.open + open.closed > 0 ? (
+              <Text style={styles.tonightLine}>
+                <Text style={{ color: open.closed === 0 ? colors.green : colors.yellow }}>● </Text>
+                {open.open} of {places.length} stops open right now
+                {open.closed > 0 ? `, ${open.closed} closed` : ''}
+                {open.unknown > 0 ? `, ${open.unknown} unknown` : ''}
+              </Text>
+            ) : null}
+            {startLine ? <Text style={styles.tonightLine}>{startLine}</Text> : null}
+          </View>
+        ) : null}
+
+        <Pressable style={styles.questTease} onPress={go}>
+          <Text style={{ fontSize: 26 }}>🎯</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.questTeaseTitle}>Side quests are waiting</Text>
+            <Text style={styles.questTeaseBody}>Surprise dares pop up as you go. Do them, skip them, or snap the proof.</Text>
+          </View>
+        </Pressable>
+
+        {e.description || e.whyOrder ? (
+          <View style={{ paddingHorizontal: space.lg, marginTop: space.md }}>
+            <Pressable onPress={() => setAbout(!about)} style={styles.aboutHead}>
+              <Text style={styles.aboutTitle}>About this night</Text>
+              <Ionicons name={about ? 'chevron-up' : 'chevron-down'} size={18} color={colors.textDim} />
+            </Pressable>
+            {about ? (
+              <View style={{ gap: space.sm, paddingTop: space.sm }}>
+                {e.description ? <Text style={styles.desc}>{e.description}</Text> : null}
+                {e.whyOrder ? (
+                  <Text style={styles.why}>
+                    <Text style={{ fontFamily: fonts.bodyBold, color: colors.text }}>Why this order  </Text>
+                    {e.whyOrder}
+                  </Text>
+                ) : null}
+                {timeline && e.startTime ? (
+                  <Text style={styles.summary}>
+                    {clock(e.startTime, 0)} start · ends around {timeline.end}
+                  </Text>
+                ) : null}
+              </View>
+            ) : null}
+          </View>
+        ) : null}
 
         {places.length > 1 ? (
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.peek}>
-            {places.map((p, i) => {
-              const ph = photoFor(p);
-              return (
-                <View key={p.id} style={styles.peekItem}>
-                  <Poster gradient={ph?.gradient ?? e.gradient} emoji={p.emoji} image={ph?.image} height={72}>
-                    <Text style={styles.peekNum}>{i + 1}</Text>
-                  </Poster>
-                </View>
-              );
-            })}
+            {places.map((p, i) => (
+              <PeekThumb key={p.id} place={p} gradient={e.gradient} n={i + 1} />
+            ))}
           </ScrollView>
         ) : null}
 
@@ -153,20 +292,7 @@ export default function ExperienceDetail() {
               ) : null}
               <View style={styles.stopCard}>
                 {place ? (
-                  <Poster
-                    gradient={photoFor(place)?.gradient ?? e.gradient}
-                    emoji={place.emoji}
-                    image={photoFor(place)?.image}
-                    height={190}
-                  >
-                    <View style={styles.stopOverlay}>
-                      <Text style={styles.act}>
-                        {i + 1} · {actName(place, i, all.length)}
-                        {timeline ? `  ·  ${timeline.arrive[i]}` : ''}
-                      </Text>
-                      <Text style={styles.stopName}>{place.name}</Text>
-                    </View>
-                  </Poster>
+                  <StopHero place={place} gradient={e.gradient} index={i} total={all.length} arrive={timeline?.arrive[i]} />
                 ) : null}
                 <View style={{ paddingHorizontal: space.lg, paddingTop: space.sm, gap: 3 }}>
                   {!place ? <Text style={styles.name}>{(all[i] as { name: string }).name}</Text> : null}
@@ -179,20 +305,28 @@ export default function ExperienceDetail() {
                         </Text>
                       ) : null}
                       {place.whyGo ? <Text style={styles.whyGo}>{place.whyGo}</Text> : null}
-                      {e.stopInfo?.[i]?.tip ? <Text style={styles.tip}>💡 {e.stopInfo[i].tip}</Text> : null}
-                      <Text style={styles.meta}>
-                        {[
-                          label[place.category],
-                          place.priceLevel ? '$'.repeat(place.priceLevel) : '',
-                          place.age19 ? '19+' : '',
-                          place.address,
-                        ]
-                          .filter(Boolean)
-                          .join(' · ')}
-                      </Text>
-                      {place.vibe?.length ? <Text style={styles.vibe}>{place.vibe.join(' · ')}</Text> : null}
-                      <Text style={styles.hours}>{place.hours || 'Hours unknown. Check before you go.'}</Text>
                       {place.late ? <Text style={styles.late}>● Open late</Text> : null}
+                      <Pressable onPress={() => setMore((m) => ({ ...m, [i]: !m[i] }))} hitSlop={8}>
+                        <Text style={styles.moreLink}>{more[i] ? 'Less' : 'Hours, address and tips'}</Text>
+                      </Pressable>
+                      {more[i] ? (
+                        <View style={{ gap: 3 }}>
+                          {e.stopInfo?.[i]?.tip ? <Text style={styles.tip}>💡 {e.stopInfo[i].tip}</Text> : null}
+                          <Text style={styles.meta}>
+                            {[
+                              label[place.category],
+                              place.priceLevel ? '$'.repeat(place.priceLevel) : '',
+                              place.age19 ? '19+' : '',
+                              place.address,
+                            ]
+                              .filter(Boolean)
+                              .join(' · ')}
+                          </Text>
+                          {place.vibe?.length ? <Text style={styles.vibe}>{place.vibe.join(' · ')}</Text> : null}
+                          <Text style={styles.hours}>{place.hours || 'Hours unknown. Check before you go.'}</Text>
+                          {place.googleId ? <GoogleDetails placeId={place.googleId} /> : null}
+                        </View>
+                      ) : null}
                     </>
                   ) : null}
                 </View>
@@ -212,6 +346,14 @@ export default function ExperienceDetail() {
             Heads up: {missingHours} stop{missingHours > 1 ? 's have' : ' has'} no listed hours. Check before you go.
           </Text>
         ) : null}
+        {credited.length > 0 ? (
+          <Text style={styles.note}>
+            Photos from Wikimedia Commons: {credited.map((p) => `${p.name} by ${p.photo?.credit} (${p.photo?.license})`).join('; ')}. Other
+            pictures are stock photos that show a mood, never a specific venue.
+          </Text>
+        ) : (
+          <Text style={styles.note}>The pictures are stock photos that show a mood, never a specific venue.</Text>
+        )}
         <Text style={styles.note}>
           Hours and walking times are estimates (hours from OpenStreetMap contributors, walking at about 80 m/min in a
           straight line).
@@ -219,12 +361,90 @@ export default function ExperienceDetail() {
       </ScrollView>
       <View style={styles.bar}>
         <View style={{ flex: 1 }}>
-          <Button label="Start this night" icon="play" onPress={go} />
+          <Button label={untilStart !== null && untilStart > 0 && untilStart < 24 * 60 ? 'Start this night' : 'Start now'} icon="play" onPress={go} />
         </View>
-        <Ionicons name="share-outline" size={26} color={colors.text} style={styles.share} onPress={share} />
+        <Ionicons
+          name={reminded ? 'notifications' : 'notifications-outline'}
+          size={26}
+          color={reminded ? colors.primary : colors.text}
+          style={styles.share}
+          onPress={remind}
+          accessibilityLabel="Remind me"
+        />
+        <Ionicons name="person-add-outline" size={25} color={colors.text} style={styles.share} onPress={share} accessibilityLabel="Invite friends" />
       </View>
       </View>
     </Screen>
+  );
+}
+
+/** A small numbered photo for the strip under the cover. Shares the stop card's Google request, so it costs nothing extra. */
+function PeekThumb({ place, gradient, n }: { place: Place; gradient: [string, string]; n: number }) {
+  const g = useGoogleInfo(place.googleId, 'details');
+  const ph = photoFor(place);
+  return (
+    <View style={styles.peekItem}>
+      <Poster gradient={ph?.gradient ?? gradient} emoji={place.emoji} image={(g?.photoUri ? { uri: g.photoUri } : ph?.image) as never} height={72}>
+        <Text style={styles.peekNum}>{n}</Text>
+      </Poster>
+    </View>
+  );
+}
+
+/**
+ * The photo of one stop with its name on it, then its stars and price. The photo is the place's own, from Google, when
+ * Google has it; otherwise a Wikimedia photo, otherwise a stock photo for that kind of place. Nothing here is stored.
+ */
+function StopHero({ place, gradient, index, total, arrive }: { place: Place; gradient: [string, string]; index: number; total: number; arrive?: string }) {
+  const g = useGoogleInfo(place.googleId, 'details');
+  const fallback = photoFor(place);
+  const image = g?.photoUri ? { uri: g.photoUri } : fallback?.image;
+  return (
+    <>
+      <Poster gradient={fallback?.gradient ?? gradient} emoji={place.emoji} image={image as never} height={190}>
+        <View style={styles.stopOverlay}>
+          <Text style={styles.act}>
+            {index + 1} · {actName(place, index, total)}
+            {arrive ? `  ·  ${arrive}` : ''}
+          </Text>
+          <Text style={styles.stopName}>{place.name}</Text>
+        </View>
+        {g?.photoUri ? (
+          <Text style={[styles.credit, { top: space.sm, bottom: undefined }]} numberOfLines={1}>
+            📷 {g.photoBy ?? 'Google contributor'} · Google Maps
+          </Text>
+        ) : place.photo?.credit ? (
+          <Text style={[styles.credit, { top: space.sm, bottom: undefined }]} numberOfLines={1}>
+            📷 {place.photo.credit} · {place.photo.license}
+          </Text>
+        ) : null}
+      </Poster>
+      {g && (g.rating || g.priceLevel != null || g.openNow != null) ? (
+        <View style={styles.reviewBar}>
+          {g.rating ? <Stars rating={g.rating} count={g.ratingCount} size={15} /> : null}
+          <View style={styles.reviewRight}>
+            <PriceSigns level={g.priceLevel} size={14} />
+            {g.openNow != null ? <Text style={[styles.openTag, { color: g.openNow ? colors.green : colors.pink }]}>{g.openNow ? 'Open now' : 'Closed now'}</Text> : null}
+          </View>
+        </View>
+      ) : null}
+    </>
+  );
+}
+
+/** Live hours and a Google Maps link for one stop, fetched only when the person opens "Hours, address and tips". */
+function GoogleDetails({ placeId }: { placeId: string }) {
+  const info = useGoogleInfo(placeId, 'details');
+  if (info === undefined) return <Text style={styles.gMuted}>Checking Google Maps…</Text>;
+  if (info === null) return null;
+  const today = info.weekdayText?.[(new Date().getDay() + 6) % 7];
+  return (
+    <View style={styles.gBox}>
+      {today ? <Text style={styles.meta}>{today}</Text> : null}
+      <Pressable onPress={() => info.mapsUri && Linking.openURL(info.mapsUri).catch(() => {})} disabled={!info.mapsUri} hitSlop={8}>
+        <Text style={styles.gAttr}>Google Maps{info.mapsUri ? '  ›' : ''}</Text>
+      </Pressable>
+    </View>
   );
 }
 
@@ -251,6 +471,26 @@ const styles = StyleSheet.create({
   vibe: { color: colors.blue, fontFamily: fonts.bodyMedium, fontSize: 11 },
   desc: { color: colors.textDim, fontFamily: fonts.body, fontSize: 15, lineHeight: 22 },
   summary: { color: colors.text, fontFamily: fonts.bodyMedium, fontSize: 14, marginTop: space.xs },
+  credit: { position: 'absolute', right: space.md, bottom: space.sm, left: space.md, textAlign: 'right', color: 'rgba(255,255,255,0.75)', fontFamily: fonts.body, fontSize: 10 },
+  reviewBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: space.lg, paddingTop: space.sm },
+  reviewRight: { flexDirection: 'row', alignItems: 'center', gap: space.md },
+  openTag: { fontFamily: fonts.bodyBold, fontSize: 12 },
+  gBox: { gap: 4, marginTop: 6, paddingTop: 8, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.line },
+  gPhoto: { height: 120, borderRadius: 10, overflow: 'hidden', backgroundColor: colors.surface },
+  gLine: { color: colors.text, fontFamily: fonts.bodyBold, fontSize: 14 },
+  gMuted: { color: colors.textFaint, fontFamily: fonts.body, fontSize: 12, marginTop: 4 },
+  gAttr: { color: colors.textDim, fontFamily: fonts.bodyBold, fontSize: 11, letterSpacing: 0.3 },
+  devNote: { color: colors.yellow, fontFamily: fonts.body, fontSize: 11, lineHeight: 15, marginHorizontal: space.lg, marginTop: space.sm },
+  proof: { color: colors.yellow, fontFamily: fonts.bodyBold, fontSize: 13, marginTop: 2 },
+  tonight: { marginHorizontal: space.lg, marginTop: space.sm, padding: space.md, borderRadius: 12, backgroundColor: colors.surface, gap: 3 },
+  tonightTitle: { color: colors.primary, fontFamily: fonts.bodyBold, fontSize: 11, letterSpacing: 1.5 },
+  tonightLine: { color: colors.text, fontFamily: fonts.bodyMedium, fontSize: 14 },
+  questTease: { flexDirection: 'row', alignItems: 'center', gap: space.md, marginHorizontal: space.lg, marginTop: space.md, padding: space.md, borderRadius: 12, backgroundColor: 'rgba(255,214,10,0.08)', borderWidth: 1, borderColor: 'rgba(255,214,10,0.25)' },
+  questTeaseTitle: { color: colors.text, fontFamily: fonts.display, fontSize: 16, letterSpacing: -0.3 },
+  questTeaseBody: { color: colors.textDim, fontFamily: fonts.body, fontSize: 12, lineHeight: 17 },
+  aboutHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 6 },
+  aboutTitle: { color: colors.text, fontFamily: fonts.bodyBold, fontSize: 14 },
+  moreLink: { color: colors.textDim, fontFamily: fonts.bodyBold, fontSize: 12, marginTop: 2 },
   hook: { color: colors.text, fontFamily: fonts.display, fontSize: 19, lineHeight: 24, letterSpacing: -0.3 },
   peek: { gap: 8, paddingHorizontal: space.lg, paddingTop: space.md },
   peekItem: { width: 72, height: 72, borderRadius: 8, overflow: 'hidden' },

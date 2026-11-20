@@ -99,7 +99,14 @@ export type Place = {
   subcategory?: string; // pub, arcade, karaoke, brewery...
   distanceKm?: number; // set when sorted by Near me
   estCad?: number; // typical spend per person in CAD (0 = free), an estimate by kind of place
+  photo?: PlacePhoto; // a real, freely licensed photo of this place (Wikimedia Commons)
+  googleId?: string; // Google place id: the only Google data we store. Photos and details are fetched live.
+  website?: string; // from OpenStreetMap: where the venue's own menu usually lives
+  phone?: string;
+  cuisine?: string;
 };
+
+export type PlacePhoto = { url: string; credit?: string; license?: string; sourceUrl?: string };
 
 // Fallback list shown only until a Supabase project is connected and seeded.
 export const places: Place[] = [
@@ -107,6 +114,30 @@ export const places: Place[] = [
   { id: 'm2', name: 'Guilt & Co', category: 'bar', emoji: '🍸', lat: 49.2840, lng: -123.1066, address: '', hours: 'Mo-Su 19:00-02:00', late: true },
   { id: 'm3', name: 'The Rec Room', category: 'activity', emoji: '🕹️', lat: 49.2808, lng: -123.1170, address: '', hours: 'Mo-Su 10:30-24:00', late: false },
   { id: 'm4', name: 'Mean Poutine', category: 'food', emoji: '🍽️', lat: 49.2790, lng: -123.1210, address: '', hours: 'Fr,Sa 11:00-04:00', late: true },
+];
+
+// A small, clearly made-up list so the Explore screen can be previewed offline. Real places come from Supabase.
+const ex = (id: string, name: string, category: PlaceCategory, subcategory: string, emoji: string, estCad: number, late = false, cuisine?: string): Place => ({
+  id, name, category, subcategory, emoji, estCad, late, cuisine, lat: 49.28, lng: -123.11, address: '123 Example Street', hours: 'Mo-Su 11:00-23:00', city: 'Vancouver',
+  website: 'https://example.com',
+});
+export const explorePlaces: Place[] = [
+  ex('e1', 'Example Bistro', 'food', 'restaurant', '🍽️', 38, false, 'french'),
+  ex('e2', 'Sample Noodle House', 'food', 'restaurant', '🍜', 24, false, 'ramen'),
+  ex('e3', 'Demo Trattoria', 'food', 'restaurant', '🍝', 34, false, 'italian'),
+  ex('e4', 'Quick Burger Joint', 'food', 'fast food', '🍔', 14, true),
+  ex('e5', 'Taco Window', 'food', 'fast food', '🌮', 12, true),
+  ex('e6', 'Example Coffee', 'food', 'cafe', '☕', 8),
+  ex('e7', 'Sample Bakery', 'food', 'bakery', '🥐', 9),
+  ex('e8', 'The Example Pub', 'bar', 'pub', '🍺', 24, true),
+  ex('e9', 'Sample Arms', 'bar', 'pub', '🍺', 24, false),
+  ex('e10', 'Demo Brewing Co.', 'bar', 'brewery', '🍻', 22),
+  ex('e11', 'Example Cocktail Room', 'bar', 'bar', '🍸', 28, true),
+  ex('e12', 'Sample Club', 'nightclub', 'nightclub', '🪩', 25, true),
+  ex('e13', 'Demo Arcade', 'activity', 'arcade', '🕹️', 20),
+  ex('e14', 'Example Lanes', 'activity', 'bowling', '🎳', 22),
+  ex('e15', 'Sample Theatre', 'activity', 'theatre', '🎭', 40),
+  ex('e16', 'Example Lookout', 'viewpoint', 'viewpoint', '🌆', 0),
 ];
 
 // Give the first mock experience full stop details so the detail screen can be previewed offline.

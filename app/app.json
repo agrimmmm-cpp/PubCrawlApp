@@ -41,7 +41,22 @@
           "locationWhenInUsePermission": "DrunkVA uses your location to show nights out near you. It stays on your phone and only a rough area is used to search."
         }
       ],
-      "expo-image"
+      "expo-image",
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "DrunkVA uses the camera so you can snap photos and short videos of your night and your side quests. They stay on your phone until you choose to share them.",
+          "microphonePermission": "DrunkVA records sound only when you film a short video moment.",
+          "photosPermission": "DrunkVA can pick a photo from your library for a moment."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#FF5C00"
+        }
+      ],
+      "expo-sharing"
     ],
     "experiments": {
       "typedRoutes": true

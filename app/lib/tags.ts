@@ -42,7 +42,7 @@ export function tagsFor(e: Experience, max = 4): Tag[] {
     if (tag && !out.some((o) => o.label === tag.label)) out.push(tag);
   }
   const late = e.stopPlaces?.filter((p) => p.late).length ?? 0;
-  if (late >= 2) out.push({ label: 'Late night', tone: 'hot' });
+  if (late >= 2 && !out.some((o) => o.label === 'Late night')) out.push({ label: 'Late night', tone: 'hot' });
   return out.slice(0, max);
 }
 

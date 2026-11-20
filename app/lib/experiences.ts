@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Experience, experiences as mockExperiences } from '@/data/mock';
 import type { Near } from '@/lib/location';
-import { PLACE_COLUMNS, Row as PlaceRow, toPlace } from '@/lib/places';
+import { PHOTO_EMBED, PLACE_COLUMNS, Row as PlaceRow, toPlace } from '@/lib/places';
 import { supabase, supabaseConfigured } from '@/lib/supabase';
 
 type Row = {
@@ -70,10 +70,20 @@ function toExperience(r: Row): Experience {
 const BASE_COLUMNS =
   'id,title,badge,emoji,gradient,rating,reviews,duration_minutes,est_cost_cad,description,why_order,best_night,start_time';
 const STOPS_BASE = `experience_stops(position,stay_minutes,tip,places(${PLACE_COLUMNS}))`;
-const STOPS_FULL = `experience_stops(position,stay_minutes,tip,travel_mode,places(${PLACE_COLUMNS}))`;
+const STOPS_FULL = `experience_stops(position,stay_minutes,tip,travel_mode,places(${PLACE_COLUMNS},google_place_id,${PHOTO_EMBED}))`;
 // city/hub/lat/lng arrive with migration 007; before that the base columns still work.
 const FULL_SELECT = `${BASE_COLUMNS},city,hub,vibe,lat,lng,score,${STOPS_FULL}`;
 const BASE_SELECT = `${BASE_COLUMNS},${STOPS_BASE}`;
+// The detail page asks for the richest select the database can answer and steps down one piece at a time, so a missing
+// piece (the photos table, or the Google id column) never costs the others.
+const stops = (extra: string) => `experience_stops(position,stay_minutes,tip,travel_mode,places(${PLACE_COLUMNS}${extra}))`;
+const DETAIL_SELECTS = [
+  FULL_SELECT,
+  `${BASE_COLUMNS},city,hub,vibe,lat,lng,${stops(',google_place_id')}`,
+  `${BASE_COLUMNS},city,hub,vibe,lat,lng,${stops(`,${PHOTO_EMBED}`)}`,
+  `${BASE_COLUMNS},city,hub,vibe,lat,lng,${stops('')}`,
+  BASE_SELECT,
+];
 
 const PAGE = 24;
 const snap = (n: number) => Math.round(n / 0.05) * 0.05; // ~5 km grid: only a coarse area is sent to the server
@@ -166,21 +176,19 @@ export function useExperience(id?: string) {
   useEffect(() => {
     if (!supabaseConfigured || !id) return;
     let cancelled = false;
-    supabase
-      .from('experiences')
-      .select(FULL_SELECT)
-      .eq('id', id)
-      .maybeSingle()
-      .then(async (res) => {
-        let row = res.data as unknown as Row | null;
-        if (res.error) {
-          const old = await supabase.from('experiences').select(BASE_SELECT).eq('id', id).maybeSingle();
-          row = old.data as unknown as Row | null;
+    (async () => {
+      let row: Row | null = null;
+      for (const select of DETAIL_SELECTS) {
+        const res = await supabase.from('experiences').select(select).eq('id', id).maybeSingle();
+        if (!res.error) {
+          row = res.data as unknown as Row | null;
+          break;
         }
-        if (cancelled) return;
-        if (row) setFound(toExperience(row));
-        setLoading(false);
-      });
+      }
+      if (cancelled) return;
+      if (row) setFound(toExperience(row));
+      setLoading(false);
+    })();
     return () => {
       cancelled = true;
     };

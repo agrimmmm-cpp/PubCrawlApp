@@ -2,10 +2,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { RatingText } from '@/components/GoogleBits';
 import { Poster } from '@/components/ui';
 import { colors, fonts, space } from '@/constants/theme';
 import { Experience } from '@/data/mock';
 import { distanceMeters, formatDistance } from '@/lib/geo';
+import { useGoogleInfo } from '@/lib/googlePlace';
 import { useLive } from '@/lib/live';
 import { Tag, tagsFor, Tone } from '@/lib/tags';
 import { vibeImage, vibeOf } from '@/lib/vibes';
@@ -17,8 +19,8 @@ const TONE: Record<Tone, string> = { price: colors.yellow, hot: colors.primary, 
 export function TagRow({ tags }: { tags: Tag[] }) {
   return (
     <View style={styles.tags}>
-      {tags.map((t) => (
-        <View key={t.label} style={[styles.tag, { borderColor: `${TONE[t.tone]}66` }]}>
+      {tags.map((t, i) => (
+        <View key={`${t.label}-${i}`} style={[styles.tag, { borderColor: `${TONE[t.tone]}66` }]}>
           <Text style={[styles.tagText, { color: TONE[t.tone] }]}>{t.label}</Text>
         </View>
       ))}
@@ -44,13 +46,19 @@ export function ExperienceCard({ e, variant = 'card' }: { e: Experience; variant
   const wide = variant === 'wide';
   const walk = walkTotal(e);
   const last = e.route[e.route.length - 1];
+  // The lead stop's real photo, rating and price from Google. Fetched only for cards that are on screen (the lists
+  // are virtualised), and only up to a per-session limit; otherwise the card keeps its Wikimedia or stock photo.
+  const lead = e.stopPlaces?.find((p) => p.googleId);
+  const g = useGoogleInfo(lead?.googleId, 'details', true, true);
+  const wiki = e.stopPlaces?.find((p) => p.photo);
+  const image = g?.photoUri ? { uri: g.photoUri } : wiki?.photo ? { uri: wiki.photo.url } : vibe ? vibeImage(vibe.id, e.id) : undefined;
 
   return (
     <Pressable
       onPress={() => router.push({ pathname: '/experience/[id]', params: { id: e.id } })}
       style={[styles.shadow, wide ? styles.wide : styles.narrow]}>
       <View style={styles.clip}>
-        <Poster gradient={e.gradient} emoji={e.emoji} image={vibe ? vibeImage(vibe.id) : undefined} height={230}>
+        <Poster gradient={e.gradient} emoji={e.emoji} image={image as never} height={192}>
           <View style={[styles.chip, styles.chipLeft, { borderColor: `${colors.primary}66` }]}>
             <Text style={[styles.chipText, { color: colors.primary, letterSpacing: 1 }]}>{e.badge}</Text>
           </View>
@@ -70,6 +78,11 @@ export function ExperienceCard({ e, variant = 'card' }: { e: Experience; variant
           <Text style={styles.title} numberOfLines={2}>
             {e.title}
           </Text>
+          {g?.photoUri ? (
+            <Text style={styles.credit} numberOfLines={1}>
+              📷 {g.photoBy ?? 'Google contributor'} · Google Maps
+            </Text>
+          ) : null}
         </Poster>
 
         <View style={styles.info}>
@@ -80,6 +93,15 @@ export function ExperienceCard({ e, variant = 'card' }: { e: Experience; variant
             </Text>
             {walk ? <Text style={styles.walk}>{walk} on foot</Text> : null}
           </View>
+
+          {g?.rating ? (
+            <View style={styles.reviewRow}>
+              <Text style={styles.leadName} numberOfLines={1}>
+                {lead?.name}
+              </Text>
+              <RatingText rating={g.rating} count={g.ratingCount} size={12} />
+            </View>
+          ) : null}
 
           <TagRow tags={tagsFor(e, wide ? 5 : 4)} />
 
@@ -121,7 +143,7 @@ const styles = StyleSheet.create({
     elevation: 12,
   },
   clip: { borderRadius: 22, overflow: 'hidden', borderWidth: 1, borderColor: colors.line },
-  narrow: { width: 260 },
+  narrow: { width: 232 },
   wide: { marginHorizontal: space.lg },
   chip: {
     position: 'absolute',
@@ -143,11 +165,14 @@ const styles = StyleSheet.create({
     right: space.md,
     color: '#fff',
     fontFamily: fonts.display,
-    fontSize: 25,
-    lineHeight: 27,
+    fontSize: 22,
+    lineHeight: 24,
     letterSpacing: -0.6,
   },
-  info: { padding: space.md + 2, gap: 10 },
+  credit: { position: 'absolute', right: space.sm, top: space.md + 34, color: 'rgba(255,255,255,0.7)', fontFamily: fonts.body, fontSize: 9 },
+  reviewRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
+  leadName: { flex: 1, color: colors.textDim, fontFamily: fonts.bodyMedium, fontSize: 11 },
+  info: { padding: space.md, gap: 8 },
   metaRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   meta: { color: colors.text, fontFamily: fonts.bodyMedium, fontSize: 13, flexShrink: 1 },
   walk: { color: colors.textFaint, fontFamily: fonts.bodyMedium, fontSize: 12 },

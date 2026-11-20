@@ -46,10 +46,13 @@ export function actName(p: Place, i: number, total: number): string {
   }
 }
 
-/** A stock photo that matches the kind of stop. Never presented as the venue itself. */
+/** The best photo for a stop: a real one when we have it (with its credit), otherwise stock for the kind of place. */
+const FALLBACK_VIBE: Record<Place['category'], string> = { bar: 'cocktails', nightclub: 'dance', food: 'restaurants', activity: 'games', viewpoint: 'scenic' };
+
 export function photoFor(p: Place) {
-  const v = VIBES.find((x) => x.place(p));
-  return v ? { id: v.id, image: vibeImage(v.id), gradient: v.gradient } : undefined;
+  const v = VIBES.find((x) => x.place(p)) ?? VIBES.find((x) => x.id === FALLBACK_VIBE[p.category]);
+  if (p.photo) return { id: v?.id ?? 'real', image: { uri: p.photo.url }, gradient: v?.gradient, credit: p.photo.credit, license: p.photo.license, real: true };
+  return v ? { id: v.id, image: vibeImage(v.id, p.id), gradient: v.gradient, credit: undefined, license: undefined, real: false } : undefined;
 }
 
 const GENERIC: Record<Place['category'], string> = {

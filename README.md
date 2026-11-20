@@ -38,9 +38,42 @@ best-looking stops are chosen together, not one at a time. All weights are in `s
   (the example is a bowling night). Add, edit or end-date entries as trends change, then re-run the generator.
 - **Better data later:** put ratings, review counts, price level and our own thumbs in
   `supabase/data/place_signals.csv` (columns `source_id,rating,reviews,price_level,own_up,own_total`). The file is
-  git-ignored and optional. Check the provider's terms before storing their fields.
+  git-ignored and optional. Do not put Google ratings or review counts in it: Google's policies forbid storing them.
+  Use it for our own signals (thumbs from `stop_ratings`, nights started) and for open data.
 - **Check a change:** `python3 scripts/algo/evaluate.py` prints walk-leg length, open-on-arrival share, variety, budget
   fit and place reuse.
+
+## Google Places (photos, ratings, hours)
+
+Google's Places policies let us keep one thing: the **place id**. Photos, ratings, prices and hours are fetched live each
+time someone opens a stop, and never stored. Two keys-in-two-places, and the key never reaches the phone:
+
+1. **For the one-time id lookup** (runs on your computer): add this line to `app/.env.local` (git-ignored, and a name
+   without `EXPO_PUBLIC_` is never bundled into the app):
+
+   ```
+   GOOGLE_PLACES_API_KEY=your-key-here
+   ```
+
+   ```bash
+   python3 scripts/resolve_google_ids.py --dry-run   # how many lookups, sends nothing
+   python3 scripts/resolve_google_ids.py --limit 20  # try 20 first
+   python3 scripts/resolve_google_ids.py             # the rest, writes migration 014
+   ```
+
+2. **For live photos and details** (runs on Supabase): the `place-info` Edge Function holds the key as a secret.
+   Supabase dashboard, Edge Functions, Deploy a new function named `place-info`, paste
+   `supabase/functions/place-info/index.ts`, keep "Verify JWT" on. Then Edge Functions, Secrets, add
+   `GOOGLE_PLACES_API_KEY`. Optional limits: `GOOGLE_USER_DAILY_LIMIT` (default 300) and `GOOGLE_DAILY_LIMIT` (default 1500).
+
+SQL order in the Supabase SQL editor: `013_google_places.sql`, then (after the script) `014_google_place_ids.sql`.
+
+In Google Cloud: restrict the key to the Places API (New) only, set a daily quota on it, and add a billing budget alert.
+Until the function is deployed the app simply keeps showing Wikimedia and stock photos.
+
+What costs money: one id lookup per stop (once), then per view a small photo request on the experience page and a
+details request only when someone taps a stop's "Hours, address and tips". Keep the Google logo or the "Google Maps"
+attribution visible wherever Google content is shown, and credit photo authors.
 
 ## Photos
 

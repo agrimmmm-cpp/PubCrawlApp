@@ -1,0 +1,7 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "drunkva-web", "runtimeExecutable": "bash", "runtimeArgs": ["-c", "cd app && npx expo start --web --port ${PORT:-8083}"], "port": 8083 },
+    { "name": "drunkva-web-mock", "runtimeExecutable": "bash", "runtimeArgs": ["-c", "cd app && EXPO_PUBLIC_SUPABASE_URL= EXPO_PUBLIC_SUPABASE_ANON_KEY= npx expo start --web --port ${PORT:-8084}"], "port": 8084 }
+  ]
+}

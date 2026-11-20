@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { ExperienceCard } from '@/components/ExperienceCard';
 import type { Experience } from '@/data/mock';
@@ -8,6 +8,26 @@ import { colors, fonts, space } from '@/constants/theme';
 import { useExperienceCities, useExperienceFeed } from '@/lib/experiences';
 import { useNearMe } from '@/lib/location';
 import { VIBES, vibeById, vibeImage } from '@/lib/vibes';
+
+/**
+ * A sideways row of cards that only draws the ones near the screen. That matters for money: each card asks Google for
+ * its photo, rating and price when it is drawn, so cards far off to the right do not cost anything until you scroll.
+ */
+function Carousel({ items }: { items: Experience[] }) {
+  return (
+    <FlatList
+      horizontal
+      data={items}
+      keyExtractor={(e) => e.id}
+      renderItem={({ item }) => <ExperienceCard e={item} />}
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={styles.row}
+      initialNumToRender={2}
+      maxToRenderPerBatch={2}
+      windowSize={3}
+    />
+  );
+}
 
 const NEAR = 'Near me';
 const BEST = 'Best crawls';
@@ -154,21 +174,13 @@ export default function Discover() {
             {crawls.top.length > 0 ? (
               <>
                 <SectionTitle title="Best of the best" />
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.row}>
-                  {crawls.top.map((e) => (
-                    <ExperienceCard key={e.id} e={e} />
-                  ))}
-                </ScrollView>
+                <Carousel items={crawls.top} />
               </>
             ) : null}
             {crawls.groups.map((g) => (
               <View key={g.tag}>
                 <SectionTitle title={`${g.emoji} ${g.title}`} right={`${g.items.length}`} />
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.row}>
-                  {g.items.slice(0, 8).map((e) => (
-                    <ExperienceCard key={e.id} e={e} />
-                  ))}
-                </ScrollView>
+                <Carousel items={g.items.slice(0, 8)} />
               </View>
             ))}
             {!bestFeed.loading && crawls.groups.length === 0 ? (
@@ -189,21 +201,13 @@ export default function Discover() {
             {all.length > 0 ? (
               <>
                 <SectionTitle title="Top picks" />
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.row}>
-                  {all.slice(0, 8).map((e) => (
-                    <ExperienceCard key={e.id} e={e} />
-                  ))}
-                </ScrollView>
+                <Carousel items={all.slice(0, 8)} />
               </>
             ) : null}
             {sections.map(({ v, items }) => (
               <View key={v.id}>
                 <SectionTitle title={`${v.emoji} ${v.label}`} right={`${items.length}`} />
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.row}>
-                  {items.slice(0, 8).map((e) => (
-                    <ExperienceCard key={e.id} e={e} />
-                  ))}
-                </ScrollView>
+                <Carousel items={items.slice(0, 8)} />
               </View>
             ))}
           </>

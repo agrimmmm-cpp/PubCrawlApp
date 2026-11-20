@@ -6,7 +6,25 @@ import { supabase, supabaseConfigured } from '@/lib/supabase';
 
 export type LogKind = 'beer' | 'cocktail' | 'shot' | 'wine' | 'water' | 'food' | 'moment';
 
-export type LogEntry = { id: string; kind: LogKind; at: number; stop?: number };
+export type LogEntry = {
+  id: string;
+  kind: LogKind;
+  at: number;
+  stop?: number;
+  // A captured moment: where the photo or video is on the phone, and the side quest it answered (if any).
+  uri?: string;
+  mediaType?: 'photo' | 'video';
+  questId?: string;
+  caption?: string;
+  // What a drink or snack was, filled in by the person after logging (all optional, all private).
+  item?: string;
+  size?: string;
+  price?: number; // CAD
+  rating?: number; // 1 to 5
+  note?: string;
+  dbId?: string; // the drink_logs row, so edits and Undo reach the database
+};
+export type LogExtra = Pick<LogEntry, 'uri' | 'mediaType' | 'questId' | 'caption' | 'item' | 'size' | 'price' | 'rating' | 'note'>;
 
 export type LiveSession = {
   id?: string; // night_sessions row id, set once saved to Supabase
@@ -30,7 +48,11 @@ type LiveContextValue = {
   clearBurst: () => void;
   start: (mode: LiveSession['mode'], experienceId?: string) => void;
   end: () => void;
-  add: (kind: LogKind) => void;
+  add: (kind: LogKind, extra?: LogExtra) => string | undefined;
+  /** Remove one log entry, for Undo. */
+  remove: (id: string) => void;
+  /** Change the details of one entry: what it was, size, price, rating, note. */
+  update: (id: string, patch: LogExtra) => void;
   nextStop: (max: number) => void;
   setJoinPolicy: (policy: JoinPolicy) => void;
 };
@@ -81,19 +103,45 @@ export function LiveProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const add = useCallback(
-    (kind: LogKind) => {
+    (kind: LogKind, extra?: LogExtra) => {
       const s = ref.current;
-      if (s?.id && userId) {
-        supabase.from('drink_logs').insert({ session_id: s.id, user_id: userId, kind, stop: s.stop }).then();
+      if (!s) return undefined;
+      const id = `${Date.now()}-${s.log.length}`;
+      // Drinks, water and food go to the (private) drink log; moments live on the phone until shared.
+      if (s.id && userId && kind !== 'moment') {
+        supabase
+          .from('drink_logs')
+          .insert({ session_id: s.id, user_id: userId, kind, stop: s.stop })
+          .select('id')
+          .single()
+          .then(({ data }) => {
+            if (data) setSession((cur) => (cur ? { ...cur, log: cur.log.map((l) => (l.id === id ? { ...l, dbId: data.id } : l)) } : cur));
+          });
       }
-      setSession((cur) =>
-        cur
-          ? { ...cur, log: [{ id: `${Date.now()}-${cur.log.length}`, kind, at: Date.now(), stop: cur.stop }, ...cur.log] }
-          : cur,
-      );
+      setSession((cur) => (cur ? { ...cur, log: [{ id, kind, at: Date.now(), stop: cur.stop, ...extra }, ...cur.log] } : cur));
+      return id;
     },
     [userId],
   );
+
+  const remove = useCallback((id: string) => {
+    const dbId = ref.current?.log.find((l) => l.id === id)?.dbId;
+    if (dbId) supabase.from('drink_logs').delete().eq('id', dbId).then();
+    setSession((cur) => (cur ? { ...cur, log: cur.log.filter((l) => l.id !== id) } : cur));
+  }, []);
+
+  const update = useCallback((id: string, patch: LogExtra) => {
+    const dbId = ref.current?.log.find((l) => l.id === id)?.dbId;
+    // The extra columns arrive with migration 013; before it runs this update simply fails and the details stay on the phone.
+    if (dbId) {
+      supabase
+        .from('drink_logs')
+        .update({ item: patch.item ?? null, size: patch.size ?? null, price_cad: patch.price ?? null, rating: patch.rating ?? null, note: patch.note ?? null })
+        .eq('id', dbId)
+        .then();
+    }
+    setSession((cur) => (cur ? { ...cur, log: cur.log.map((l) => (l.id === id ? { ...l, ...patch } : l)) } : cur));
+  }, []);
 
   const nextStop = useCallback((max: number) => {
     const s = ref.current;
@@ -110,8 +158,8 @@ export function LiveProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ session, finished, dismissFinished, burst, clearBurst, start, end, add, nextStop, setJoinPolicy }),
-    [session, finished, dismissFinished, burst, clearBurst, start, end, add, nextStop, setJoinPolicy],
+    () => ({ session, finished, dismissFinished, burst, clearBurst, start, end, add, remove, update, nextStop, setJoinPolicy }),
+    [session, finished, dismissFinished, burst, clearBurst, start, end, add, remove, update, nextStop, setJoinPolicy],
   );
   return <LiveContext.Provider value={value}>{children}</LiveContext.Provider>;
 }

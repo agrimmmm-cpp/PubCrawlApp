@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Place, PlaceCategory, places as mockPlaces } from '@/data/mock';
+import { explorePlaces, Place, PlaceCategory, places as mockPlaces } from '@/data/mock';
 import type { Near } from '@/lib/location';
 import { supabase, supabaseConfigured } from '@/lib/supabase';
 import { vibeById } from '@/lib/vibes';
@@ -25,7 +25,19 @@ export type Row = {
   city?: string | null;
   subcategory?: string | null;
   est_cost_cad?: number | null;
+  google_place_id?: string | null;
+  website?: string | null;
+  phone?: string | null;
+  cuisine?: string | null;
+  place_photos?: PhotoRow | PhotoRow[] | null; // one-to-one, so PostgREST sends an object; tolerate an array
 };
+
+type PhotoRow = { url: string; credit: string | null; license: string | null; source_url: string | null };
+
+function photoOf(p: Row['place_photos']) {
+  const row = Array.isArray(p) ? p[0] : p;
+  return row?.url ? { url: row.url, credit: row.credit ?? undefined, license: row.license ?? undefined, sourceUrl: row.source_url ?? undefined } : undefined;
+}
 
 export const toPlace = (r: Row): Place => ({
   id: r.id,
@@ -47,13 +59,21 @@ export const toPlace = (r: Row): Place => ({
   city: r.city ?? undefined,
   subcategory: r.subcategory ?? undefined,
   estCad: r.est_cost_cad ?? undefined,
+  photo: photoOf(r.place_photos),
+  googleId: r.google_place_id ?? undefined,
+  website: r.website ?? undefined,
+  phone: r.phone ?? undefined,
+  cuisine: r.cuisine ?? undefined,
 });
+
+// Real photos arrive with migration 011. Queries that ask for them fall back to plain columns if it has not run.
+export const PHOTO_EMBED = 'place_photos(url,credit,license,source_url)';
 
 export const PLACE_COLUMNS =
   'id,name,category,emoji,lat,lng,address,hours,late_night,why_go,tip,vibe,price_level,music,age_19,verified_at';
 
 // Columns added by migration 005. Used for browsing; experiences only need PLACE_COLUMNS.
-const EXT_COLUMNS = `${PLACE_COLUMNS},city,subcategory,est_cost_cad`;
+const EXT_COLUMNS = `${PLACE_COLUMNS},city,subcategory,est_cost_cad,google_place_id,website,phone,cuisine,${PHOTO_EMBED}`;
 
 export const CITIES = [
   'Vancouver', 'Burnaby', 'Surrey', 'Richmond', 'North Vancouver', 'West Vancouver', 'New Westminster',
@@ -171,4 +191,123 @@ export function usePlaceSearch(opts: Opts) {
   }, [city, nearLat, nearLng, vibe, lateOnly, price, query]);
 
   return { places, loading, capped: places.length >= PAGE_SIZE };
+}
+
+export type GroupOpts = {
+  subs?: string[];
+  category?: string;
+  late?: boolean;
+  city?: string;
+  near?: Near;
+  price?: PriceBand;
+  query?: string;
+  limit?: number;
+  googleOnly?: boolean; // only places that have a Google id (so a real photo is possible)
+  skip?: boolean; // do not fetch yet
+};
+
+/**
+ * One slice of the Explore page: the best places of one kind in a city or near you. Always a small page, filtered in the
+ * database, best first (independent venues, then the most complete records). Nothing is fetched while `skip` is true.
+ */
+export function usePlaceGroup(opts: GroupOpts) {
+  const { category, late, city, near, price, query = '', limit = 10, googleOnly, skip } = opts;
+  // The kinds are compared by value, so a caller may pass a fresh array each render without causing a refetch.
+  const subsKey = opts.subs?.join(',') ?? '';
+  const nearLat = near?.lat;
+  const nearLng = near?.lng;
+  const [state, setState] = useState<{ key: string; places: Place[] } | null>(null);
+  const key = [subsKey, category, late, city, nearLat, nearLng, price, query, limit, googleOnly].join('|');
+
+  useEffect(() => {
+    if (skip) return;
+    let cancelled = false;
+    const subs = subsKey ? subsKey.split(',') : undefined;
+
+    if (!supabaseConfigured) {
+      const range = price ? PRICE_RANGE[price] : undefined;
+      const list = explorePlaces
+        .filter((p) => (!subs || (p.subcategory && subs.includes(p.subcategory))) && (!category || p.category === category) && (!late || p.late))
+        .filter((p) => !range || (p.estCad != null && p.estCad >= range[0] && p.estCad <= range[1]))
+        .filter((p) => !query || p.name.toLowerCase().includes(query.toLowerCase()))
+        .slice(0, limit);
+      Promise.resolve().then(() => !cancelled && setState({ key, places: list }));
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    const timer = setTimeout(async () => {
+      let q = supabase.from('places').select(EXT_COLUMNS);
+      if (nearLat != null && nearLng != null) {
+        const la = snap(nearLat);
+        const ln = snap(nearLng);
+        q = q.gte('lat', la - 0.05).gte('lng', ln - 0.07).lte('lat', la + 0.05).lte('lng', ln + 0.07);
+      } else {
+        q = q.eq('city', city ?? 'Vancouver');
+      }
+      if (subs) q = q.in('subcategory', subs);
+      if (category) q = q.eq('category', category);
+      if (late) q = q.eq('late_night', true);
+      if (googleOnly) q = q.not('google_place_id', 'is', null);
+      const range = price ? PRICE_RANGE[price] : undefined;
+      if (range) q = q.gte('est_cost_cad', range[0]).lte('est_cost_cad', range[1]);
+      const term = query.trim().replace(/[%_\\]/g, (c) => `\\${c}`);
+      if (term) q = q.ilike('name', `%${term}%`);
+      const res = await q
+        .order('is_chain', { ascending: true })
+        .order('quality', { ascending: false })
+        .order('name')
+        .limit(nearLat != null ? Math.max(limit * 4, 60) : limit);
+      if (cancelled) return;
+      let list = res.error ? [] : (res.data as unknown as Row[]).map(toPlace);
+      if (nearLat != null && nearLng != null) {
+        const here = { lat: nearLat, lng: nearLng };
+        list = list
+          .map((p) => ({ ...p, distanceKm: km(here, { lat: p.lat, lng: p.lng }) }))
+          .sort((a, b) => (a.distanceKm as number) - (b.distanceKm as number))
+          .slice(0, limit);
+      }
+      setState({ key, places: list });
+    }, 150);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [key, skip, subsKey, category, late, city, nearLat, nearLng, price, query, limit, googleOnly]);
+
+  const ready = state?.key === key;
+  return { places: ready ? state.places : [], loading: !skip && !ready };
+}
+
+/** How many places are open past midnight in this city or near you. A count only: no rows are fetched. */
+export function useLateCount(city?: string, near?: Near) {
+  const nearLat = near?.lat;
+  const nearLng = near?.lng;
+  const [res, setRes] = useState<{ key: string; n: number } | null>(null);
+  const key = `${city}|${nearLat}|${nearLng}`;
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!supabaseConfigured) {
+      Promise.resolve().then(() => !cancelled && setRes({ key, n: explorePlaces.filter((p) => p.late).length }));
+      return () => {
+        cancelled = true;
+      };
+    }
+    let q = supabase.from('places').select('id', { count: 'exact', head: true }).eq('late_night', true);
+    if (nearLat != null && nearLng != null) {
+      const la = snap(nearLat);
+      const ln = snap(nearLng);
+      q = q.gte('lat', la - 0.05).lte('lat', la + 0.05).gte('lng', ln - 0.07).lte('lng', ln + 0.07);
+    } else {
+      q = q.eq('city', city ?? 'Vancouver');
+    }
+    q.then(({ count }) => !cancelled && setRes({ key, n: count ?? 0 }));
+    return () => {
+      cancelled = true;
+    };
+  }, [key, city, nearLat, nearLng]);
+
+  return res?.key === key ? res.n : undefined;
 }

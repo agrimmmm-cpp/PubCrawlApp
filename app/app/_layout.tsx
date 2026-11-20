@@ -5,8 +5,10 @@ import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 
 import { colors } from '@/constants/theme';
+import { QuestCard } from '@/components/QuestCard';
 import { AuthProvider, useAuth } from '@/lib/auth';
 import { LiveProvider } from '@/lib/live';
+import { QuestProvider } from '@/lib/quests';
 import { SocialProvider } from '@/lib/social';
 
 export const unstable_settings = { anchor: '(tabs)' };
@@ -30,10 +32,13 @@ export default function RootLayout() {
     <ThemeProvider value={theme}>
       <AuthProvider>
         <LiveProvider>
-          <SocialProvider>
-            <StatusBar style="light" />
-            <Routes />
-          </SocialProvider>
+          <QuestProvider>
+            <SocialProvider>
+              <StatusBar style="light" />
+              <Routes />
+              <QuestCard />
+            </SocialProvider>
+          </QuestProvider>
         </LiveProvider>
       </AuthProvider>
     </ThemeProvider>

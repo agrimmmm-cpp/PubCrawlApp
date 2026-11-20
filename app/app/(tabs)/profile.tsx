@@ -64,7 +64,7 @@ export default function Profile() {
 
         {credits.length > 0 ? (
           <Text style={[styles.note, { marginTop: space.xl }]}>
-            Photos by {credits.map((c) => c.photographer).join(', ')} on {[...new Set(credits.map((c) => c.source))].join(' and ')}.
+            Photos by {[...new Set(credits.map((c) => c.photographer))].length} photographers on {[...new Set(credits.map((c) => c.source))].join(' and ')}.
             Stock photos show a mood, never a specific venue. Place data © OpenStreetMap contributors.
           </Text>
         ) : null}

@@ -33,7 +33,15 @@ export const VIBES: Vibe[] = [
 ];
 
 export const vibeById = (id: string) => VIBES.find((v) => v.id === id);
-export const vibeImage = (id: string) => VIBE_IMAGES[id];
+/** A bundled photo for a vibe. Pass a seed (an experience or place id) and the same item always gets the same one, different items get different ones. */
+export function vibeImage(id: string, seed?: string) {
+  const list = VIBE_IMAGES[id];
+  if (!list?.length) return undefined;
+  if (!seed) return list[0];
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
+  return list[h % list.length];
+}
 
 /** The vibe an experience reads as, from its tags. Used to pick a cover when it has no photo of its own. */
 export function vibeOf(e: Pick<Experience, 'tags' | 'badge'>) {
